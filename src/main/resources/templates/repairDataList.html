@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>datapage</title>
+
+
+
+<body>
+
+<div >
+
+    <main>
+        <h1>Список модификаций</h1><b></b>
+        <br>
+        <table >
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>Modification</th>
+<!--                <th>Jrone NO</th>-->
+<!--                <th>Turbo Maker</th>-->
+<!--                <th>Turbo Model</th>-->
+<!--                <th>Turbo OE NO</th>-->
+<!--                <th>Vehicle OE NO</th>-->
+<!--                <th>Brand</th>-->
+<!--                <th>Maker Model</th>-->
+<!--                <th>Engine</th>-->
+<!--                <th>Year</th>-->
+            </tr>
+            </thead><hr>
+            <tbody>
+            <tr th:each="modification:${modificationList}">
+                <td th:text="${modification.id}">id</td>
+<!--                <td><a th:href="'/turbocharger/edit/'+${turbocharger.id}">Редактировать</a></td>-->
+                <td th:text="${modification.nameModificationAuto}">name</td>
+            </tr>
+            </tbody>
+        </table>
+        <p><br>
+            <a href="/auth/login" >Получить данные</a>
+        </p>
+    </main>
+</div>
+</body>
+</html>
