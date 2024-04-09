@@ -18,7 +18,7 @@ public class MarkAuto {
     @Column(name="id")
     private long id;
 
-    @Column(name="nameMark")
+    @Column(name="nameMark",unique = true)
     private String nameMark;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "markAuto")

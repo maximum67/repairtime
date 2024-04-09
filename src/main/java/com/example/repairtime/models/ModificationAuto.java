@@ -17,10 +17,10 @@ public class ModificationAuto {
     @Column(name="id")
     private long id;
 
-    @Column(name="nameModificationAuto")
+    @Column(name="nameModificationAuto", unique = true)
     private String nameModificationAuto;
 
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn
     private TypeEngine typeEngine;
 

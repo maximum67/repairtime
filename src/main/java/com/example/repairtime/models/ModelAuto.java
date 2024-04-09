@@ -18,10 +18,10 @@ public class ModelAuto {
     @Column(name="id")
     private long id;
 
-    @Column(name="nameModel")
+    @Column(name="nameModel", unique = true)
     private String nameModel;
 
-    @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn
     private MarkAuto markAuto;
 

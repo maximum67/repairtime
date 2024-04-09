@@ -18,10 +18,10 @@ public class TypeEngine {
     @Column(name="id")
     private long id;
 
-    @Column(name="nameTypeEngine")
+    @Column(name="nameTypeEngine", unique = true)
     private String nameTypeEngine;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
     private ModelAuto modelAuto;
 

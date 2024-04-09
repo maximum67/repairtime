@@ -1,6 +1,6 @@
 package com.example.repairtime.controllers;
 
-import com.example.repairtime.services.ModificationAutoService;
+import com.example.repairtime.services.RepairDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @RequestMapping("/data")
 public class ReceivedDataController {
 
-    private final ModificationAutoService modificationAutoService;
+    private final RepairDataService repairDataService;
 
 
     @GetMapping("/modification")
@@ -24,12 +24,12 @@ public class ReceivedDataController {
 
     @GetMapping("/modification/list")
     public String getModificationList(Model model){
-        model.addAttribute("modificationList",modificationAutoService.modificationAutoList());
+        model.addAttribute("modificationList", repairDataService.modificationAutoList());
         return "repairDataList";
     }
     @GetMapping("/write")
     public String writeData() throws IOException {
-        modificationAutoService.writingFileAndSave("test.xlsx");
+        repairDataService.writingFileAndSave("test.xlsx");
         return "redirect:/data/modification/list";
     }
 
