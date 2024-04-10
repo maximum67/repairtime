@@ -40,10 +40,17 @@ public class RepairDataService {
         ParsingFile parsingFile = new ParsingFile();
         Map<Integer, List<String>> map = parsingFile.read(filename);
         List<String> resultList = new LinkedList<>();
+        List<String> listGroup = new LinkedList<>();
+        List<String> listTypeRepair = new LinkedList<>();
+        List<String> listStandardHours = new LinkedList<>();
         map.forEach((key, value) -> resultList.add(value.get(1)));
+        map.forEach((key,value)-> listGroup.add(value.get(2)));
+        map.forEach((key,value)-> listTypeRepair.add(value.get(3)));
+        map.forEach((key,value)-> listStandardHours.add(value.get(4)));
 
         for (String string : resultList) {
             string = string.replaceAll(" / ", "*");
+            string = string.replaceAll("\\d{4}\\sоб/мин\\s","");
             List<String> list = new LinkedList<>(Arrays.asList(string.split("\\*")));
             listMark.add(list.get(0));
             listModel.add(list.get(1));
@@ -56,16 +63,16 @@ public class RepairDataService {
 
         TypeEngine typeEngine = new TypeEngine();
         typeEngine.setNameTypeEngine(listEngineType.get(0));
-        typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
+//        typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
 
         ModelAuto modelAuto = new ModelAuto();
         modelAuto.setNameModel(listModel.get(0));
-        modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
+//        modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
 
 
         MarkAuto markAuto = new MarkAuto();
         markAuto.setNameMark(listMark.get(0));
-        markAuto.setModelAutoList(Collections.singletonList(modelAuto));
+//        markAuto.setModelAutoList(Collections.singletonList(modelAuto));
 
         markAutoRepository.save(markAuto);
     }

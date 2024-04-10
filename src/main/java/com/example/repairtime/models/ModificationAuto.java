@@ -3,12 +3,14 @@ package com.example.repairtime.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="modification_auto")
 public class ModificationAuto {
 
@@ -24,16 +26,11 @@ public class ModificationAuto {
     @JoinColumn
     private TypeEngine typeEngine;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ModificationAuto that = (ModificationAuto) o;
-        return id == that.id && nameModificationAuto.equals(that.nameModificationAuto);
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "repair_standard",
+            joinColumns = {@JoinColumn(name="modification_auto_id")},
+            inverseJoinColumns = {@JoinColumn(name="type_repair_id")})
+        private List<TypeRepair> typeRepairList;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nameModificationAuto);
-    }
 }
