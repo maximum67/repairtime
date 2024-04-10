@@ -20,7 +20,7 @@ public class ModificationAuto {
     private long id;
 
     @Column(name="nameModificationAuto", unique = true)
-    private String nameModificationAuto;
+    private String name;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn
@@ -33,4 +33,16 @@ public class ModificationAuto {
             inverseJoinColumns = {@JoinColumn(name="type_repair_id")})
         private List<TypeRepair> typeRepairList;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ModificationAuto that = (ModificationAuto) o;
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(typeEngine, that.typeEngine) && Objects.equals(typeRepairList, that.typeRepairList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, typeEngine, typeRepairList);
+    }
 }

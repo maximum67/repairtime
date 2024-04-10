@@ -19,7 +19,7 @@ public class MarkAuto {
     private long id;
 
     @Column(name="nameMark",unique = true)
-    private String nameMark;
+    private String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "markAuto")
     private List<ModelAuto> modelAutoList;
@@ -30,11 +30,11 @@ public class MarkAuto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MarkAuto markAuto = (MarkAuto) o;
-        return id == markAuto.id && nameMark.equals(markAuto.nameMark);
+        return id == markAuto.id && Objects.equals(name, markAuto.name) && Objects.equals(modelAutoList, markAuto.modelAutoList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameMark);
+        return Objects.hash(id, name, modelAutoList);
     }
 }

@@ -9,7 +9,8 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="model_auto")
 public class ModelAuto {
 
@@ -19,7 +20,7 @@ public class ModelAuto {
     private long id;
 
     @Column(name="nameModel", unique = true)
-    private String nameModel;
+    private String name;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn
@@ -28,17 +29,16 @@ public class ModelAuto {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "modelAuto")
     private List<TypeEngine> typeEngineList;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ModelAuto modelAuto = (ModelAuto) o;
-        return id == modelAuto.id && Objects.equals(nameModel, modelAuto.nameModel);
+        return id == modelAuto.id && Objects.equals(name, modelAuto.name) && Objects.equals(markAuto, modelAuto.markAuto) && Objects.equals(typeEngineList, modelAuto.typeEngineList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameModel);
+        return Objects.hash(id, name, markAuto, typeEngineList);
     }
 }

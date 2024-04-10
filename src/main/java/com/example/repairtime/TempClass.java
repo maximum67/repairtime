@@ -1,10 +1,8 @@
 package com.example.repairtime;
 
-import com.example.repairtime.services.Parser;
 import com.example.repairtime.services.ParsingFile;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;

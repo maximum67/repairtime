@@ -3,7 +3,6 @@ package com.example.repairtime.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,18 +19,18 @@ public class RepairGroup {
     private long id;
 
     @Column(name="repair_group_name")
-    private String repairGroupName;
+    private String name;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RepairGroup that = (RepairGroup) o;
-        return id == that.id && repairGroupName.equals(that.repairGroupName);
+        return id == that.id && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, repairGroupName);
+        return Objects.hash(id, name);
     }
 }

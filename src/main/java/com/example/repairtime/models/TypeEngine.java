@@ -19,7 +19,7 @@ public class TypeEngine {
     private long id;
 
     @Column(name="nameTypeEngine", unique = true)
-    private String nameTypeEngine;
+    private String name;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
@@ -33,11 +33,11 @@ public class TypeEngine {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TypeEngine that = (TypeEngine) o;
-        return id == that.id && nameTypeEngine.equals(that.nameTypeEngine);
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(modelAuto, that.modelAuto) && Objects.equals(modificationAutoList, that.modificationAutoList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameTypeEngine);
+        return Objects.hash(id, name, modelAuto, modificationAutoList);
     }
 }

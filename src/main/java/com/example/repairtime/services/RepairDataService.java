@@ -5,7 +5,9 @@ import com.example.repairtime.models.ModelAuto;
 import com.example.repairtime.models.ModificationAuto;
 import com.example.repairtime.models.TypeEngine;
 import com.example.repairtime.repositories.MarkAutoRepository;
+import com.example.repairtime.repositories.ModelAutoRepository;
 import com.example.repairtime.repositories.ModificationAutoRepository;
+import com.example.repairtime.repositories.TypeEngineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +18,16 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RepairDataService {
 
-    private final ModificationAutoRepository modificationAutoRepository;
     private final MarkAutoRepository markAutoRepository;
+    private final ModelAutoRepository modelAutoRepository;
+    private final TypeEngineRepository typeEngineRepository;
+    private final ModificationAutoRepository modificationAutoRepository;
 
     public List<ModificationAuto> modificationAutoList(){
         return modificationAutoRepository.findAll();
     }
 
-    public ModificationAuto getModificationAutoByName(Long id){
-        return modificationAutoRepository.getReferenceById(id);
-    }
 
-    public void saveModification(ModificationAuto modificationAuto){
-        modificationAutoRepository.save(modificationAuto);
-    }
     public void writingFileAndSave(String filename) throws IOException {
 
         List<String> listMark = new LinkedList<>();
@@ -58,21 +56,56 @@ public class RepairDataService {
             listModification.add(list.get(3));
         }
 
-        ModificationAuto modificationAuto = new ModificationAuto();
-        modificationAuto.setNameModificationAuto(listModification.get(0));
 
-        TypeEngine typeEngine = new TypeEngine();
-        typeEngine.setNameTypeEngine(listEngineType.get(0));
+//        modificationAuto.setNameModificationAuto(listModification.get(0));
+
+
+//        typeEngine.setNameTypeEngine(listEngineType.get(0));
 //        typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
 
-        ModelAuto modelAuto = new ModelAuto();
-        modelAuto.setNameModel(listModel.get(0));
+//        markAuto.setModelAutoList(Collections.singletonList(modelAuto));
+
+//        modelAuto.setNameModel(listModel.get(0));
 //        modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
 
-
         MarkAuto markAuto = new MarkAuto();
-        markAuto.setNameMark(listMark.get(0));
-//        markAuto.setModelAutoList(Collections.singletonList(modelAuto));
+        ModelAuto modelAuto = new ModelAuto();
+        TypeEngine typeEngine = new TypeEngine();
+        ModificationAuto modificationAuto = new ModificationAuto();
+        if (markAutoRepository.findByName(listMark.get(0)).isPresent()) {
+           markAuto = markAutoRepository.findByName(listMark.get(0)).get();
+            if (markAuto.getModelAutoList().stream()
+                    .findFirst()
+                    .filter(modelAuto1 -> modelAuto1.getName()
+                    .equals(listModel.get(0))).isPresent()) {
+                modelAuto = modelAutoRepository.findByName(listModel.get(0));
+                if (modelAuto.getTypeEngineList().stream()
+                        .findFirst()
+                        .filter(typeEngine1 -> typeEngine1.getName()
+                        .equals(listEngineType.get(0))).isPresent()){
+                    typeEngine = typeEngineRepository.findByName(listEngineType.get(0));
+                    if (typeEngine.getModificationAutoList().stream()
+                            .findFirst()
+                            .filter(modificationAuto1 -> modificationAuto1.getName()
+                            .equals(listModification.get(0))).isPresent()){
+                       modificationAuto = modificationAutoRepository.findByName(listModification.get(0));
+                    }else{
+                       modificationAuto.setName(listModification.get(0));
+                    }
+                }else{
+                    typeEngine.setName(listEngineType.get(0));
+                    typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
+                }
+            }else{
+                modelAuto.setName(listModel.get(0));
+                modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
+            }
+        }else{
+            markAuto.setName(listMark.get(0));
+            markAuto.setModelAutoList(Collections.singletonList(modelAuto));
+
+        }
+
 
         markAutoRepository.save(markAuto);
     }
