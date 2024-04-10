@@ -33,6 +33,7 @@ public class ModificationAuto {
             inverseJoinColumns = {@JoinColumn(name="type_repair_id")})
         private List<TypeRepair> typeRepairList;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

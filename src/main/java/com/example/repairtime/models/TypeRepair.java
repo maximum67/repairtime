@@ -26,6 +26,7 @@ public class TypeRepair {
     @JoinColumn
     private RepairGroup repairGroup;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

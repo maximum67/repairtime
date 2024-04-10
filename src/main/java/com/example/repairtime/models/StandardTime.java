@@ -19,6 +19,7 @@ public class StandardTime {
     @Column(name="standardTime")
     private double standardTime;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

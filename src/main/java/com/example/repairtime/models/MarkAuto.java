@@ -25,6 +25,7 @@ public class MarkAuto {
     private List<ModelAuto> modelAutoList;
 
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

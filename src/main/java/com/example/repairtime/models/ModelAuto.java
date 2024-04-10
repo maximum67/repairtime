@@ -29,6 +29,7 @@ public class ModelAuto {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "modelAuto")
     private List<TypeEngine> typeEngineList;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

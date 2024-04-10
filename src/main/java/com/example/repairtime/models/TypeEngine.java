@@ -28,6 +28,7 @@ public class TypeEngine {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "typeEngine")
     private List<ModificationAuto> modificationAutoList;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

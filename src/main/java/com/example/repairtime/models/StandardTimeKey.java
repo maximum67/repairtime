@@ -23,7 +23,6 @@ public class StandardTimeKey implements Serializable {
     @Column(name="type_repair_id")
     private TypeRepair typeRepair;
 
-
     @JdbcTypeCode(SqlTypes.BIGINT)
     @Column(name="modification_auto_id")
     private ModificationAuto modificationAuto;

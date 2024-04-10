@@ -21,6 +21,7 @@ public class RepairGroup {
     @Column(name="repair_group_name")
     private String name;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

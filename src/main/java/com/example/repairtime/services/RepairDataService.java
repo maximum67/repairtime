@@ -134,7 +134,7 @@ public class RepairDataService {
                 typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
 //                markAutoRepository.save(markAuto);
             }
-            markAutoRepository.save(markAuto);
+//            markAutoRepository.save(markAuto);
         }
 
     }

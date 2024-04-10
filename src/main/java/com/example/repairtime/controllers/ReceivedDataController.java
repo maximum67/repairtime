@@ -16,7 +16,6 @@ public class ReceivedDataController {
 
     private final RepairDataService repairDataService;
 
-
     @GetMapping("/modification")
     public String getModification(Model model){
         return "receivedDataPage";
