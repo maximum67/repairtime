@@ -22,7 +22,7 @@ public class ModelAuto {
     @Column(name="nameModel", unique = true)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
     @JoinColumn
     private MarkAuto markAuto;
 

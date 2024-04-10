@@ -67,46 +67,75 @@ public class RepairDataService {
 
 //        modelAuto.setNameModel(listModel.get(0));
 //        modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
+        for (int i = 0; i < 25; i++) {
 
-        MarkAuto markAuto = new MarkAuto();
-        ModelAuto modelAuto = new ModelAuto();
-        TypeEngine typeEngine = new TypeEngine();
-        ModificationAuto modificationAuto = new ModificationAuto();
-        if (markAutoRepository.findByName(listMark.get(0)).isPresent()) {
-           markAuto = markAutoRepository.findByName(listMark.get(0)).get();
-            if (markAuto.getModelAutoList().stream()
-                    .findFirst()
-                    .filter(modelAuto1 -> modelAuto1.getName()
-                    .equals(listModel.get(0))).isPresent()) {
-                modelAuto = modelAutoRepository.findByName(listModel.get(0));
-                if (modelAuto.getTypeEngineList().stream()
-                        .findFirst()
-                        .filter(typeEngine1 -> typeEngine1.getName()
-                        .equals(listEngineType.get(0))).isPresent()){
-                    typeEngine = typeEngineRepository.findByName(listEngineType.get(0));
-                    if (typeEngine.getModificationAutoList().stream()
-                            .findFirst()
-                            .filter(modificationAuto1 -> modificationAuto1.getName()
-                            .equals(listModification.get(0))).isPresent()){
-                       modificationAuto = modificationAutoRepository.findByName(listModification.get(0));
-                    }else{
-                       modificationAuto.setName(listModification.get(0));
+            String markName = listMark.get(i);
+            System.out.println(markName);
+            String modelName = listModel.get(i);
+            System.out.println(modelName);
+            String typeEngineName = listEngineType.get(i);
+            System.out.println(typeEngineName);
+            String modificationName = listModification.get(i);
+            System.out.println(modificationName);
+            MarkAuto markAuto = new MarkAuto();
+            ModelAuto modelAuto = new ModelAuto();
+            TypeEngine typeEngine = new TypeEngine();
+            ModificationAuto modificationAuto = new ModificationAuto();
+            if (markAutoRepository.findByName(markName).isPresent()) {
+                markAuto = markAutoRepository.findByName(markName).get();
+//                System.out.println(markAuto.getName());
+                if (modelAutoRepository.findByName(modelName).isPresent()) {
+                    modelAuto = modelAutoRepository.findByName(modelName).get();
+//                    System.out.println(modelAuto.getName());
+                    if (typeEngineRepository.findByName(typeEngineName).isPresent()) {
+                        typeEngine = typeEngineRepository.findByName(typeEngineName).get();
+//                        System.out.println(typeEngine.getName());
+                        if (modificationAutoRepository.findByName(modificationName).isPresent()) {
+                            modificationAuto = modificationAutoRepository.findByName(modificationName).get();
+//                            System.out.println(modificationAuto.getName());
+                        } else {
+                            modificationAuto.setName(modificationName);
+                            modificationAuto.setTypeEngine(typeEngine);
+                            typeEngine.getModificationAutoList().add(modificationAuto);
+//                            modificationAutoRepository.save(modificationAuto);
+                        }
+                    } else {
+                        typeEngine.setName(typeEngineName);
+                        typeEngine.setModelAuto(modelAuto);
+                        modelAuto.getTypeEngineList().add(typeEngine);
+                        modificationAuto.setName(modificationName);
+                        modificationAuto.setTypeEngine(typeEngine);
+                        typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
+//                        typeEngineRepository.save(typeEngine);
                     }
-                }else{
-                    typeEngine.setName(listEngineType.get(0));
-                    typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
-                }
-            }else{
-                modelAuto.setName(listModel.get(0));
-                modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
-            }
-        }else{
-            markAuto.setName(listMark.get(0));
-            markAuto.setModelAutoList(Collections.singletonList(modelAuto));
+                } else {
 
+                    modelAuto.setName(modelName);
+                    modelAuto.setMarkAuto(markAuto);
+                    markAuto.getModelAutoList().add(modelAuto);
+                    typeEngine.setName(typeEngineName);
+                    typeEngine.setModelAuto(modelAuto);
+                    modificationAuto.setName(modificationName);
+                    modificationAuto.setTypeEngine(typeEngine);
+                    modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
+                    typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
+//                    modelAutoRepository.save(modelAuto);
+                }
+            } else {
+                markAuto.setName(markName);
+                modelAuto.setName(modelName);
+                modelAuto.setMarkAuto(markAuto);
+                typeEngine.setName(typeEngineName);
+                typeEngine.setModelAuto(modelAuto);
+                modificationAuto.setName(modificationName);
+                modificationAuto.setTypeEngine(typeEngine);
+                markAuto.setModelAutoList(Collections.singletonList(modelAuto));
+                modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
+                typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
+//                markAutoRepository.save(markAuto);
+            }
+            markAutoRepository.save(markAuto);
         }
 
-
-        markAutoRepository.save(markAuto);
     }
 }
