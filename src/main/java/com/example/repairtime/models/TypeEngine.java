@@ -18,7 +18,7 @@ public class TypeEngine {
     @Column(name="id")
     private long id;
 
-    @Column(name="nameTypeEngine", unique = true)
+    @Column(name="nameTypeEngine")
     private String name;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
@@ -27,7 +27,6 @@ public class TypeEngine {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "typeEngine")
     private List<ModificationAuto> modificationAutoList;
-
 
     @Override
     public boolean equals(Object o) {

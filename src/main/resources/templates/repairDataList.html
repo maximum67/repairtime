@@ -16,11 +16,11 @@
         <table >
             <thead>
             <tr>
-                <th>id</th>
-                <th>Modification</th>
-<!--                <th>Jrone NO</th>-->
-<!--                <th>Turbo Maker</th>-->
-<!--                <th>Turbo Model</th>-->
+                <th>Modification.id</th>
+                <th>Марка автомобиля</th>
+                <th>Модель автомобиля</th>
+                <th>Тип двигателя</th>
+                <th>Модификация</th>
 <!--                <th>Turbo OE NO</th>-->
 <!--                <th>Vehicle OE NO</th>-->
 <!--                <th>Brand</th>-->
@@ -31,7 +31,9 @@
             <tbody>
             <tr th:each="modification:${modificationList}">
                 <td th:text="${modification.id}">id</td>
-<!--                <td><a th:href="'/turbocharger/edit/'+${turbocharger.id}">Редактировать</a></td>-->
+                <td th:text="${modification.typeEngine.modelAuto.markAuto.name}">id</td>
+                <td th:text="${modification.typeEngine.modelAuto.name}">id</td>
+                <td th:text="${modification.typeEngine.name}">id</td>
                 <td th:text="${modification.name}">name</td>
             </tr>
             </tbody>
