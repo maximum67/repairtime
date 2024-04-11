@@ -2,7 +2,7 @@
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>datapage</title>
+    <title>modification</title>
 
 
 
@@ -21,22 +21,24 @@
                 <th>Модель автомобиля</th>
                 <th>Тип двигателя</th>
                 <th>Модификация</th>
-                <th>Редактировать</th>
-<!--                <th>Vehicle OE NO</th>-->
-<!--                <th>Brand</th>-->
-<!--                <th>Maker Model</th>-->
-<!--                <th>Engine</th>-->
+                <th>Вид ремонта</th>
+                <!--                <th>Vehicle OE NO</th>-->
+                <!--                <th>Brand</th>-->
+                <!--                <th>Maker Model</th>-->
+                <!--                <th>Engine</th>-->
             </tr>
             </thead><hr>
             <tbody>
-            <tr th:each="modification:${modificationList}">
+            <tr>
                 <td th:text="${modification.id}">id</td>
                 <td th:text="${modification.typeEngine.modelAuto.markAuto.name}">id</td>
                 <td th:text="${modification.typeEngine.modelAuto.name}">id</td>
                 <td th:text="${modification.typeEngine.name}">id</td>
                 <td th:text="${modification.name}">name</td>
                 <td>
-                <a th:href="'/data/modification/edit/'+${modification.id}">Редактировать</a>
+                    <p th:each="typeRepair:${typeRepairs}">
+                    <span th:text="${typeRepair.name}">текст</span>
+                    </p>
                 </td>
             </tr>
             </tbody>
