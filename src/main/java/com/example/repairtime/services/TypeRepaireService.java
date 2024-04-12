@@ -10,8 +10,5 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TypeRepaireService {
-
     private final TypeRepairRepository typeRepairRepository;
-
-
 }

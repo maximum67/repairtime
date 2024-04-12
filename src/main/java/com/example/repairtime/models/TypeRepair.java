@@ -18,7 +18,7 @@ public class TypeRepair {
     @Column(name="id")
     private long id;
 
-    @Column(name="type_repair_name")
+    @Column(name="type_repair_name", unique = true)
     private String name;
 
 

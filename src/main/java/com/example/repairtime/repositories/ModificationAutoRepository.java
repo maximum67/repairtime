@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface ModificationAutoRepository extends JpaRepository<ModificationAuto,Long> {
 
     Optional<ModificationAuto> findByName(String s);
+
 }

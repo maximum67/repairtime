@@ -18,7 +18,7 @@ public class RepairGroup {
     @Column(name="id")
     private long id;
 
-    @Column(name="repair_group_name")
+    @Column(name="repair_group_name", unique = true)
     private String name;
 
 

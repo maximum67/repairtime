@@ -21,10 +21,6 @@ public class RepairDataService {
     private final TypeRepairRepository typeRepairRepository;
     private final StandardTimeRepository standardTimeRepository;
 
-    public List<ModificationAuto> modificationAutoList(){
-        return modificationAutoRepository.findAll();
-    }
-
 
     public void writingFileAndSave(String filename) throws IOException {
 
@@ -65,22 +61,22 @@ public class RepairDataService {
 
 //        modelAuto.setNameModel(listModel.get(0));
 //        modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
-        for (int i = 0; i <2; i++) {
+        for (int i = 0; i <142; i++) {
 
             String markName = listMark.get(i);
-            System.out.println(markName);
+//            System.out.println(markName);
             String modelName = listModel.get(i);
-            System.out.println(modelName);
+//            System.out.println(modelName);
             String typeEngineName = listEngineType.get(i);
-            System.out.println(typeEngineName);
+//            System.out.println(typeEngineName);
             String modificationName = listModification.get(i);
-            System.out.println(modificationName);
+//            System.out.println(modificationName);
             String repairGroupName = listGroup.get(i);
-            System.out.println(repairGroupName);
+//            System.out.println(repairGroupName);
             String typeRepairName = listTypeRepair.get(i);
-            System.out.println(typeRepairName);
+//            System.out.println(typeRepairName);
             Double standardTimeName = listStandardHours.get(i);
-            System.out.println(standardTimeName);
+//            System.out.println(standardTimeName);
 
             MarkAuto markAuto = new MarkAuto();
             ModelAuto modelAuto = new ModelAuto();
@@ -108,34 +104,48 @@ public class RepairDataService {
                         System.out.println(typeEngine.getName());
                         if (modificationAutoRepository.findByName(modificationName).isPresent()) {
                             modificationAuto = modificationAutoRepository.findByName(modificationName).get();
-                            System.out.println(modificationAuto.getName());
+//                            System.out.println(modificationAuto.getName());
                         } else {
                             modificationAuto.setName(modificationName);
                             modificationAuto.setTypeEngine(typeEngine);
-                            typeEngine.getModificationAutoList().add(modificationAuto);
+//                            typeEngine.getModificationAutoList().add(modificationAuto);
                             modificationAutoRepository.save(modificationAuto);
                         }
                     } else {
-                        typeEngine.setName(typeEngineName);
-                        typeEngine.setModelAuto(modelAuto);
+
                         modificationAuto.setName(modificationName);
                         modificationAuto.setTypeEngine(typeEngine);
-                        typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
-                        modelAuto.getTypeEngineList().add(typeEngine);
+
+                        List<ModificationAuto> modifList = new LinkedList<>();
+                        modifList.add(modificationAuto);
+                        typeEngine.setModificationAutoList(modifList);
+                        typeEngine.setName(typeEngineName);
+                        typeEngine.setModelAuto(modelAuto);
+
+//                        modelAuto.getTypeEngineList().add(typeEngine);
                         typeEngineRepository.save(typeEngine);
                     }
                 } else {
-
                     modelAuto.setName(modelName);
                     modelAuto.setMarkAuto(markAuto);
                     typeEngine.setName(typeEngineName);
                     typeEngine.setModelAuto(modelAuto);
                     modificationAuto.setName(modificationName);
                     modificationAuto.setTypeEngine(typeEngine);
-                    modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
-                    typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
-                    markAuto.getModelAutoList().add(modelAuto);
+
+                    List<TypeEngine> engineList = new LinkedList<>();
+                    engineList.add(typeEngine);
+                    modelAuto.setTypeEngineList(engineList);
+
+                    List<ModificationAuto> modifList = new LinkedList<>();
+                    modifList.add(modificationAuto);
+                    typeEngine.setModificationAutoList(modifList);
                     modelAutoRepository.save(modelAuto);
+//                    ModelAuto model = modelAutoRepository.findByName(modelName).get();
+//                    markAuto.getModelAutoList().add(model);
+
+
+
                 }
             } else {
                 markAuto.setName(markName);
@@ -145,25 +155,48 @@ public class RepairDataService {
                 typeEngine.setModelAuto(modelAuto);
                 modificationAuto.setName(modificationName);
                 modificationAuto.setTypeEngine(typeEngine);
-                markAuto.setModelAutoList(Collections.singletonList(modelAuto));
-                modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
-                typeEngine.setModificationAutoList(Collections.singletonList(modificationAuto));
+
+                List<ModelAuto> modelList = new LinkedList<>();
+                modelList.add(modelAuto);
+                markAuto.setModelAutoList(modelList);
+
+                List<TypeEngine> engineList = new LinkedList<>();
+                engineList.add(typeEngine);
+                modelAuto.setTypeEngineList(engineList);
+
+                List<ModificationAuto> modifList = new LinkedList<>();
+                modifList.add(modificationAuto);
+                typeEngine.setModificationAutoList(modifList);
+
                 markAutoRepository.save(markAuto);
             }
-//            markAutoRepository.save(markAuto);
+
             repairGroup.setName(repairGroupName);
-            repairGroupRepository.save(repairGroup);
+            if (!repairGroupRepository.existsByName(repairGroupName)){
+                repairGroupRepository.save(repairGroup);
+            }
+            repairGroup = repairGroupRepository.getByName(repairGroupName).get();
+
 
             typeRepair.setName(typeRepairName);
             typeRepair.setRepairGroup(repairGroup);
-            typeRepairRepository.save(typeRepair);
+            if (!typeRepairRepository.existsByName(typeRepairName)){
+                typeRepairRepository.save(typeRepair);
+            }
+            typeRepair = typeRepairRepository.getByName(typeRepairName).get();
 
-            standardTime.setStandardTime(standardTimeName);
-            standardTime.setTypeRepairId(typeRepair);
-            standardTime.setModificationAutoId(modificationAuto);
 
-            System.out.println("type "+typeRepair.getId()+"  modif "+modificationAuto.getId());
-            standardTimeRepository.save(standardTime);
+            standardTimeKey.setTypeRepairId(typeRepair);
+            standardTimeKey.setModificationAutoId(modificationAuto);
+            if (!standardTimeRepository.existsExampleStandardTime(standardTimeKey)) {
+                standardTime.setStandardTime(standardTimeName);
+                standardTime.setTypeRepairId(typeRepair);
+                standardTime.setModificationAutoId(modificationAuto);
+                standardTimeRepository.save(standardTime);
+
+
+//                System.out.println("type " + typeRepair.getId() + "  modif " + modificationAuto.getId() + "  group " + repairGroup.getName());
+            }
         }
 
     }

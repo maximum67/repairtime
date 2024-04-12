@@ -5,6 +5,7 @@ import com.example.repairtime.models.StandardTime;
 import com.example.repairtime.repositories.StandardTimeRepository;
 import com.example.repairtime.services.ModificationAutoService;
 import com.example.repairtime.services.RepairDataService;
+import com.example.repairtime.services.StandardTimeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ public class ReceivedDataController {
 
     private final RepairDataService repairDataService;
     private final ModificationAutoService modificationAutoService;
-    private final StandardTimeRepository standardTimeRepository;
+    private final StandardTimeService standardTimeService;
 
     @GetMapping("/modification")
     public String getModification(Model model){
@@ -31,7 +32,7 @@ public class ReceivedDataController {
 
     @GetMapping("/modification/list")
     public String getModificationList(Model model){
-        model.addAttribute("modificationList", repairDataService.modificationAutoList());
+        model.addAttribute("modificationList", modificationAutoService.modificationAutoList());
         return "repairDataList";
     }
     @GetMapping("/write")
@@ -43,8 +44,11 @@ public class ReceivedDataController {
     public String getModificationEdit(@PathVariable ("modification") ModificationAuto modificationAuto, Model model) {
         model.addAttribute("modification", modificationAuto);
         model.addAttribute("typeRepairs",
-                standardTimeRepository.findDistinctByModificationAutoId(modificationAuto)
+                standardTimeService.getStandardTimeListByModification(modificationAuto)
                         .stream().map(StandardTime::getTypeRepairId).collect(Collectors.toList()));
+        model.addAttribute("standardTimes",
+                standardTimeService.getStandardTimeListByModification(modificationAuto));
+//                        .stream().map(StandardTime::getStandardTime).collect(Collectors.toList()));
         return "modificationEdit";
     }
 }

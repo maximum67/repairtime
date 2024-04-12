@@ -22,6 +22,7 @@
                 <th>Тип двигателя</th>
                 <th>Модификация</th>
                 <th>Вид ремонта</th>
+                <th>Нормы времени</th>
                 <!--                <th>Vehicle OE NO</th>-->
                 <!--                <th>Brand</th>-->
                 <!--                <th>Maker Model</th>-->
@@ -37,7 +38,12 @@
                 <td th:text="${modification.name}">name</td>
                 <td>
                     <p th:each="typeRepair:${typeRepairs}">
-                    <span th:text="${typeRepair.name}">текст</span>
+                    <span th:text="${typeRepair.name}">text</span>
+                    </p>
+                </td>
+                <td>
+                    <p th:each="item:${standardTimes}">
+                    <span th:text="${item.standardTime}">text</span>
                     </p>
                 </td>
             </tr>
