@@ -1,11 +1,10 @@
 package com.example.repairtime.controllers;
 
+import com.example.repairtime.models.MarkAuto;
 import com.example.repairtime.models.ModificationAuto;
 import com.example.repairtime.models.StandardTime;
 import com.example.repairtime.repositories.StandardTimeRepository;
-import com.example.repairtime.services.ModificationAutoService;
-import com.example.repairtime.services.RepairDataService;
-import com.example.repairtime.services.StandardTimeService;
+import com.example.repairtime.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +23,9 @@ public class ReceivedDataController {
     private final RepairDataService repairDataService;
     private final ModificationAutoService modificationAutoService;
     private final StandardTimeService standardTimeService;
+    private final MarkAutoService markAutoService;
+    private final ModelAutoService modelAutoService;
 
-    @GetMapping("/modification")
-    public String getModification(Model model){
-        return "receivedDataPage";
-    }
 
     @GetMapping("/modification/list")
     public String getModificationList(Model model){

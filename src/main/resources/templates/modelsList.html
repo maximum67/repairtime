@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>datapagemodel</title>
+
+
+
+<body>
+
+<div >
+
+    <main>
+        <h1>Выбор автомобиля</h1><b></b>
+        <br>
+        <table >
+            <thead>
+            <tr>
+                <th>Марка автомобиля</th>
+                <th th:hidden = "${!isPermission}">Модель автомобиля</th>
+                <th th:hidden = "${!isPermission1}">Тип двигателя</th>
+                <th th:hidden = "${!isPermission2}">Модификация</th>
+                <!--                <th>Редактировать</th>-->
+                <!--                <th>Vehicle OE NO</th>-->
+                <!--                <th>Brand</th>-->
+                <!--                <th>Maker Model</th>-->
+                <!--                <th>Engine</th>-->
+            </tr>
+            </thead><hr>
+            <tbody>
+            <tr>
+                <td th:text="${mark.name}">name</td>
+
+                <td th:hidden = "${!isPermission}">
+                    <select onchange="window.location.href=this.value;">
+                    <option th:value="'/select/mark/'+${mark.id}">-модель-</option>
+                    <option  th:each="model:${modelsList}" th:text="${model.name}" th:value="'/select/model'+${model.id}">далее</option>
+                    </select>
+                </td>
+                <td th:hidden = "${!isPermission1}">
+                    <select>
+                        <div th:each="mark:${markList}">
+                            <option th:text="${mark.name}" >далее</option>
+                        </div>
+                    </select>
+                </td>
+                <td th:hidden = "${!isPermission2}">
+                    <select>
+                        <div th:each="mark:${markList}">
+                            <option th:text="${mark.name}" >далее</option>
+                        </div>
+                    </select>
+                </td>
+
+                <!--                <td th:text="${modification.id}">id</td>-->
+                <!--                <td th:text="${modification.typeEngine.modelAuto.markAuto.name}">id</td>-->
+                <!--                <td th:text="${modification.typeEngine.modelAuto.name}">id</td>-->
+                <!--                <td th:text="${modification.typeEngine.name}">id</td>-->
+                <!--                <td th:text="${modification.name}">name</td>-->
+                <!--                <td>-->
+                <!--                    <a th:href="'/data/modification/edit/'+${modification.id}">Редактировать</a>-->
+                <!--                </td>-->
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>
