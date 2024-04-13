@@ -2,7 +2,7 @@
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>datapagemodel</title>
+    <title>datapagetype</title>
 
 
 
@@ -30,21 +30,17 @@
             <tbody>
             <tr>
                 <td th:text="${mark.name}">name</td>
+                <td th:text="${model.name}">name</td>
 
-                <td th:hidden = "${!isPermission}">
+
+                <td>
                     <select onchange="window.location.href=this.value;">
-                    <option th:value="'/select/mark/'+${mark.id}">-модель-</option>
-                    <option  th:each="model:${modelsList}" th:text="${model.name}"
-                             th:value="'/select/model/'+${mark.id}+'/'+${model.id}">далее</option>
+                        <option th:value="'/select/model/'+${mark.id}+'/'+${model.id}">-тип двигателя-</option>
+                        <option  th:each="type:${typeEngineList}" th:text="${type.name}"
+                                 th:value="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">далее</option>
                     </select>
                 </td>
-                <td th:hidden = "${!isPermission1}">
-                    <select>
-                        <div th:each="mark:${markList}">
-                            <option th:text="${mark.name}" >далее</option>
-                        </div>
-                    </select>
-                </td>
+
                 <td th:hidden = "${!isPermission2}">
                     <select>
                         <div th:each="mark:${markList}">

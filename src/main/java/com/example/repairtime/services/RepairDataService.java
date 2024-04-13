@@ -61,7 +61,7 @@ public class RepairDataService {
 
 //        modelAuto.setNameModel(listModel.get(0));
 //        modelAuto.setTypeEngineList(Collections.singletonList(typeEngine));
-        for (int i = 0; i <142; i++) {
+        for (int i = 0; i <resultList.size(); i++) {
 
             String markName = listMark.get(i);
 //            System.out.println(markName);
@@ -89,11 +89,11 @@ public class RepairDataService {
             ModificationAuto modificationAuto = new ModificationAuto();
             if (markAutoRepository.findByName(markName).isPresent()) {
                 markAuto = markAutoRepository.findByName(markName).get();
-                System.out.println(markAuto.getName());
+//                System.out.println(markAuto.getName());
                 if (modelAutoRepository.findByName(modelName).isPresent()) {
                     modelAuto = modelAutoRepository.findByName(modelName).get();
                     final ModelAuto modelAutoTemp = modelAuto;
-                    System.out.println(modelAuto.getName());
+//                    System.out.println(modelAuto.getName());
                     if (typeEngineRepository.findAllByName(typeEngineName).isPresent() &&
                             !typeEngineRepository.findAllByName(typeEngineName).get()
                                     .stream().filter(typeEngine1 -> typeEngine1.getModelAuto().equals(modelAutoTemp))
@@ -101,7 +101,7 @@ public class RepairDataService {
                         typeEngine = typeEngineRepository.findAllByName(typeEngineName).get()
                                 .stream().filter(typeEngine1 -> typeEngine1.getModelAuto().equals(modelAutoTemp))
                                 .findFirst().get();
-                        System.out.println(typeEngine.getName());
+//                        System.out.println(typeEngine.getName());
                         if (modificationAutoRepository.findByName(modificationName).isPresent()) {
                             modificationAuto = modificationAutoRepository.findByName(modificationName).get();
 //                            System.out.println(modificationAuto.getName());

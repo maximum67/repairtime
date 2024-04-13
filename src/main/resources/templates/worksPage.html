@@ -37,10 +37,14 @@
                 <td th:text="${modification.typeEngine.name}">id</td>
                 <td th:text="${modification.name}">name</td>
                 <td>
-                   <div th:each="typeRepair:${typeRepairs}" th:text="${typeRepair.name}">text</div>
+                    <p th:each="typeRepair:${typeRepairs}" th:text="${typeRepair.name}">text</p>
+<!--                        <span th:text="${typeRepair.name}">text</span>-->
+<!--                    </p>-->
                 </td>
                 <td>
-                    <div th:each="item:${standardTimes}" th:text="${item.standardTime}">text</div>
+                    <p th:each="item:${standardTimes}">
+                        <span th:text="${item.standardTime}">text</span>
+                    </p>
                 </td>
             </tr>
             </tbody>
@@ -51,4 +55,3 @@
     </main>
 </div>
 </body>
-</html>

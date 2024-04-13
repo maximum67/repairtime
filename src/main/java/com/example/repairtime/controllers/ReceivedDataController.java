@@ -48,4 +48,8 @@ public class ReceivedDataController {
 //                        .stream().map(StandardTime::getStandardTime).collect(Collectors.toList()));
         return "modificationEdit";
     }
+    @GetMapping("/modification")
+    public String getModification(Model model){
+        return "receivedDataPage";
+    }
 }
