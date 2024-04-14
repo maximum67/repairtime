@@ -34,25 +34,13 @@
         <table>
             <thead>
             <th>Группа ремонта</th>
-            <th>Вид ремонта</th>
-            <th>Нормы времени</th>
             </thead>
             <tbody>
             <td>
                 <div th:each="group:${groupRepairs}">
-                    <a th:href="'/select/grouprepair/'+${mark.id}+'/'+${model.id}+'/'+${type.id}+'/'+${modification.id}+'/'+${group.id}"
-                       th:text="${group.name}">text
-                    </a>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <div th:each="typeRepair:${typeRepairs}" th:text="${typeRepair.name}">text</div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <div th:each="standardTime:${standardTimes}" th:text="${standardTime}">text</div>
+                <a th:href="'/select/grouprepair/'+${mark.id}+'/'+${model.id}+'/'+${type.id}+'/'+${modification.id}+'/'+${group.id}"
+                   th:text="${group.name}">text
+                </a>
                 </div>
             </td>
             </tbody>

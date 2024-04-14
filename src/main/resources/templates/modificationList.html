@@ -3,28 +3,19 @@
 <head>
     <meta charset="utf-8">
     <title>datapagemodification</title>
-
-
-
+</head>
 <body>
-
-<div >
-
+<div>
     <main>
         <h1>Выбор автомобиля</h1><b></b>
         <br>
-        <table >
+        <table>
             <thead>
             <tr>
                 <th>Марка автомобиля</th>
-                <th th:hidden = "${!isPermission}">Модель автомобиля</th>
-                <th th:hidden = "${!isPermission1}">Тип двигателя</th>
-                <th th:hidden = "${!isPermission2}">Модификация</th>
-                <!--                <th>Редактировать</th>-->
-                <!--                <th>Vehicle OE NO</th>-->
-                <!--                <th>Brand</th>-->
-                <!--                <th>Maker Model</th>-->
-                <!--                <th>Engine</th>-->
+                <th>Модель автомобиля</th>
+                <th>Тип двигателя</th>
+                <th>Модификация</th>
             </tr>
             </thead><hr>
             <tbody>
@@ -32,7 +23,6 @@
                 <td th:text="${mark.name}">name</td>
                 <td th:text="${model.name}">name</td>
                 <td th:text="${type.name}">name</td>
-
                 <td>
                     <select onchange="window.location.href=this.value;">
                         <option th:value="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">-модификация-</option>
@@ -40,16 +30,6 @@
                                  th:value="'/select/modification/'+${mark.id}+'/'+${model.id}+'/'+${type.id}+'/'+${modification.id}">далее</option>
                     </select>
                 </td>
-
-
-                <!--                <td th:text="${modification.id}">id</td>-->
-                <!--                <td th:text="${modification.typeEngine.modelAuto.markAuto.name}">id</td>-->
-                <!--                <td th:text="${modification.typeEngine.modelAuto.name}">id</td>-->
-                <!--                <td th:text="${modification.typeEngine.name}">id</td>-->
-                <!--                <td th:text="${modification.name}">name</td>-->
-                <!--                <td>-->
-                <!--                    <a th:href="'/data/modification/edit/'+${modification.id}">Редактировать</a>-->
-                <!--                </td>-->
             </tr>
             </tbody>
         </table>

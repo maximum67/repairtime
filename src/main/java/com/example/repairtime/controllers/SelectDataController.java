@@ -26,9 +26,6 @@ public class SelectDataController {
 
     @GetMapping("/mark")
     public String getMark(Model model){
-        model.addAttribute("isPermission", false);
-        model.addAttribute("isPermission1", false);
-        model.addAttribute("isPermission2", false);
         model.addAttribute("markList",
                 markAutoService.getMarkAutoList());
         return "markList";
@@ -36,9 +33,6 @@ public class SelectDataController {
 
     @GetMapping("/mark/{id}")
     public String getModel(@PathVariable("id") MarkAuto markAuto, Model model){
-        model.addAttribute("isPermission", true);
-        model.addAttribute("isPermission1", false);
-        model.addAttribute("isPermission2", false);
         model.addAttribute("mark", markAuto);
         model.addAttribute("modelsList",
                 modelAutoService.getModelsListByMark(markAuto.getId()));
@@ -48,9 +42,6 @@ public class SelectDataController {
     @GetMapping("/model/{markid}/{id}")
     public String getTypeEngine(@PathVariable("markid") MarkAuto markAuto,
                                 @PathVariable("id") ModelAuto modelAuto, Model model) {
-        model.addAttribute("isPermission", true);
-        model.addAttribute("isPermission1", true);
-        model.addAttribute("isPermission2", false);
         model.addAttribute("mark", markAuto);
         model.addAttribute("model", modelAuto);
         model.addAttribute("typeEngineList",
@@ -63,9 +54,6 @@ public class SelectDataController {
                                 @PathVariable("modelid") ModelAuto modelAuto,
                                 @PathVariable("id") TypeEngine typeEngine,
                                 Model model) {
-        model.addAttribute("isPermission", true);
-        model.addAttribute("isPermission1", true);
-        model.addAttribute("isPermission2", true);
         model.addAttribute("mark", markAuto);
         model.addAttribute("model", modelAuto);
         model.addAttribute("type", typeEngine);
@@ -75,22 +63,43 @@ public class SelectDataController {
     }
 
     @GetMapping("/modification/{markid}/{modelid}/{typeEngineid}/{id}")
-    public String getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
+    public String getGroupRepair(@PathVariable("markid") MarkAuto markAuto,
                                 @PathVariable("modelid") ModelAuto modelAuto,
                                 @PathVariable("typeEngineid") TypeEngine typeEngine,
                                 @PathVariable("id") ModificationAuto modificationAuto,
                                 Model model) {
-        model.addAttribute("isPermission", true);
-        model.addAttribute("isPermission1", true);
-        model.addAttribute("isPermission2", true);
         model.addAttribute("mark", markAuto);
         model.addAttribute("model", modelAuto);
         model.addAttribute("type", typeEngine);
         model.addAttribute("modification",modificationAuto);
-        model.addAttribute("typeRepairs",
+        model.addAttribute("groupRepairs",
                 standardTimeService.getStandardTimeListByModification(modificationAuto)
-                        .stream().map(StandardTime::getTypeRepairId).collect(Collectors.toList()));
-        return "typeRepairList";
+                        .stream().map(StandardTime::getTypeRepairId).map(TypeRepair::getRepairGroup)
+                        .collect(Collectors.toSet()));
+        return "groupRepairList";
     }
 
+    @GetMapping("/grouprepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
+    public String getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
+                                @PathVariable("modelid") ModelAuto modelAuto,
+                                @PathVariable("typeEngineid") TypeEngine typeEngine,
+                                @PathVariable("modificationid") ModificationAuto modificationAuto,
+                                @PathVariable("id") RepairGroup repairGroup,
+                                Model model) {
+        model.addAttribute("mark", markAuto);
+        model.addAttribute("model", modelAuto);
+        model.addAttribute("type", typeEngine);
+        model.addAttribute("modification",modificationAuto);
+        model.addAttribute("groupRepairs",
+                standardTimeService.getStandardTimeListByModification(modificationAuto)
+                        .stream().map(StandardTime::getTypeRepairId).map(TypeRepair::getRepairGroup)
+                        .collect(Collectors.toSet()));
+        model.addAttribute("typeRepairs",
+                standardTimeService.getStandardTimeListByModificationAngRepairGroup(modificationAuto, repairGroup)
+                        .stream().map(StandardTime::getTypeRepairId).collect(Collectors.toList()));
+        model.addAttribute("standardTimes",
+                standardTimeService.getStandardTimeListByModificationAngRepairGroup(modificationAuto,repairGroup)
+                .stream().map(StandardTime::getStandardTime).collect(Collectors.toList()));
+        return "typeRepairList";
+    }
 }
