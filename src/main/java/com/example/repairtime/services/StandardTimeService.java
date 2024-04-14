@@ -8,9 +8,8 @@ import com.example.repairtime.repositories.StandardTimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +31,18 @@ public class StandardTimeService {
             }
         }
             return list;
+    }
+    public List<Map> getMapDataStandardTime(ModificationAuto modificationAuto, RepairGroup repairGroup){
+        List<String> typeRepairList = getStandardTimeListByModificationAngRepairGroup(modificationAuto, repairGroup)
+                .stream().map(StandardTime::getTypeRepairId).map(TypeRepair::getName).toList();
+        List<Double> standardTimeList = getStandardTimeListByModificationAngRepairGroup(modificationAuto, repairGroup)
+                .stream().map(StandardTime::getStandardTime).toList();
+        Map<String, Double> map = new HashMap<>();
+        for (int i=0; i< typeRepairList.size(); i++) {
+            map.put(typeRepairList.get(i), standardTimeList.get(i));
+        }
+        List<Map> mapList = new LinkedList<>();
+        mapList.add(map);
+        return mapList;
     }
 }

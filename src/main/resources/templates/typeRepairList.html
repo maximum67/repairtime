@@ -56,6 +56,16 @@
                 </div>
             </td>
             </tbody>
+
+            <script src="/myScript.js"></script>
+            <script th:inline="javascript">
+
+                // myFunction([[${dashboardParamId}]],[[${periodValue}]],[[${typeline_select}]],[[${dashboardParam}]]);
+                getStandardTimeData([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${group.id}]]);
+            </script>
+
+            <form id="#myForm"></form>
+
         </table>
     </main>
 </div>
