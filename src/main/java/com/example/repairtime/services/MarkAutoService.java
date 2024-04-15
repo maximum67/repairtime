@@ -5,7 +5,6 @@ import com.example.repairtime.repositories.MarkAutoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Service

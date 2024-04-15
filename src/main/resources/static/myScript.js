@@ -1,5 +1,6 @@
 function getStandardTimeData(markid, modelid, typeEngineid, modificationid, id) {
-    fetch('api/select/grouprepair/'+markid+'/'+modelid+'/'+typeEngineid+'/'+modificationid+'/'+id, {
+
+    fetch('/api/select/grouprepair/'+markid+'/'+modelid+'/'+typeEngineid+'/'+modificationid+'/'+id, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -19,10 +20,12 @@ function getStandardTimeData(markid, modelid, typeEngineid, modificationid, id) 
                 const option = document.createElement('option');
                 option.value = item.id;
                 option.text = item.name;
-                htmlForm.appendChild(option);
+                alert(option.value);
+//                htmlForm.appendChild(option);
             });
         })
         .catch(error => {
+        alert(error);
             console.error('There was a problem with the fetch operation:', error);
         });
 }
