@@ -1,27 +1,25 @@
 function getStandardTimeData(markid, modelid, typeEngineid, modificationid, id) {
-
-    fetch('/api/select/grouprepair/'+markid+'/'+modelid+'/'+typeEngineid+'/'+modificationid+'/'+id, {
+    fetch('/api/select/grouprepair/'+markid+'/'+modelid+'/'+typeEngineid+'/'+modificationid+'/'+id,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => {
+        .then((response) => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             return response.json();
         })
-        .then(data => {
+        .then((data) => {
             // Process the fetched data and update the HTML form
             const htmlForm = document.querySelector('#myForm');
             data.forEach(item => {
                 // Assuming each item has 'id' and 'name' properties
-                const option = document.createElement('option');
-                option.value = item.id;
-                option.text = item.name;
-                alert(option.value);
-//                htmlForm.appendChild(option);
+                const option = document.createElement('p');
+                option.value = item.key;
+                option.textContent = item.key+" "+item.value;
+               htmlForm.appendChild(option);
             });
         })
         .catch(error => {
