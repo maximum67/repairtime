@@ -13,13 +13,27 @@ function getStandardTimeData(markid, modelid, typeEngineid, modificationid, id) 
         })
         .then((data) => {
             // Process the fetched data and update the HTML form
-            const htmlForm = document.querySelector('#myForm');
+            const htmlFormType = document.querySelector('#typeRepair');
+            const htmlFormTime = document.querySelector('#timeRepair');
+            const typeRepairHead = document.getElementById('typeRepairHead');
+            const timeRepairHead = document.getElementById('timeRepairHead');
+             typeRepairHead.textContent = "___________Вид ремонта____________";
+             timeRepairHead.textContent = "Нормо-часы";
+            while(htmlFormType.firstChild){
+                htmlFormType.removeChild(htmlFormType.firstChild);
+            };
+            while(htmlFormTime.firstChild){
+                 htmlFormTime.removeChild(htmlFormTime.firstChild);
+            };
+
             data.forEach(item => {
                 // Assuming each item has 'id' and 'name' properties
-                const option = document.createElement('p');
-                option.value = item.key;
-                option.textContent = item.key+" "+item.value;
-               htmlForm.appendChild(option);
+                const typeRepair = document.createElement('tr');
+                const timeRepair = document.createElement('tr');
+                typeRepair.textContent = item.key;
+                timeRepair.textContent = item.value;
+               htmlFormType.appendChild(typeRepair);
+               htmlFormTime.appendChild(timeRepair);
             });
         })
         .catch(error => {
