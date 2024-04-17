@@ -1,10 +1,12 @@
 package com.example.repairtime.services;
 
+import com.example.repairtime.comparators.MarkAutoComparator;
 import com.example.repairtime.models.MarkAuto;
 import com.example.repairtime.repositories.MarkAutoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -15,7 +17,7 @@ public class MarkAutoService {
 
     public List<MarkAuto> getMarkAutoList(){
 
-     return markAutoRepository.findAll();
+     return markAutoRepository.findAll().stream().sorted(new MarkAutoComparator()).toList();
       }
 }
 

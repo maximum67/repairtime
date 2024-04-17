@@ -9,6 +9,4 @@ import java.util.Optional;
 public interface MarkAutoRepository extends JpaRepository<MarkAuto,Long> {
 
     Optional<MarkAuto> findByName(String s);
-
-//    Optional<List<MarkAuto>> findALL();
 }

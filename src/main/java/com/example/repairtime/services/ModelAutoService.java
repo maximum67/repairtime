@@ -1,5 +1,6 @@
 package com.example.repairtime.services;
 
+import com.example.repairtime.comparators.ModelAutoComparator;
 import com.example.repairtime.models.ModelAuto;
 import com.example.repairtime.repositories.MarkAutoRepository;
 import com.example.repairtime.repositories.ModelAutoRepository;
@@ -20,7 +21,7 @@ public class ModelAutoService {
     public List<ModelAuto> getModelsListByMark(Long markId) {
 
         if (markAutoRepository.findById(markId).isPresent()) {
-            return markAutoRepository.findById(markId).get().getModelAutoList();
+            return markAutoRepository.findById(markId).get().getModelAutoList().stream().sorted(new ModelAutoComparator()).toList();
         } else {
             return new LinkedList<>();
         }

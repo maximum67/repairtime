@@ -1,5 +1,6 @@
 package com.example.repairtime.services;
 
+import com.example.repairtime.comparators.TypeEngineComparator;
 import com.example.repairtime.models.ModelAuto;
 import com.example.repairtime.models.TypeEngine;
 import com.example.repairtime.repositories.ModelAutoRepository;
@@ -18,7 +19,7 @@ public class TypeEngineService {
 
     public List<TypeEngine> getTypeEngineList(Long modelAutoId){
         if (modelAutoRepository.findById(modelAutoId).isPresent()) {
-            return modelAutoRepository.findById(modelAutoId).get().getTypeEngineList();
+            return modelAutoRepository.findById(modelAutoId).get().getTypeEngineList().stream().sorted(new TypeEngineComparator()).toList();
         } else {
             return new LinkedList<>();
         }

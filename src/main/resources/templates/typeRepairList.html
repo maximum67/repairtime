@@ -56,21 +56,11 @@
                 </div>
             </td>
             <td>
-                <button type="button" onclick="window.location.href ='/select/mark';" value="text" name="Очистить">Очистить </button>
+                <button type="button" onclick="window.location.href ='/select/mark';" value="text" name="Очистить">Очистить</button>
             </td>
             </tbody>
         </table>
-
-        <div id="myForm">
-            <p></p>
-        </div>
     </main>
 </div>
-
-<script src="/myScript.js"></script>
-<script th:inline="javascript">
-            getStandardTimeData([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${modification.id}]]);
-        </script>
-
 </body>
 </html>

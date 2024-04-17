@@ -1,5 +1,6 @@
 package com.example.repairtime.services;
 
+import com.example.repairtime.comparators.ModificationAutoComparator;
 import com.example.repairtime.models.ModificationAuto;
 import com.example.repairtime.repositories.ModificationAutoRepository;
 import com.example.repairtime.repositories.TypeEngineRepository;
@@ -22,6 +23,7 @@ public class ModificationAutoService {
     }
 
     public List<ModificationAuto> modificationAutoList(){
-        return modificationAutoRepository.findAll();
+        return modificationAutoRepository.findAll()
+                .stream().sorted(new ModificationAutoComparator()).toList();
     }
 }
