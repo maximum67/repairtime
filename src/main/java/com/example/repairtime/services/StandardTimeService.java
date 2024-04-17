@@ -37,12 +37,13 @@ public class StandardTimeService {
                 .stream().map(StandardTime::getTypeRepairId).map(TypeRepair::getName).toList();
         List<Double> standardTimeList = getStandardTimeListByModificationAngRepairGroup(modificationAuto, repairGroup)
                 .stream().map(StandardTime::getStandardTime).toList();
-        Map<String, Double> map = new HashMap<>();
-        for (int i=0; i< typeRepairList.size(); i++) {
-            map.put(typeRepairList.get(i), standardTimeList.get(i));
-        }
         List<Map> mapList = new LinkedList<>();
-        mapList.add(map);
+        Map<String, String> map = new HashMap<>();
+        for (int i=0; i< typeRepairList.size(); i++) {
+            map.put("key", typeRepairList.get(i));
+            map.put("value", String.valueOf(standardTimeList.get(i)));
+            mapList.add(map);
+        }
         return mapList;
     }
 }

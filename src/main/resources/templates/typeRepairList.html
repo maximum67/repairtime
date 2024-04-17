@@ -2,7 +2,7 @@
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>datapagemodification</title>
+    <title>standardtimedatapage</title>
 </head>
 <body>
 <div>
@@ -57,10 +57,10 @@
             </td>
             </tbody>
             <form id="#myForm">
-            <script src="/myScript.js"></script>
-            <script th:inline="javascript">
-                getStandardTimeData([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${modification.id}]]);
-            </script>
+                <script src="/myScript.js"></script>
+                <script th:inline="javascript">
+                            getStandardTimeData([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${modification.id}]]);
+                    </script>
                 <option id="option" value="optionValue" text="optionText"></option>
            </form>
 
