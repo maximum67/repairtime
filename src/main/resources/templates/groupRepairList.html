@@ -2,7 +2,7 @@
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>datapagemodification</title>
+    <title>datapagegrouprepair</title>
 </head>
 <body>
 <div>
@@ -26,7 +26,9 @@
                 <td th:text="${type.name}">name</td>
                 <td th:text="${modification.name}">name</td>
                 <td>
-                    <button type="button" onclick="window.location.href ='/select/mark';" value="text" name="Очистить">Очистить </button>
+                    <form th:action="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">
+                        <button type="submit">Очистить</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

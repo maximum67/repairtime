@@ -31,7 +31,9 @@
                     </select>
                 </td>
                 <td>
-                    <button type="button" onclick="window.location.href ='/select/mark';" value="text" name="Очистить">Очистить </button>
+                    <form th:action="'/select/model/'+${mark.id}+'/'+${model.id}">
+                        <button type="submit">Очистить</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

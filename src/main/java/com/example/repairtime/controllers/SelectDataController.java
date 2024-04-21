@@ -79,6 +79,23 @@ public class SelectDataController {
         return "groupRepairList";
     }
 
+    @GetMapping("/modification/{markid}/{modelid}/{typeEngineid}/{id}/V1")
+    public String getAutoCode(@PathVariable("markid") MarkAuto markAuto,
+                                 @PathVariable("modelid") ModelAuto modelAuto,
+                                 @PathVariable("typeEngineid") TypeEngine typeEngine,
+                                 @PathVariable("id") ModificationAuto modificationAuto,
+                                 Model model) {
+        model.addAttribute("mark", markAuto);
+        model.addAttribute("model", modelAuto);
+        model.addAttribute("type", typeEngine);
+        model.addAttribute("modification", modificationAuto);
+        model.addAttribute("groupRepairs",
+                standardTimeService.getStandardTimeListByModification(modificationAuto)
+                        .stream().map(StandardTime::getTypeRepairId).map(TypeRepair::getRepairGroup)
+                        .collect(Collectors.toSet()));
+        return "groupRepairList";
+    }
+
     @GetMapping("/grouprepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
     public String getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
                                 @PathVariable("modelid") ModelAuto modelAuto,
