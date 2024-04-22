@@ -20,11 +20,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/data")
 public class ReceivedDataController {
 
-    private final RepairDataService repairDataService;
+   
     private final ModificationAutoService modificationAutoService;
     private final StandardTimeService standardTimeService;
     private final MarkAutoService markAutoService;
     private final ModelAutoService modelAutoService;
+    private final AutoDataService autoDataService;
 
 
     @GetMapping("/modification/list")
@@ -34,15 +35,16 @@ public class ReceivedDataController {
     }
     @GetMapping("/write")
     public String writeData() throws IOException {
-        repairDataService.writingFileAndSave("test.xlsx");
+//        repairDataService.writingFileAndSave("test.xlsx");
+        autoDataService.readFileAndSaveData("test.xlsx");
         return "redirect:/data/modification/list";
     }
     @GetMapping("/modification/edit/{modification}")
     public String getModificationEdit(@PathVariable ("modification") ModificationAuto modificationAuto, Model model) {
         model.addAttribute("modification", modificationAuto);
-        model.addAttribute("typeRepairs",
-                standardTimeService.getStandardTimeListByModification(modificationAuto)
-                        .stream().map(StandardTime::getTypeRepairId).collect(Collectors.toList()));
+//        model.addAttribute("typeRepairs",
+//                standardTimeService.getStandardTimeListByModification(modificationAuto)
+//                        .stream().map(StandardTime::getTypeRepairId).collect(Collectors.toList()));
         model.addAttribute("standardTimes",
                 standardTimeService.getStandardTimeListByModification(modificationAuto));
 //                        .stream().map(StandardTime::getStandardTime).collect(Collectors.toList()));

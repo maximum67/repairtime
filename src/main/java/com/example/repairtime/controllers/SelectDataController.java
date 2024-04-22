@@ -77,7 +77,7 @@ public class SelectDataController {
         model.addAttribute("modification",modificationAuto);
 
         List<String> vendorCodeList = standardTimeService.getStandardTimeListByModification(modificationAuto)
-                        .stream().map(StandardTime::getVendorCode).collect(Collectors.toList());
+                .stream().map(StandardTime::getVendorCode).toList();
         List<TypeRepair> typeRepairList = new LinkedList<>();
         for (String str: vendorCodeList){
             typeRepairList.add(typeRepaireService.getTypeRepairByVendorCode(str));
@@ -98,7 +98,7 @@ public class SelectDataController {
         model.addAttribute("type", typeEngine);
         model.addAttribute("modification", modificationAuto);
         List<String> vendorCodeList = standardTimeService.getStandardTimeListByModification(modificationAuto)
-                .stream().map(StandardTime::getVendorCode).collect(Collectors.toList());
+                .stream().map(StandardTime::getVendorCode).toList();
         List<TypeRepair> typeRepairList = new LinkedList<>();
         for (String str : vendorCodeList) {
             typeRepairList.add(typeRepaireService.getTypeRepairByVendorCode(str));

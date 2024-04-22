@@ -18,7 +18,7 @@ public class StandardTimeService {
     private final StandardTimeRepository standardTimeRepository;
 
     public List<StandardTime> getStandardTimeListByModification(ModificationAuto modificationAuto){
-        return standardTimeRepository.findDistinctByModificationAutoId(modificationAuto);
+        return standardTimeRepository.findAllByRepairCode(modificationAuto.getRepairCode());
     }
 
 

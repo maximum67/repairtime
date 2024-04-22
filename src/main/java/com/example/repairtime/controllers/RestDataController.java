@@ -23,13 +23,13 @@ public class RestDataController {
     private final ModelAutoService modelAutoService;
     private final TypeEngineService typeEngineService;
 
-    @GetMapping("/grouprepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
-    public List<Map<String, String>> getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
-                                   @PathVariable("modelid") ModelAuto modelAuto,
-                                   @PathVariable("typeEngineid") TypeEngine typeEngine,
-                                   @PathVariable("modificationid") ModificationAuto modificationAuto,
-                                   @PathVariable("id") RepairGroup repairGroup) {
-        return standardTimeService.getMapDataStandardTime(modificationAuto,repairGroup);
+//    @GetMapping("/grouprepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
+//    public List<Map<String, String>> getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
+//                                   @PathVariable("modelid") ModelAuto modelAuto,
+//                                   @PathVariable("typeEngineid") TypeEngine typeEngine,
+//                                   @PathVariable("modificationid") ModificationAuto modificationAuto,
+//                                   @PathVariable("id") RepairGroup repairGroup) {
+//        return standardTimeService.getMapDataStandardTime(modificationAuto,repairGroup);
 //        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
+//    }
 }

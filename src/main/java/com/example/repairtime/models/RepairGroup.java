@@ -25,7 +25,7 @@ public class RepairGroup {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "repairGroup")
     private List<TypeRepair> typeRepairList;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
     private RepairGroupMain repairGroupMain;
 
