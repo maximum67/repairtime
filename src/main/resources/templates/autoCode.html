@@ -38,18 +38,14 @@
         <br>
         <table>
             <thead>
-            <th>Группа ремонта</th>
+            <th>Код ремонта</th>
             <th id="typeRepairHead"></th>
             <th id="timeRepairHead"></th>
             </thead>
             <tbody>
             <tr>
                 <td>
-                    <div th:each="group:${groupRepairs}">
-                        <a th:id="${group.id}" href="#" th:onclick="getStandardTimeData([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${group.id}]])"
-                           th:text="${group.name}">text
-                        </a>
-                    </div>
+                    <div th:text="${repairCode}"></div>
                 </td>
                 <td id="typeRepair"></td>
                 <td id="timeRepair"></td>

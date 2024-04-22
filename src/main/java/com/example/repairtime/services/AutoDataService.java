@@ -43,9 +43,9 @@ public class AutoDataService {
 
         for (String string : resultList) {
             string = string.replaceAll(";", "*");
-            System.out.println(string);
+//            System.out.println(string);
             string = string.replaceAll("\\d{4}\\sоб/мин\\s", "");
-            System.out.println(string);
+//            System.out.println(string);
             List<String> list = new LinkedList<>(Arrays.asList(string.split("\\*")));
             listMark.add(list.get(0));
             listModel.add(list.get(1));
@@ -98,7 +98,7 @@ public class AutoDataService {
 
                         modificationAuto.setName(modificationName);
                         modificationAuto.setTypeEngine(typeEngine);
-
+                        modificationAuto.setRepairCode(repairCodes.get(i));
                         List<ModificationAuto> modifList = new LinkedList<>();
                         modifList.add(modificationAuto);
                         typeEngine.setModificationAutoList(modifList);
@@ -115,7 +115,7 @@ public class AutoDataService {
                     typeEngine.setModelAuto(modelAuto);
                     modificationAuto.setName(modificationName);
                     modificationAuto.setTypeEngine(typeEngine);
-
+                    modificationAuto.setRepairCode(repairCodes.get(i));
                     List<TypeEngine> engineList = new LinkedList<>();
                     engineList.add(typeEngine);
                     modelAuto.setTypeEngineList(engineList);
@@ -137,7 +137,7 @@ public class AutoDataService {
                 typeEngine.setModelAuto(modelAuto);
                 modificationAuto.setName(modificationName);
                 modificationAuto.setTypeEngine(typeEngine);
-
+                modificationAuto.setRepairCode(repairCodes.get(i));
                 List<ModelAuto> modelList = new LinkedList<>();
                 modelList.add(modelAuto);
                 markAuto.setModelAutoList(modelList);

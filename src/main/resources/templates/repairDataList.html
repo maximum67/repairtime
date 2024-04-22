@@ -21,6 +21,7 @@
                 <th>Модель автомобиля</th>
                 <th>Тип двигателя</th>
                 <th>Модификация</th>
+                <th>Код ремонта</th>
                 <th>Редактировать</th>
 <!--                <th>Vehicle OE NO</th>-->
 <!--                <th>Brand</th>-->
@@ -35,6 +36,7 @@
                 <td th:text="${modification.typeEngine.modelAuto.name}">id</td>
                 <td th:text="${modification.typeEngine.name}">id</td>
                 <td th:text="${modification.name}">name</td>
+                <td th:text="${modification.repairCode}">name</td>
                 <td>
                 <a th:href="'/data/modification/edit/'+${modification.id}">Редактировать</a>
                 </td>
