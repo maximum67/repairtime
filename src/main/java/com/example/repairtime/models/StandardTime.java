@@ -11,19 +11,20 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="repair_standard")
-@IdClass(StandardTimeKey.class)
 public class StandardTime {
 
     @Id
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "modification_auto_id", nullable = false)
-    private ModificationAuto modificationAutoId;
-    @Id
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "type_repair_id", nullable = false)
-    private TypeRepair typeRepairId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
 
-    @Column(name="standardTime")
+    @Column(name = "vendorCode")
+    private String vendorCode;
+
+    @Column(name="repairCode")
+    private String repairCode;
+
+    @Column(name = "standardTime")
     private double standardTime;
 
     @Override
@@ -31,11 +32,13 @@ public class StandardTime {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StandardTime that = (StandardTime) o;
-        return Double.compare(that.standardTime, standardTime) == 0 && Objects.equals(modificationAutoId, that.modificationAutoId) && Objects.equals(typeRepairId, that.typeRepairId);
+        return id == that.id && Double.compare(that.standardTime, standardTime) == 0 && Objects.equals(vendorCode, that.vendorCode) && Objects.equals(repairCode, that.repairCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(modificationAutoId, typeRepairId, standardTime);
+        return Objects.hash(id, vendorCode, repairCode, standardTime);
     }
 }
+
+

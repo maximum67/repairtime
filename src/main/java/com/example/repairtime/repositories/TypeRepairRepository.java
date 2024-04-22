@@ -11,4 +11,6 @@ public interface TypeRepairRepository extends JpaRepository<TypeRepair, Long> {
     boolean existsByName(String string);
 
     Optional<TypeRepair> getByName(String string);
+
+    Optional<TypeRepair> getByVendorCode(String string);
 }

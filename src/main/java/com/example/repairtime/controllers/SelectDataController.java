@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -23,6 +25,7 @@ public class SelectDataController {
     private final MarkAutoService markAutoService;
     private final ModelAutoService modelAutoService;
     private final TypeEngineService typeEngineService;
+    private final TypeRepaireService typeRepaireService;
 
     @GetMapping("/mark")
     public String getMark(Model model){
@@ -72,10 +75,15 @@ public class SelectDataController {
         model.addAttribute("model", modelAuto);
         model.addAttribute("type", typeEngine);
         model.addAttribute("modification",modificationAuto);
-        model.addAttribute("groupRepairs",
-                standardTimeService.getStandardTimeListByModification(modificationAuto)
-                        .stream().map(StandardTime::getTypeRepairId).map(TypeRepair::getRepairGroup)
-                        .collect(Collectors.toSet()));
+
+        List<String> vendorCodeList = standardTimeService.getStandardTimeListByModification(modificationAuto)
+                        .stream().map(StandardTime::getVendorCode).collect(Collectors.toList());
+        List<TypeRepair> typeRepairList = new LinkedList<>();
+        for (String str: vendorCodeList){
+            typeRepairList.add(typeRepaireService.getTypeRepairByVendorCode(str));
+                    model.addAttribute("groupRepairs", typeRepairList);
+        }
+
         return "groupRepairList";
     }
 
@@ -89,34 +97,29 @@ public class SelectDataController {
         model.addAttribute("model", modelAuto);
         model.addAttribute("type", typeEngine);
         model.addAttribute("modification", modificationAuto);
-        model.addAttribute("groupRepairs",
-                standardTimeService.getStandardTimeListByModification(modificationAuto)
-                        .stream().map(StandardTime::getTypeRepairId).map(TypeRepair::getRepairGroup)
-                        .collect(Collectors.toSet()));
+        List<String> vendorCodeList = standardTimeService.getStandardTimeListByModification(modificationAuto)
+                .stream().map(StandardTime::getVendorCode).collect(Collectors.toList());
+        List<TypeRepair> typeRepairList = new LinkedList<>();
+        for (String str : vendorCodeList) {
+            typeRepairList.add(typeRepaireService.getTypeRepairByVendorCode(str));
+            model.addAttribute("groupRepairs", typeRepairList);
+        }
         return "groupRepairList";
     }
 
-    @GetMapping("/grouprepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
-    public String getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
-                                @PathVariable("modelid") ModelAuto modelAuto,
-                                @PathVariable("typeEngineid") TypeEngine typeEngine,
-                                @PathVariable("modificationid") ModificationAuto modificationAuto,
-                                @PathVariable("id") RepairGroup repairGroup,
-                                Model model) {
-        model.addAttribute("mark", markAuto);
-        model.addAttribute("model", modelAuto);
-        model.addAttribute("type", typeEngine);
-        model.addAttribute("modification",modificationAuto);
-        model.addAttribute("groupRepairs",
-                standardTimeService.getStandardTimeListByModification(modificationAuto)
-                        .stream().map(StandardTime::getTypeRepairId).map(TypeRepair::getRepairGroup)
-                        .collect(Collectors.toSet()));
-        model.addAttribute("typeRepairs",
-                standardTimeService.getStandardTimeListByModificationAngRepairGroup(modificationAuto, repairGroup)
-                        .stream().map(StandardTime::getTypeRepairId).collect(Collectors.toList()));
-        model.addAttribute("standardTimes",
-                standardTimeService.getStandardTimeListByModificationAngRepairGroup(modificationAuto,repairGroup)
-                .stream().map(StandardTime::getStandardTime).collect(Collectors.toList()));
-        return "typeRepairList";
-    }
+//    @GetMapping("/grouprepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
+//    public String getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
+//                                @PathVariable("modelid") ModelAuto modelAuto,
+//                                @PathVariable("typeEngineid") TypeEngine typeEngine,
+//                                @PathVariable("modificationid") ModificationAuto modificationAuto,
+//                                @PathVariable("id") RepairGroup repairGroup,
+//                                Model model) {
+//        model.addAttribute("mark", markAuto);
+//        model.addAttribute("model", modelAuto);
+//        model.addAttribute("type", typeEngine);
+//        model.addAttribute("modification",modificationAuto);
+//        model.addAttribute("groupRepairs",);
+//
+//        return "typeRepairList";
+//    }
 }

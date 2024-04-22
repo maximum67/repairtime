@@ -26,24 +26,19 @@ public class ModificationAuto {
     @JoinColumn
     private TypeEngine typeEngine;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "repair_standard",
-            joinColumns = {@JoinColumn(name="modification_auto_id")},
-            inverseJoinColumns = {@JoinColumn(name="type_repair_id")})
-        private List<TypeRepair> typeRepairList;
-
+    @Column(name = "repair_code", unique = true)
+    private String repairCode;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ModificationAuto that = (ModificationAuto) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(typeEngine, that.typeEngine) && Objects.equals(typeRepairList, that.typeRepairList);
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(typeEngine, that.typeEngine) && Objects.equals(repairCode, that.repairCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, typeEngine, typeRepairList);
+        return Objects.hash(id, name, typeEngine, repairCode);
     }
 }

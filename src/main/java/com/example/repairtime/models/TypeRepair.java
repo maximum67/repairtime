@@ -21,22 +21,23 @@ public class TypeRepair {
     @Column(name="type_repair_name", unique = true)
     private String name;
 
-
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
     private RepairGroup repairGroup;
 
+    @Column(name = "vendor_code")
+    private String vendorCode;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TypeRepair that = (TypeRepair) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(repairGroup, that.repairGroup);
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(repairGroup, that.repairGroup) && Objects.equals(vendorCode, that.vendorCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, repairGroup);
+        return Objects.hash(id, name, repairGroup, vendorCode);
     }
 }

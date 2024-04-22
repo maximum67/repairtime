@@ -24,8 +24,6 @@ public class MarkAuto {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "markAuto")
     private List<ModelAuto> modelAutoList;
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

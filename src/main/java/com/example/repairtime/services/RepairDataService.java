@@ -84,7 +84,7 @@ public class RepairDataService {
             RepairGroup repairGroup = new RepairGroup();
             TypeRepair typeRepair = new TypeRepair();
             StandardTime standardTime = new StandardTime();
-            StandardTimeKey standardTimeKey = new StandardTimeKey();
+
 
             ModificationAuto modificationAuto = new ModificationAuto();
             if (markAutoRepository.findByName(markName).isPresent()) {
@@ -186,18 +186,9 @@ public class RepairDataService {
             typeRepair = typeRepairRepository.getByName(typeRepairName).get();
 
 
-            standardTimeKey.setTypeRepairId(typeRepair);
-            standardTimeKey.setModificationAutoId(modificationAuto);
-            if (!standardTimeRepository.existsExampleStandardTime(standardTimeKey)) {
-                standardTime.setStandardTime(standardTimeName);
-                standardTime.setTypeRepairId(typeRepair);
-                standardTime.setModificationAutoId(modificationAuto);
-                standardTimeRepository.save(standardTime);
-
 
 //                System.out.println("type " + typeRepair.getId() + "  modif " + modificationAuto.getId() + "  group " + repairGroup.getName());
-            }
-        }
 
+        }
     }
 }
