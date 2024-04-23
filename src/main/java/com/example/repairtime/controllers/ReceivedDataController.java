@@ -26,6 +26,7 @@ public class ReceivedDataController {
     private final MarkAutoService markAutoService;
     private final ModelAutoService modelAutoService;
     private final AutoDataService autoDataService;
+    private final RepairElementService repairElementService;
 
 
     @GetMapping("/modification/list")
@@ -37,6 +38,7 @@ public class ReceivedDataController {
     public String writeData() throws IOException {
 //        repairDataService.writingFileAndSave("test.xlsx");
         autoDataService.readFileAndSaveData("test.xlsx");
+        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
         return "redirect:/data/modification/list";
     }
     @GetMapping("/modification/edit/{modification}")

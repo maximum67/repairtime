@@ -16,7 +16,6 @@ import java.util.Map;
 @RequestMapping("/api/select")
 public class RestDataController {
 
-    private final RepairDataService repairDataService;
     private final ModificationAutoService modificationAutoService;
     private final StandardTimeService standardTimeService;
     private final MarkAutoService markAutoService;

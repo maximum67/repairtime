@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/select")
 public class SelectDataController {
 
-    private final RepairDataService repairDataService;
     private final ModificationAutoService modificationAutoService;
     private final StandardTimeService standardTimeService;
     private final MarkAutoService markAutoService;
