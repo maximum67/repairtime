@@ -31,9 +31,8 @@ public class RepairElementService {
     public void readFile(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
         Scanner sc = new Scanner(file);
-
-        String PATTERN_1 = "([А-Я]?[а-я*\\(?а-я*\\)?\\-?а-я*]*\\,*\\s)+([A-z])*([А-Я]?[а-я*\\(?а-я*\\)?\\-?а-я*]*\\,*\\s*)*";
-        String PATTERN_2 = "([А-Я]{2,}\\,*\\s*)+";
+        String PATTERN_1 = "([A-z]*[А-Я]*[а-я*\\/*\\(?а-я*\\)?\\-?а-я*]*\\,*\\s)+(\\s*\\(?[A-z\\-*\\+*]\\d*\\s*\\)?\\-*\\/?)*([А-Я]?[\\d*а-я*\\(?а-я*\\/*\\)?\\-?а-я*]*\\.*\\,*\\s*)*(\\s*\\(?[A-z\\-*\\+*]\\s*\\)?\\-*\\/?)*";
+        String PATTERN_2 = "(\\(?((ABS)|(ESP)|(T)|[А-Я])+\\d*\\.?\\)?\\,*\\/?\\s*)+";
         String PATTERN_3 = "[A-Z]{1}\\d{1,2}\\.\\d{4}";
         int i = 0;
         Pattern pattern1 = Pattern.compile(PATTERN_1);
@@ -49,7 +48,7 @@ public class RepairElementService {
                 }else{
                     typeRepair.setName(matcher.group());
                 }
-                System.out.println(matcher.group());  // Выводит: подстрокой
+//                System.out.println(matcher.group());  // Выводит: подстрокой
             }
             matcher = pattern2.matcher(sc.nextLine());
 
@@ -61,12 +60,12 @@ public class RepairElementService {
                         repairGroup.setName(matcher.group());
                         typeRepair.setRepairGroup(repairGroup);
                     }
-               System.out.println(matcher.group());  // Выводит: подстрокой
+//               System.out.println(matcher.group());  // Выводит: подстрокой
             }
             matcher = pattern3.matcher(sc.nextLine());
             if (matcher.find()) {
                 typeRepair.setVendorCode(matcher.group());
-                System.out.println(matcher.group());  // Выводит: подстрокой
+//                System.out.println(matcher.group());  // Выводит: подстрокой
                 typeRepairRepository.save(typeRepair);
             }
             i++;

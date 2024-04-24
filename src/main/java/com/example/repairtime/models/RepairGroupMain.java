@@ -22,7 +22,7 @@ public class RepairGroupMain {
     @Column(name="id")
     private long id;
 
-    @Column(name = "groupMainNname")
+    @Column(name = "groupMainNname", unique = true)
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "repairGroupMain")
