@@ -31,8 +31,7 @@ public class RepairGroupService {
         while (sc.hasNext()) {
             matcher = pattern.matcher(sc.nextLine().replaceAll("Услуга", "услуга"));
             if (matcher.find()) {
-                flag = true;
-                System.out.println(matcher.group());  // Выводит: подстрокой
+//                System.out.println(matcher.group());  // Выводит: подстрокой
                 RepairGroup repairGroup = new RepairGroup();
                 if (repairGroupRepository.existsByName(matcher.group())) {
                     repairGroup = repairGroupRepository.getByName(matcher.group()).get();
@@ -41,7 +40,7 @@ public class RepairGroupService {
                 }
                 matcher = pattern.matcher(sc.nextLine().replaceAll("Услуга", "услуга"));
             if (matcher.find()) {
-                    System.out.println(matcher.group());  // Выводит: подстрокой
+//                    System.out.println(matcher.group());  // Выводит: подстрокой
                     RepairGroupMain repairGroupMain = new RepairGroupMain();
                     if (repairGroupMainRepository.existsByName(matcher.group())) {
                         repairGroupMain = repairGroupMainRepository.getByName(matcher.group()).get();

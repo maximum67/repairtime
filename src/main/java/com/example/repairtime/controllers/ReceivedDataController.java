@@ -38,9 +38,8 @@ public class ReceivedDataController {
     @GetMapping("/write")
     public String writeData() throws IOException {
 //        repairDataService.writingFileAndSave("test.xlsx");
-//        autoDataService.readFileAndSaveData("test.xlsx");
-//        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
-
+        autoDataService.readFileAndSaveData("test.xlsx");
+        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
         repairGroupService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
         return "redirect:/data/modification/list";
     }
