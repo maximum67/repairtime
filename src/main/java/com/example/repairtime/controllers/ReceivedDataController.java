@@ -40,6 +40,7 @@ public class ReceivedDataController {
 //        repairDataService.writingFileAndSave("test.xlsx");
 //        autoDataService.readFileAndSaveData("test.xlsx");
 //        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
+
         repairGroupService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
         return "redirect:/data/modification/list";
     }

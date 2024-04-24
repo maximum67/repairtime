@@ -19,14 +19,10 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class RepairElementService {
 
-//    private final MarkAutoRepository markAutoRepository;
-//    private final ModelAutoRepository modelAutoRepository;
-//    private final TypeEngineRepository typeEngineRepository;
 //    private final ModificationAutoRepository modificationAutoRepository;
     private final RepairGroupRepository repairGroupRepository;
     private final TypeRepairRepository typeRepairRepository;
 //    private final StandardTimeRepository standardTimeRepository;
-
 
     public void readFile(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
