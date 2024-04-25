@@ -5,8 +5,12 @@ import com.example.repairtime.models.StandardTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StandardTimeRepository extends JpaRepository<StandardTime, Long> {
-    List<StandardTime> findAllByRepairCode(String repairCode);
+
+    StandardTime getByRepairCode(String repairCode);
+
+    boolean existsByRepairCode(String repairCode);
 
 }

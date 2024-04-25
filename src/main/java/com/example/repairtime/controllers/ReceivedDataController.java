@@ -38,9 +38,10 @@ public class ReceivedDataController {
     @GetMapping("/write")
     public String writeData() throws IOException {
 //        repairDataService.writingFileAndSave("test.xlsx");
-        autoDataService.readFileAndSaveData("test.xlsx");
+//        autoDataService.readFileAndSaveData("База итог.xlsx");
         repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
-        repairGroupService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
+//        repairGroupService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
+        standardTimeService.readDirectories("База");
         return "redirect:/data/modification/list";
     }
     @GetMapping("/modification/edit/{modification}")
@@ -49,8 +50,8 @@ public class ReceivedDataController {
 //        model.addAttribute("typeRepairs",
 //                standardTimeService.getStandardTimeListByModification(modificationAuto)
 //                        .stream().map(StandardTime::getTypeRepairId).collect(Collectors.toList()));
-        model.addAttribute("standardTimes",
-                standardTimeService.getStandardTimeListByModification(modificationAuto));
+//        model.addAttribute("standardTimes",
+//                standardTimeService.getStandardTimeListByModification(modificationAuto));
 //                        .stream().map(StandardTime::getStandardTime).collect(Collectors.toList()));
         return "modificationEdit";
     }

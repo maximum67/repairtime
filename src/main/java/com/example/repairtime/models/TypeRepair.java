@@ -3,6 +3,8 @@ package com.example.repairtime.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,16 +30,24 @@ public class TypeRepair {
     @Column(name = "vendor_code")
     private String vendorCode;
 
+    @ManyToMany(
+            fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "type_repairs_repair_code",
+            joinColumns = @JoinColumn(name = "type_repair_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "repair_standard_id", referencedColumnName = "id"))
+    private List<StandardTime> standardTimeList = new LinkedList<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TypeRepair that = (TypeRepair) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(repairGroup, that.repairGroup) && Objects.equals(vendorCode, that.vendorCode);
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(repairGroup, that.repairGroup) && Objects.equals(vendorCode, that.vendorCode) && Objects.equals(standardTimeList, that.standardTimeList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, repairGroup, vendorCode);
+        return Objects.hash(id, name, repairGroup, vendorCode, standardTimeList);
     }
 }

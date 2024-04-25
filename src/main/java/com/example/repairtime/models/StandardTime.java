@@ -3,7 +3,7 @@ package com.example.repairtime.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Getter
@@ -18,26 +18,33 @@ public class StandardTime {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "vendorCode")
-    private String vendorCode;
-
-    @Column(name="repairCode")
+    @Column(name="repairCode",unique = true)
     private String repairCode;
 
-    @Column(name = "standardTime")
-    private double standardTime;
+    @ManyToMany(
+            fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "type_repairs_repair_code",
+            joinColumns = @JoinColumn(name = "repair_standard_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "type_repair_id", referencedColumnName = "id"))
+     private List<TypeRepair> typeRepairList = new LinkedList<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "standard_time_collection",
+            joinColumns = @JoinColumn(name = "standart_time_id"))
+    private List<Double> standardTimes = new LinkedList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StandardTime that = (StandardTime) o;
-        return id == that.id && Double.compare(that.standardTime, standardTime) == 0 && Objects.equals(vendorCode, that.vendorCode) && Objects.equals(repairCode, that.repairCode);
+        return id == that.id && Objects.equals(repairCode, that.repairCode) && Objects.equals(typeRepairList, that.typeRepairList) && Objects.equals(standardTimes, that.standardTimes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, vendorCode, repairCode, standardTime);
+        return Objects.hash(id, repairCode, typeRepairList, standardTimes);
     }
 }
 
