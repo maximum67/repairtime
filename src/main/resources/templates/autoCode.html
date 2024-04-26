@@ -49,9 +49,6 @@
                 </td>
                 <td>
                     <div th:each="groupmain:${groupRepairMains}">
-<!--                        <a th:id="${groupmain.id}" href="#" th:onclick="getStandardTimeData([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${group.id}]])"-->
-<!--                           th:text="${groupmain.name}">text-->
-<!--                        </a>-->
                         <a th:id="${groupmain.id}" th:text="${groupmain.name}">text</a>
                     </div>
                 </td>

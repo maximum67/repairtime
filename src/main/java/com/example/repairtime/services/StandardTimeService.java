@@ -81,7 +81,7 @@ public class StandardTimeService {
                .toList()
                .stream()
                .map(RepairGroup::getRepairGroupMain)
-               .toList();
+               .collect(Collectors.toSet()).stream().toList();
    }catch (NullPointerException e){
        return new LinkedList<>();
    }
