@@ -38,11 +38,11 @@ public class RepairElementService {
             TypeRepair typeRepair = new TypeRepair();
             matcher = pattern1.matcher(sc.nextLine());
             if (matcher.find()) {
-                if (typeRepairRepository.existsByName(matcher.group())){
-                   typeRepair = typeRepairRepository.getByName(matcher.group()).get();
-                }else{
+//                if (typeRepairRepository.existsByName(matcher.group())){
+//                   typeRepair = typeRepairRepository.getByName(matcher.group()).get();
+//                }else{
                     typeRepair.setName(matcher.group());
-                }
+//                }
 //                System.out.println(matcher.group());  // Выводит: подстрокой
             }
             matcher = pattern2.matcher(sc.nextLine());
@@ -59,9 +59,11 @@ public class RepairElementService {
             }
             matcher = pattern3.matcher(sc.nextLine());
             if (matcher.find()) {
-                typeRepair.setVendorCode(matcher.group());
+                if (!typeRepairRepository.existsByVendorCode(matcher.group())) {
+                    typeRepair.setVendorCode(matcher.group());
 //                System.out.println(matcher.group());  // Выводит: подстрокой
-                typeRepairRepository.save(typeRepair);
+                    typeRepairRepository.save(typeRepair);
+                }
             }
         }
     }

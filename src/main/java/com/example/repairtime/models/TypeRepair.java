@@ -20,14 +20,14 @@ public class TypeRepair {
     @Column(name="id")
     private long id;
 
-    @Column(name="type_repair_name", unique = true)
+    @Column(name="type_repair_name")
     private String name;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
     private RepairGroup repairGroup;
 
-    @Column(name = "vendor_code")
+    @Column(name = "vendor_code", unique = true)
     private String vendorCode;
 
     @ManyToMany(

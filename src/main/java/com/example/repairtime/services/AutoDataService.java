@@ -43,7 +43,7 @@ public class AutoDataService {
 
         for (String string : resultList) {
             string = string.replaceAll(";", "*");
-//            System.out.println(string);
+            System.out.println(string);
             string = string.replaceAll("\\d{4}\\sоб/мин\\s", "");
 //            System.out.println(string);
             List<String> list = new LinkedList<>(Arrays.asList(string.split("\\*")));
