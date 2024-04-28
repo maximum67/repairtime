@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,14 +23,28 @@ public class RestDataController {
     private final MarkAutoService markAutoService;
     private final ModelAutoService modelAutoService;
     private final TypeEngineService typeEngineService;
+    private final RepairGroupService repairGroupService;
 
-//    @GetMapping("/grouprepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
-//    public List<Map<String, String>> getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
-//                                   @PathVariable("modelid") ModelAuto modelAuto,
-//                                   @PathVariable("typeEngineid") TypeEngine typeEngine,
-//                                   @PathVariable("modificationid") ModificationAuto modificationAuto,
-//                                   @PathVariable("id") RepairGroup repairGroup) {
-//        return standardTimeService.getMapDataStandardTime(modificationAuto,repairGroup);
-//        return new ResponseEntity<>(map, HttpStatus.OK);
-//    }
+    @GetMapping("/standardTime/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
+    public List<Map<String, String>> getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
+                                   @PathVariable("modelid") ModelAuto modelAuto,
+                                   @PathVariable("typeEngineid") TypeEngine typeEngine,
+                                   @PathVariable("modificationid") ModificationAuto modificationAuto,
+                                   @PathVariable("id") RepairGroup repairGroup) {
+
+        return new ArrayList<>();
+    }
+
+    @GetMapping("/groupRepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
+        public List<Map<String, String>> getRepairGroup(@PathVariable("markid") MarkAuto markAuto,
+                                                @PathVariable("modelid") ModelAuto modelAuto,
+                                                @PathVariable("typeEngineid") TypeEngine typeEngine,
+                                                @PathVariable("modificationid") ModificationAuto modificationAuto,
+                                                @PathVariable("id") RepairGroupMain repairGroupMain){
+         List<Map<String,String>> mapList = new LinkedList<>();
+         Map<String,String> map = repairGroupService.getAllRepairGroupOfModification(repairGroupMain,modificationAuto);
+         mapList.add(map);
+        System.out.println(mapList.toString());
+        return mapList;
+    }
 }

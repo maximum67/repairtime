@@ -1,6 +1,7 @@
 package com.example.repairtime.controllers;
 
 import com.example.repairtime.models.*;
+import com.example.repairtime.repositories.RepairGroupRepository;
 import com.example.repairtime.repositories.TypeEngineRepository;
 import com.example.repairtime.services.*;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class SelectDataController {
     private final ModelAutoService modelAutoService;
     private final TypeEngineService typeEngineService;
     private final TypeRepaireService typeRepaireService;
+    private final RepairGroupService repairGroupService;
 
     @GetMapping("/mark")
     public String getMark(Model model){
@@ -75,7 +77,8 @@ public class SelectDataController {
         model.addAttribute("type", typeEngine);
         model.addAttribute("modification",modificationAuto);
         model.addAttribute("repairCode", modificationAuto.getRepairCode());
-        model.addAttribute("groupRepairMains", standardTimeService.getListOfRepairGroupMain(modificationAuto.getRepairCode()));
+//        model.addAttribute("groupRepairMains", standardTimeService.getListOfRepairGroupMain(modificationAuto.getRepairCode()));
+        model.addAttribute("groupRepairMains", repairGroupService.findAllRepairGroupMain());
         return "autoCode";
     }
 

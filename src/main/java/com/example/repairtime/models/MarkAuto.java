@@ -21,7 +21,7 @@ public class MarkAuto {
     @Column(name="nameMark",unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "markAuto")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "markAuto")
     private List<ModelAuto> modelAutoList;
 
     @Override

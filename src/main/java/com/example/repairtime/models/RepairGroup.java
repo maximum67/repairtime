@@ -22,7 +22,7 @@ public class RepairGroup {
     @Column(name="repair_group_name", unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "repairGroup")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "repairGroup")
     private List<TypeRepair> typeRepairList;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

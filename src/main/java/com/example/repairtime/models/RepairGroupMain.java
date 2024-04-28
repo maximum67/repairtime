@@ -25,7 +25,7 @@ public class RepairGroupMain {
     @Column(name = "groupMainNname", unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "repairGroupMain")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "repairGroupMain")
     private List<RepairGroup> repairGroupList;
 
     @Override

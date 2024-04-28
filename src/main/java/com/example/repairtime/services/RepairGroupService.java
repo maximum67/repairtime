@@ -1,5 +1,6 @@
 package com.example.repairtime.services;
 
+import com.example.repairtime.models.ModificationAuto;
 import com.example.repairtime.models.RepairGroup;
 import com.example.repairtime.models.RepairGroupMain;
 import com.example.repairtime.repositories.RepairGroupMainRepository;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,5 +56,18 @@ public class RepairGroupService {
                     }
             }
         }
+    }
+
+    public List<RepairGroupMain> findAllRepairGroupMain(){
+        return repairGroupMainRepository.findAll();
+    }
+
+    public Map<String, String> getAllRepairGroupOfModification(RepairGroupMain repairGroupMain, ModificationAuto modificationAuto){
+        List <RepairGroup> repairGroupList = repairGroupMainRepository.getByName(repairGroupMain.getName()).get().getRepairGroupList();
+        Map <String, String> map = new LinkedHashMap<>();
+        for (RepairGroup rg: repairGroupList){
+            map.put(rg.getName(),"value");
+        }
+        return map;
     }
 }
