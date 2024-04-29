@@ -41,10 +41,6 @@ public class RestDataController {
                                                 @PathVariable("typeEngineid") TypeEngine typeEngine,
                                                 @PathVariable("modificationid") ModificationAuto modificationAuto,
                                                 @PathVariable("id") RepairGroupMain repairGroupMain){
-         List<Map<String,String>> mapList = new LinkedList<>();
-         Map<String,String> map = repairGroupService.getAllRepairGroupOfModification(repairGroupMain,modificationAuto);
-         mapList.add(map);
-        System.out.println(mapList.toString());
-        return mapList;
+        return  repairGroupService.getAllRepairGroupOfModification(repairGroupMain,modificationAuto);
     }
 }

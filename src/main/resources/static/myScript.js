@@ -22,7 +22,6 @@ function getRepairGroup(markid, modelid, typeEngineid, modificationid, id) {
 
             data.forEach(item => {
                 // Assuming each item has 'id' and 'name' properties
-                alert(item.key);
                 const repairGroup = document.createElement('tr');
                 repairGroup.textContent = item.key;
                htmlFormType1.appendChild(repairGroup);

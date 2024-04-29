@@ -48,7 +48,7 @@ public class StandardTimeService {
                             boolean typeIsPresent = false;
                             matcher = pattern1.matcher(sc.nextLine());
                             if (matcher.find()) {
-                            System.out.println(matcher.group());
+//                            System.out.println(matcher.group());
                             if (typeRepairRepository.getByVendorCode(matcher.group()).isPresent()) {
                                standardTime.getTypeRepairList()
                                             .add(typeRepairRepository.getByVendorCode(matcher.group()).get());
@@ -58,10 +58,10 @@ public class StandardTimeService {
                             }
                             matcher = pattern2.matcher(sc.nextLine());
                             if (matcher.find()) {
-                            System.out.println(matcher.group());
+//                            System.out.println(matcher.group());
                             standardTime.getStandardTimes().add(Double.parseDouble(matcher.group()));
                             if (typeIsPresent) {
-                                standardTimeRepository.save(standardTime);
+//                                standardTimeRepository.save(standardTime);
                             }
                                 if (sc.hasNext()) sc.nextLine();
                             }

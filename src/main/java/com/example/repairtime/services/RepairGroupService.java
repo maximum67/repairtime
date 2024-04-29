@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +40,7 @@ public class RepairGroupService {
                     repairGroup.setName(matcher.group());
                 }
                 matcher = pattern.matcher(sc.nextLine().replaceAll("Услуга", "услуга"));
-            if (matcher.find()) {
+                if (matcher.find()) {
 //                    System.out.println(matcher.group());  // Выводит: подстрокой
                     RepairGroupMain repairGroupMain = new RepairGroupMain();
                     if (repairGroupMainRepository.existsByName(matcher.group())) {
@@ -53,21 +50,24 @@ public class RepairGroupService {
                     }
                     repairGroup.setRepairGroupMain(repairGroupMain);
                     repairGroupRepository.save(repairGroup);
-                    }
+                }
             }
         }
     }
 
-    public List<RepairGroupMain> findAllRepairGroupMain(){
+    public List<RepairGroupMain> findAllRepairGroupMain() {
         return repairGroupMainRepository.findAll();
     }
 
-    public Map<String, String> getAllRepairGroupOfModification(RepairGroupMain repairGroupMain, ModificationAuto modificationAuto){
-        List <RepairGroup> repairGroupList = repairGroupMainRepository.getByName(repairGroupMain.getName()).get().getRepairGroupList();
-        Map <String, String> map = new LinkedHashMap<>();
-        for (RepairGroup rg: repairGroupList){
-            map.put(rg.getName(),"value");
+    public List<Map<String, String>> getAllRepairGroupOfModification(RepairGroupMain repairGroupMain, ModificationAuto modificationAuto) {
+        List<RepairGroup> repairGroupList = repairGroupMainRepository.getByName(repairGroupMain.getName()).get().getRepairGroupList();
+        List<Map<String, String>> mapList = new LinkedList<>();
+        for (RepairGroup rg : repairGroupList) {
+            Map<String, String> map = new LinkedHashMap<>();
+            map.put("key", rg.getName());
+            map.put("value", rg.getRepairGroupMain().getName());
+            mapList.add(map);
         }
-        return map;
+        return mapList;
     }
 }
