@@ -87,4 +87,25 @@ public class StandardTimeService {
    }
 
     }
+
+    public StandardTime getStandardTimeByModification(ModificationAuto modificationAuto){
+        return standardTimeRepository.getStandardTimeByRepairCode(modificationAuto.getRepairCode());
+    }
+
+
+    public List<Map<String, String>> getMapDataStandardTime(ModificationAuto modificationAuto, RepairGroup repairGroup){
+        List<TypeRepair> typeRepairList = getStandardTimeByModification(modificationAuto).getTypeRepairList();
+        List<Double> standardTimeList = getStandardTimeByModification(modificationAuto).getStandardTimes();
+
+        List<Map<String, String>> mapList = new LinkedList<>();
+        for (int i=0; i< typeRepairList.size(); i++) {
+            Map<String, String> map = new HashMap<>();
+            if (typeRepairList.get(i).getRepairGroup().equals(repairGroup)) {
+                map.put("key", typeRepairList.get(i).getName());
+                map.put("value", String.valueOf(standardTimeList.get(i)));
+                mapList.add(map);
+            }
+        }
+        return mapList;
+    }
 }

@@ -1,3 +1,4 @@
+
 function getRepairGroup(markid, modelid, typeEngineid, modificationid, id) {
     fetch('/api/select/groupRepair/'+markid+'/'+modelid+'/'+typeEngineid+'/'+modificationid+'/'+id,{
         method: 'GET',
@@ -23,11 +24,13 @@ function getRepairGroup(markid, modelid, typeEngineid, modificationid, id) {
             data.forEach(item => {
                 // Assuming each item has 'id' and 'name' properties
                 const repairGroup = document.createElement('a');
+                const br = document.createElement('br');
                 repairGroup.textContent = item.key;
-                repairGroup.href="#";
-                repairGroup.onclick = 'getRepairGroup('+ markid+','+modelid+','+typeEngineid+','+modificationid+','+id+');';
+                repairGroup.href = '#';
+                repairGroup.id = item.key;
                htmlFormType1.appendChild(repairGroup);
-
+               htmlFormType1.appendChild(br);
+                repairGroup.addEventListener('click', getStandardTimeData(markid,modelid,typeEngineid,modificationid,id));
             });
         })
         .catch(error => {
@@ -50,6 +53,7 @@ function getStandardTimeData(markid, modelid, typeEngineid, modificationid, id) 
         })
         .then((data) => {
             // Process the fetched data and update the HTML form
+            alert(globalElement.id);
             const htmlFormType = document.querySelector('#typeRepair');
             const htmlFormTime = document.querySelector('#timeRepair');
             const typeRepairHead = document.getElementById('typeRepairHead');

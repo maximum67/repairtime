@@ -31,8 +31,7 @@ public class RestDataController {
                                    @PathVariable("typeEngineid") TypeEngine typeEngine,
                                    @PathVariable("modificationid") ModificationAuto modificationAuto,
                                    @PathVariable("id") RepairGroup repairGroup) {
-
-        return new ArrayList<>();
+        return standardTimeService.getMapDataStandardTime(modificationAuto, repairGroup);
     }
 
     @GetMapping("/groupRepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
