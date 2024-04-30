@@ -30,7 +30,8 @@ function getRepairGroup(markid, modelid, typeEngineid, modificationid, id) {
                 repairGroup.id = item.key;
                htmlFormType1.appendChild(repairGroup);
                htmlFormType1.appendChild(br);
-                repairGroup.addEventListener('click', getStandardTimeData(markid,modelid,typeEngineid,modificationid,id));
+                // repairGroup.addEventListener('click', getStandardTimeData(markid, modelid, typeEngineid, modificationid, id));
+                repairGroup.addEventListener('click', getStandardTimeData);
             });
         })
         .catch(error => {
@@ -38,8 +39,10 @@ function getRepairGroup(markid, modelid, typeEngineid, modificationid, id) {
             console.error('There was a problem with the fetch operation:', error);
         });
 }
-function getStandardTimeData(markid, modelid, typeEngineid, modificationid, id) {
-    fetch('/api/select/standardTime/' + markid + '/' + modelid + '/' + typeEngineid + '/' + modificationid + '/' + id, {
+// function getStandardTimeData(markid, modelid, typeEngineid, modificationid, id) {
+    // fetch('/api/select/standardTime/' + markid + '/' + modelid + '/' + typeEngineid + '/' + modificationid + '/' + id, {
+function getStandardTimeData() {
+    fetch('/api/select/standardTime/1/2/3/1965/9', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -53,7 +56,6 @@ function getStandardTimeData(markid, modelid, typeEngineid, modificationid, id) 
         })
         .then((data) => {
             // Process the fetched data and update the HTML form
-            alert(globalElement.id);
             const htmlFormType = document.querySelector('#typeRepair');
             const htmlFormTime = document.querySelector('#timeRepair');
             const typeRepairHead = document.getElementById('typeRepairHead');
@@ -72,6 +74,7 @@ function getStandardTimeData(markid, modelid, typeEngineid, modificationid, id) 
                 const timeRepair = document.createElement('tr');
                 typeRepair.textContent = item.key;
                 timeRepair.textContent = item.value;
+
                 htmlFormType.appendChild(typeRepair);
                 htmlFormTime.appendChild(timeRepair);
             });

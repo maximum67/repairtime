@@ -22,14 +22,14 @@ public class StandardTime {
     private String repairCode;
 
     @ManyToMany(
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinTable(
             name = "type_repairs_repair_code",
             joinColumns = @JoinColumn(name = "repair_standard_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "type_repair_id", referencedColumnName = "id"))
      private List<TypeRepair> typeRepairList = new LinkedList<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "standard_time_collection",
             joinColumns = @JoinColumn(name = "standart_time_id"))
     private List<Double> standardTimes = new LinkedList<>();

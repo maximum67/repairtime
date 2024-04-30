@@ -34,7 +34,6 @@ public class StandardTimeService {
                 if (item.isDirectory()) {
                     System.out.println(item.getName() + "  \t folder");
                 } else {
-
                     System.out.println(item.getName().replaceAll(".txt", ""));
                     Scanner sc = new Scanner(item);
                     StandardTime standardTime = new StandardTime();
@@ -94,18 +93,22 @@ public class StandardTimeService {
 
 
     public List<Map<String, String>> getMapDataStandardTime(ModificationAuto modificationAuto, RepairGroup repairGroup){
-        List<TypeRepair> typeRepairList = getStandardTimeByModification(modificationAuto).getTypeRepairList();
-        List<Double> standardTimeList = getStandardTimeByModification(modificationAuto).getStandardTimes();
+        StandardTime standardTime =  getStandardTimeByModification(modificationAuto);
+        List<TypeRepair> typeRepairList = standardTime.getTypeRepairList();
+        List<Double> standardTimeList = standardTime.getStandardTimes();
 
         List<Map<String, String>> mapList = new LinkedList<>();
         for (int i=0; i< typeRepairList.size(); i++) {
             Map<String, String> map = new HashMap<>();
-            if (typeRepairList.get(i).getRepairGroup().equals(repairGroup)) {
+            if (typeRepairList.get(i).getRepairGroup().getName().equals(repairGroup.getName())) {
                 map.put("key", typeRepairList.get(i).getName());
                 map.put("value", String.valueOf(standardTimeList.get(i)));
+                System.out.println(typeRepairList.get(i).getName()+" "+typeRepairList.get(i).getVendorCode()+" "+String.valueOf(standardTimeList.get(i)));
                 mapList.add(map);
             }
         }
+
+
         return mapList;
     }
 }
