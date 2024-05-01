@@ -65,7 +65,7 @@ public class RepairGroupService {
         for (RepairGroup rg : repairGroupList) {
             Map<String, String> map = new LinkedHashMap<>();
             map.put("key", rg.getName());
-            map.put("value", rg.getRepairGroupMain().getName());
+            map.put("value", String.valueOf(rg.getId()));
             mapList.add(map);
         }
         return mapList;

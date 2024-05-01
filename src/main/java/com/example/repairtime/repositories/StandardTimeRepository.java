@@ -14,7 +14,5 @@ public interface StandardTimeRepository extends JpaRepository<StandardTime, Long
 
     boolean existsByRepairCode(String repairCode);
 
-    StandardTime getStandardTimeByRepairCode(String repairCode);
-
-
+    Optional<StandardTime> getStandardTimeByRepairCode(String repairCode);
 }

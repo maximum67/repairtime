@@ -87,28 +87,38 @@ public class StandardTimeService {
 
     }
 
-    public StandardTime getStandardTimeByModification(ModificationAuto modificationAuto){
+    public Optional<StandardTime> getStandardTimeByModification(ModificationAuto modificationAuto){
         return standardTimeRepository.getStandardTimeByRepairCode(modificationAuto.getRepairCode());
     }
 
 
     public List<Map<String, String>> getMapDataStandardTime(ModificationAuto modificationAuto, RepairGroup repairGroup){
-        StandardTime standardTime =  getStandardTimeByModification(modificationAuto);
-        List<TypeRepair> typeRepairList = standardTime.getTypeRepairList();
-        List<Double> standardTimeList = standardTime.getStandardTimes();
+        List<TypeRepair> typeRepairList = new LinkedList<>();
+        List<Double> standardTimeList = new LinkedList<>();
+        Optional<StandardTime> optionalStandardTime = getStandardTimeByModification(modificationAuto);
+        if (optionalStandardTime.isPresent()) {
+            StandardTime standardTime = optionalStandardTime.get();
+//            System.out.println(standardTime.getId());
+             typeRepairList = standardTime.getTypeRepairList();
+             standardTimeList = standardTime.getStandardTimes();
+        }
+        return getMaps(repairGroup, typeRepairList, standardTimeList);
+    }
 
+    private static List<Map<String, String>> getMaps(RepairGroup repairGroup, List<TypeRepair> typeRepairList, List<Double> standardTimeList) {
         List<Map<String, String>> mapList = new LinkedList<>();
-        for (int i=0; i< typeRepairList.size(); i++) {
+        Map<String, String> defaultMap = new HashMap<>();
+        defaultMap.put("key", "Данные отсутствуют");
+        for (int i = 0; i< typeRepairList.size(); i++) {
             Map<String, String> map = new HashMap<>();
             if (typeRepairList.get(i).getRepairGroup().getName().equals(repairGroup.getName())) {
                 map.put("key", typeRepairList.get(i).getName());
                 map.put("value", String.valueOf(standardTimeList.get(i)));
-                System.out.println(typeRepairList.get(i).getName()+" "+typeRepairList.get(i).getVendorCode()+" "+String.valueOf(standardTimeList.get(i)));
+//                System.out.println(typeRepairList.get(i).getName()+" "+typeRepairList.get(i).getVendorCode()+" "+String.valueOf(standardTimeList.get(i)));
                 mapList.add(map);
             }
         }
-
-
+        if (mapList.isEmpty()) mapList.add(defaultMap);
         return mapList;
     }
 }

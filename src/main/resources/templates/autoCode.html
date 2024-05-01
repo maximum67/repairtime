@@ -38,7 +38,7 @@
         <br>
         <table>
             <thead>
-            <th id="repairGroupMainHead">Группа ремонта</th>
+            <th id="repairGroupMainHead">ГРУППА РЕМОНТА</th>
             <th id="repairGroupHead"></th>
             <th id="typeRepairHead"></th>
             <th id="timeRepairHead"></th>
@@ -47,14 +47,12 @@
             <tr>
                 <td>
                 <div th:each="groupmain:${groupRepairMains}">
-                <a th:id="${groupmain.id}" href="#" th:onclick="getRepairGroup([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${groupmain.id}]])"
+                <a th:id="${groupmain.id}" href="#" th:onclick="getRepairGroup([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${groupmain.id}]],[[${groupmain.name}]])"
                        th:text="${groupmain.name}">text
                     </a>
                 </div>
                 </td>
-                <td id="repairGroup">
-
-                </td>
+                <td id="repairGroup"></td>
                 <td id="typeRepair"></td>
                 <td id="timeRepair"></td>
             </tr>

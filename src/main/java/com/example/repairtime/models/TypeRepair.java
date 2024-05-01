@@ -31,7 +31,7 @@ public class TypeRepair {
     private String vendorCode;
 
     @ManyToMany(
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinTable(
             name = "type_repairs_repair_code",
             joinColumns = @JoinColumn(name = "type_repair_id", referencedColumnName = "id"),
