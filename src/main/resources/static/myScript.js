@@ -1,4 +1,3 @@
-
 function getRepairGroup(markid, modelid, typeEngineid, modificationid, id, groupMainName) {
     fetch('/api/select/groupRepair/'+markid+'/'+modelid+'/'+typeEngineid+'/'+modificationid+'/'+id,{
         method: 'GET',

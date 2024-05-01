@@ -66,6 +66,7 @@ public class SelectDataController {
         return "modificationList";
     }
 
+
     @GetMapping("/modification/{markid}/{modelid}/{typeEngineid}/{id}")
     public String getGroupRepair(@PathVariable("markid") MarkAuto markAuto,
                                 @PathVariable("modelid") ModelAuto modelAuto,

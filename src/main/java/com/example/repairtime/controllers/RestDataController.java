@@ -34,6 +34,7 @@ public class RestDataController {
         return standardTimeService.getMapDataStandardTime(modificationAuto, repairGroup);
     }
 
+
     @GetMapping("/groupRepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
         public List<Map<String, String>> getRepairGroup(@PathVariable("markid") MarkAuto markAuto,
                                                 @PathVariable("modelid") ModelAuto modelAuto,

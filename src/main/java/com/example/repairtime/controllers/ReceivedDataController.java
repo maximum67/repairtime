@@ -29,7 +29,6 @@ public class ReceivedDataController {
     private final RepairElementService repairElementService;
     private final RepairGroupService repairGroupService;
 
-
     @GetMapping("/modification/list")
     public String getModificationList(Model model){
         model.addAttribute("modificationList", modificationAutoService.modificationAutoList());
