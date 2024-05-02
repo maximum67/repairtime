@@ -61,7 +61,7 @@ public class StandardTimeService {
 //                            System.out.println(matcher.group());
                             standardTime.getStandardTimes().add(Double.parseDouble(matcher.group()));
                             if (typeIsPresent) {
-//                                standardTimeRepository.save(standardTime);
+                                standardTimeRepository.save(standardTime);
                             }
                                 if (sc.hasNext()) sc.nextLine();
                             }

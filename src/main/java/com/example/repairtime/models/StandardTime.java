@@ -31,7 +31,7 @@ public class StandardTime {
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "standard_time_collection",
-            joinColumns = @JoinColumn(name = "standart_time_id"))
+            joinColumns = @JoinColumn(name = "standard_time_id"))
     private List<Double> standardTimes = new LinkedList<>();
 
     @Override
