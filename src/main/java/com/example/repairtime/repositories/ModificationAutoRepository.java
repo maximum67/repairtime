@@ -10,4 +10,6 @@ public interface ModificationAutoRepository extends JpaRepository<ModificationAu
 
     Optional<ModificationAuto> findByName(String s);
 
+    Optional<ModificationAuto> findAllByRepairCode(String s);
+
 }

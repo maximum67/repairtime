@@ -19,7 +19,7 @@ public class ModificationAuto {
     @Column(name="id")
     private long id;
 
-    @Column(name="nameModificationAuto", unique = true)
+    @Column(name="nameModificationAuto")
     private String name;
 
     @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)

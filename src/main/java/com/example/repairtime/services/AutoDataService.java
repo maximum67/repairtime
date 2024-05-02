@@ -43,7 +43,7 @@ public class AutoDataService {
 
         for (String string : resultList) {
             string = string.replaceAll(";", "*");
-            System.out.println(string);
+//            System.out.println(string);
             string = string.replaceAll("\\d{4}\\sоб/мин\\s", "");
 //            System.out.println(string);
             List<String> list = new LinkedList<>(Arrays.asList(string.split("\\*")));
@@ -84,16 +84,17 @@ public class AutoDataService {
                                 .stream().filter(typeEngine1 -> typeEngine1.getModelAuto().equals(modelAutoTemp))
                                 .findFirst().get();
 //                        System.out.println(typeEngine.getName());
-                        if (modificationAutoRepository.findByName(modificationName).isPresent()) {
-                            modificationAuto = modificationAutoRepository.findByName(modificationName).get();
-//                            System.out.println(modificationAuto.getName());
-                        } else {
+                        if (modificationAutoRepository.findAllByRepairCode(repairCodes.get(i)).isEmpty()) {
                             modificationAuto.setName(modificationName);
                             modificationAuto.setTypeEngine(typeEngine);
                             modificationAuto.setRepairCode(repairCodes.get(i));
 //                            typeEngine.getModificationAutoList().add(modificationAuto);
                             modificationAutoRepository.save(modificationAuto);
+                        } else {
+                            modificationAuto = modificationAutoRepository.findAllByRepairCode(repairCodes.get(i)).get();
+//                            System.out.println(modificationAuto.getName());
                         }
+
                     } else {
 
                         modificationAuto.setName(modificationName);
