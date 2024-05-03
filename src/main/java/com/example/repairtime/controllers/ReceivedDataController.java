@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,12 +40,17 @@ public class ReceivedDataController {
         return "repairDataList";
     }
     @GetMapping("/write")
-    public String writeData() throws IOException {
+    public String writeData() throws IOException,
+                                     NoSuchPaddingException,
+                                     IllegalBlockSizeException,
+                                     NoSuchAlgorithmException,
+                                     BadPaddingException,
+                                     InvalidKeyException {
 //        repairDataService.writingFileAndSave("test.xlsx");
-//        autoDataService.readFileAndSaveData("ЛистМодификаций.xlsx");
-//        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
-//        repairGroupService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
-//        standardTimeService.readDirectories("База");
+        autoDataService.readFileAndSaveData("ЛистМодификаций.xlsx");
+        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
+        repairGroupService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
+        standardTimeService.readDirectories("База");
         return "redirect:/data/modification/list";
     }
     @GetMapping("/modification/edit/{modification}")

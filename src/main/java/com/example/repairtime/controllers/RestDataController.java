@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,10 +35,13 @@ public class RestDataController {
                                    @PathVariable("modelid") ModelAuto modelAuto,
                                    @PathVariable("typeEngineid") TypeEngine typeEngine,
                                    @PathVariable("modificationid") ModificationAuto modificationAuto,
-                                   @PathVariable("id") RepairGroup repairGroup) {
+                                   @PathVariable("id") RepairGroup repairGroup) throws NoSuchPaddingException,
+                                                                                       IllegalBlockSizeException,
+                                                                                       NoSuchAlgorithmException,
+                                                                                       BadPaddingException,
+                                                                                       InvalidKeyException {
         return standardTimeService.getMapDataStandardTime(modificationAuto, repairGroup);
     }
-
 
     @GetMapping("/groupRepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
         public List<Map<String, String>> getRepairGroup(@PathVariable("markid") MarkAuto markAuto,

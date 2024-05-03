@@ -1,6 +1,7 @@
 package com.example.repairtime.services;
 
 
+import com.example.repairtime.cipher.RepairCodeEncrypt;
 import com.example.repairtime.models.*;
 import com.example.repairtime.repositories.MarkAutoRepository;
 import com.example.repairtime.repositories.ModelAutoRepository;
@@ -9,11 +10,14 @@ import com.example.repairtime.repositories.TypeEngineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,13 +28,16 @@ public class AutoDataService {
     private final TypeEngineRepository typeEngineRepository;
     private final ModificationAutoRepository modificationAutoRepository;
 
-    public void readFileAndSaveData(String filename) throws IOException {
-
+    public void readFileAndSaveData(String filename) throws IOException,
+                                                            NoSuchPaddingException,
+                                                            IllegalBlockSizeException,
+                                                            NoSuchAlgorithmException,
+                                                            BadPaddingException,
+                                                            InvalidKeyException {
         List<String> listMark = new LinkedList<>();
         List<String> listModel = new LinkedList<>();
         List<String> listEngineType = new LinkedList<>();
         List<String> listModification = new LinkedList<>();
-
 
         ParsingFile parsingFile = new ParsingFile();
         Map<Integer, List<String>> map = parsingFile.read(filename);
@@ -39,7 +46,6 @@ public class AutoDataService {
 
         map.forEach((key, value) -> resultList.add(value.get(0)));
         map.forEach((key, value) -> repairCodes.add(value.get(1)));
-
 
         for (String string : resultList) {
             string = string.replaceAll(";", "*");
@@ -68,7 +74,10 @@ public class AutoDataService {
             ModelAuto modelAuto = new ModelAuto();
             TypeEngine typeEngine = new TypeEngine();
             ModificationAuto modificationAuto = new ModificationAuto();
-
+            List<TypeEngine> engineList = new LinkedList<>();
+            String repairCodeEncrypt = RepairCodeEncrypt
+                                       .repairCodeCryptCipher(Base64.getEncoder()
+                                                                    .encodeToString(repairCodes.get(i).getBytes(StandardCharsets.UTF_8)));
             if (markAutoRepository.findByName(markName).isPresent()) {
                 markAuto = markAutoRepository.findByName(markName).get();
 //                System.out.println(markAuto.getName());
@@ -84,28 +93,25 @@ public class AutoDataService {
                                 .stream().filter(typeEngine1 -> typeEngine1.getModelAuto().equals(modelAutoTemp))
                                 .findFirst().get();
 //                        System.out.println(typeEngine.getName());
-                        if (modificationAutoRepository.findAllByRepairCode(repairCodes.get(i)).isEmpty()) {
+                        if (modificationAutoRepository.findAllByRepairCode(repairCodeEncrypt).isEmpty()) {
                             modificationAuto.setName(modificationName);
                             modificationAuto.setTypeEngine(typeEngine);
-                            modificationAuto.setRepairCode(repairCodes.get(i));
+                            modificationAuto.setRepairCode(repairCodeEncrypt);
 //                            typeEngine.getModificationAutoList().add(modificationAuto);
                             modificationAutoRepository.save(modificationAuto);
                         } else {
-                            modificationAuto = modificationAutoRepository.findAllByRepairCode(repairCodes.get(i)).get();
+                            modificationAuto = modificationAutoRepository.findAllByRepairCode(repairCodeEncrypt).get();
 //                            System.out.println(modificationAuto.getName());
                         }
-
                     } else {
-
                         modificationAuto.setName(modificationName);
                         modificationAuto.setTypeEngine(typeEngine);
-                        modificationAuto.setRepairCode(repairCodes.get(i));
+                        modificationAuto.setRepairCode(repairCodeEncrypt);
                         List<ModificationAuto> modifList = new LinkedList<>();
                         modifList.add(modificationAuto);
                         typeEngine.setModificationAutoList(modifList);
                         typeEngine.setName(typeEngineName);
                         typeEngine.setModelAuto(modelAuto);
-
 //                        modelAuto.getTypeEngineList().add(typeEngine);
                         typeEngineRepository.save(typeEngine);
                     }
@@ -116,19 +122,15 @@ public class AutoDataService {
                     typeEngine.setModelAuto(modelAuto);
                     modificationAuto.setName(modificationName);
                     modificationAuto.setTypeEngine(typeEngine);
-                    modificationAuto.setRepairCode(repairCodes.get(i));
-                    List<TypeEngine> engineList = new LinkedList<>();
+                    modificationAuto.setRepairCode(repairCodeEncrypt);
                     engineList.add(typeEngine);
                     modelAuto.setTypeEngineList(engineList);
-
                     List<ModificationAuto> modifList = new LinkedList<>();
                     modifList.add(modificationAuto);
                     typeEngine.setModificationAutoList(modifList);
                     modelAutoRepository.save(modelAuto);
 //                    ModelAuto model = modelAutoRepository.findByName(modelName).get();
 //                    markAuto.getModelAutoList().add(model);
-
-
                 }
             } else {
                 markAuto.setName(markName);
@@ -138,22 +140,17 @@ public class AutoDataService {
                 typeEngine.setModelAuto(modelAuto);
                 modificationAuto.setName(modificationName);
                 modificationAuto.setTypeEngine(typeEngine);
-                modificationAuto.setRepairCode(repairCodes.get(i));
+                modificationAuto.setRepairCode(repairCodeEncrypt);
                 List<ModelAuto> modelList = new LinkedList<>();
                 modelList.add(modelAuto);
                 markAuto.setModelAutoList(modelList);
-
-                List<TypeEngine> engineList = new LinkedList<>();
                 engineList.add(typeEngine);
                 modelAuto.setTypeEngineList(engineList);
-
                 List<ModificationAuto> modifList = new LinkedList<>();
                 modifList.add(modificationAuto);
                 typeEngine.setModificationAutoList(modifList);
-
                 markAutoRepository.save(markAuto);
             }
         }
-
     }
 }

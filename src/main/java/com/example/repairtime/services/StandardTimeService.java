@@ -1,13 +1,20 @@
 package com.example.repairtime.services;
 
+import com.example.repairtime.cipher.RepairCodeDecrypt;
 import com.example.repairtime.models.*;
 import com.example.repairtime.repositories.StandardTimeRepository;
 import com.example.repairtime.repositories.TypeRepairRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,7 +45,9 @@ public class StandardTimeService {
                     System.out.println(item.getName().replaceAll(".txt", ""));
                     Scanner sc = new Scanner(item);
                     StandardTime standardTime = new StandardTime();
-                    String repairCode =item.getName().replaceAll(".txt", "");
+                    String repairCode = Base64.getEncoder().encodeToString(item.getName()
+                                                           .replaceAll(".txt", "")
+                                                           .getBytes(StandardCharsets.UTF_8));
                     if (standardTimeRepository.existsByRepairCode(repairCode)) {
                         standardTime = standardTimeRepository.getByRepairCode(repairCode);
                     }else{
@@ -88,12 +97,21 @@ public class StandardTimeService {
 
     }
 
-    public Optional<StandardTime> getStandardTimeByModification(ModificationAuto modificationAuto){
-        return standardTimeRepository.getStandardTimeByRepairCode(modificationAuto.getRepairCode());
+    public Optional<StandardTime> getStandardTimeByModification(ModificationAuto modificationAuto) throws NoSuchPaddingException,
+                                                                                                       IllegalBlockSizeException,
+                                                                                                       NoSuchAlgorithmException,
+                                                                                                       BadPaddingException,
+                                                                                                       InvalidKeyException {
+        String repairCodeDecrypt = RepairCodeDecrypt.repairCodeDecryptCipher(modificationAuto.getRepairCode());
+        return standardTimeRepository.getStandardTimeByRepairCode(repairCodeDecrypt);
     }
 
 
-    public List<Map<String, String>> getMapDataStandardTime(ModificationAuto modificationAuto, RepairGroup repairGroup){
+    public List<Map<String, String>> getMapDataStandardTime(ModificationAuto modificationAuto, RepairGroup repairGroup) throws NoSuchPaddingException,
+                                                                                                                              IllegalBlockSizeException,
+                                                                                                                              NoSuchAlgorithmException,
+                                                                                                                              BadPaddingException,
+                                                                                                                              InvalidKeyException {
         List<TypeRepair> typeRepairList = new LinkedList<>();
         List<Double> standardTimeList = new LinkedList<>();
         Optional<StandardTime> optionalStandardTime = getStandardTimeByModification(modificationAuto);
