@@ -33,6 +33,7 @@ public class ReceivedDataController {
     private final AutoDataService autoDataService;
     private final RepairElementService repairElementService;
     private final RepairGroupService repairGroupService;
+    private final TechnikalDataService technikalDataService;
 
     @GetMapping("/modification/list")
     public String getModificationList(Model model){
@@ -46,11 +47,11 @@ public class ReceivedDataController {
                                      NoSuchAlgorithmException,
                                      BadPaddingException,
                                      InvalidKeyException {
-//        repairDataService.writingFileAndSave("test.xlsx");
-        autoDataService.readFileAndSaveData("ЛистМодификаций.xlsx");
-        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
-        repairGroupService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
-        standardTimeService.readDirectories("База");
+        technikalDataService.readTechnikalData("ТеническиеДанные");
+//        autoDataService.readFileAndSaveData("ЛистМодификаций.xlsx");
+//        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
+//        repairGroupService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
+//        standardTimeService.readDirectories("База");
         return "redirect:/data/modification/list";
     }
     @GetMapping("/modification/edit/{modification}")
