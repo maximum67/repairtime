@@ -12,7 +12,6 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 public class SpecificationGroup {
 
@@ -24,7 +23,7 @@ public class SpecificationGroup {
     @Column(name="header_group")
     private String headerGroup;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private SpecificationsCar specificationsCar;
 

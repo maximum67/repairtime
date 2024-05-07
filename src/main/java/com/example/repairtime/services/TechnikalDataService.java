@@ -42,11 +42,12 @@ public class TechnikalDataService {
                     List<String> listResult = new LinkedList<>();
                     StringBuilder stringBuilder = new StringBuilder();
                     String repairCode = item.getName().replaceAll(".txt", "");
+                    String repairCodeEncoded = Base64.getEncoder().encodeToString(repairCode.getBytes());
                     SpecificationsCar specificationsCar = new SpecificationsCar();
-                    if (specificationsCarRepository.existsByRepairCode(repairCode)){
-                         specificationsCar = specificationsCarRepository.getByRepairCode(repairCode);
+                    if (specificationsCarRepository.existsByRepairCode(repairCodeEncoded)){
+                         specificationsCar = specificationsCarRepository.getByRepairCode(repairCodeEncoded);
                     }else {
-                        specificationsCar.setRepairCode(repairCode);
+                        specificationsCar.setRepairCode(repairCodeEncoded);
                         specificationsCarRepository.save(specificationsCar);
                     }
                     while (sc.hasNext()) {
@@ -83,7 +84,8 @@ public class TechnikalDataService {
 //                        System.out.println(s);
                         if (s.contains(";*;*;")) {
                             SpecificationGroup specificationGroup = new SpecificationGroup();
-                            specificationGroup.setHeaderGroup(s);
+                            specificationGroup.setHeaderGroup(s.replaceAll(";\\*;\\*;", ""));
+//                            System.out.println(s);
                             if (specificationsCar.getSpecificationGroupList()==null) {
                                 List<SpecificationGroup> specificationGroupList = new LinkedList<>();
                                 specificationGroupList.add(specificationGroup);
@@ -95,12 +97,13 @@ public class TechnikalDataService {
 //                            specificationGroupRepository.save(specificationGroup);
                         } else {
                             String[] strings = s.split(";");
+//                            Arrays.stream(strings).forEach(System.out::println);
                             SpecificationRow specificationRow = new SpecificationRow();
                             specificationRow.setSpecificationName(strings[0]);
-                            specificationRow.setSpecificationUnit(strings[1]);
-                            specificationRow.setSpecificationValue(strings[2]);
+                            specificationRow.setSpecificationUnit(strings[1].replaceAll("\\*",""));
+                            specificationRow.setSpecificationValue(strings[2].replaceAll("\\*",""));
 
-                            if (specificationsCar.getSpecificationGroupList().isEmpty()) {
+                            if (specificationsCar.getSpecificationGroupList()==null) {
                                 List<SpecificationRow> specificationRowList = new LinkedList<>();
                                 specificationRowList.add(specificationRow);
                                 SpecificationGroup specificationGroup = new SpecificationGroup();
@@ -132,16 +135,20 @@ public class TechnikalDataService {
                         }
                     }
                     specificationsCarRepository.save(specificationsCar);
-//                    System.out.println(specificationsCar);
-                    System.out.println(specificationsCarRepository.getByRepairCode(repairCode));
-                    List<SpecificationGroup> specificationGroupList = specificationGroupRepository.findAllBySpecificationsCar_RepairCode(repairCode).get();
+                    System.out.println(repairCode);
+//                    System.out.println(specificationsCarRepository.getByRepairCode(repairCode));
+                    List<SpecificationGroup> specificationGroupList = specificationGroupRepository
+                                                       .findAllBySpecificationsCar_RepairCode(repairCodeEncoded)
+                                                       .get();
                     for (SpecificationGroup sg : specificationGroupList) {
-                        System.out.println(sg.getHeaderGroup());
+//                        System.out.println(sg.getHeaderGroup());
                         List<SpecificationRow> specificationRowList = sg.getSpecificationRowList();
-                        for (SpecificationRow sr : specificationRowList) {
-                            System.out.println(sr.getSpecificationName() + " "
-                                    + sr.getSpecificationValue() + " "
-                                    + sr.getSpecificationUnit());
+                        if (!(specificationRowList==null)) {
+                            for (SpecificationRow sr : specificationRowList) {
+//                                System.out.println(sr.getSpecificationName() + " "
+//                                        + sr.getSpecificationValue() + " "
+//                                        + sr.getSpecificationUnit());
+                            }
                         }
                     }
                 }

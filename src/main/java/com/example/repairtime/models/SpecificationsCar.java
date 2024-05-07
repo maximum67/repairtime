@@ -10,7 +10,6 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @Table(name = "specifications_car")
 public class SpecificationsCar {

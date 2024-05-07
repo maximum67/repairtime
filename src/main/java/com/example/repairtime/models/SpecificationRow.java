@@ -20,15 +20,15 @@ public class SpecificationRow {
     private long id;
 
     @Column(name="specification_name")
-    private String specificationName;
+    private String specificationName="";
 
     @Column(name="specification_init")
-    private String specificationUnit;
+    private String specificationUnit="";
 
     @Column(name="specification_value")
-    private String specificationValue;
+    private String specificationValue="";
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private SpecificationGroup specificationGroup;
 

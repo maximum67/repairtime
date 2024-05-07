@@ -47,7 +47,7 @@ public class ReceivedDataController {
                                      NoSuchAlgorithmException,
                                      BadPaddingException,
                                      InvalidKeyException {
-        technikalDataService.readTechnikalData("ТеническиеДанные");
+        technikalDataService.readTechnikalData("ТехническиеДанные");
 //        autoDataService.readFileAndSaveData("ЛистМодификаций.xlsx");
 //        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
 //        repairGroupService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
