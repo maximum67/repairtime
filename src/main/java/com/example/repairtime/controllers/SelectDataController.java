@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +32,7 @@ public class SelectDataController {
     private final TypeEngineService typeEngineService;
     private final TypeRepaireService typeRepaireService;
     private final RepairGroupService repairGroupService;
+    private final TechnikalDataService technikalDataService;
 
     @GetMapping("/mark")
     public String getMark(Model model){
@@ -72,13 +78,14 @@ public class SelectDataController {
                                 @PathVariable("modelid") ModelAuto modelAuto,
                                 @PathVariable("typeEngineid") TypeEngine typeEngine,
                                 @PathVariable("id") ModificationAuto modificationAuto,
-                                Model model) {
+                                Model model) throws NoSuchPaddingException,
+            IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         model.addAttribute("mark", markAuto);
         model.addAttribute("model", modelAuto);
         model.addAttribute("type", typeEngine);
         model.addAttribute("modification",modificationAuto);
         model.addAttribute("repairCode", modificationAuto.getRepairCode());
-//        model.addAttribute("groupRepairMains", standardTimeService.getListOfRepairGroupMain(modificationAuto.getRepairCode()));
+        model.addAttribute("specificationGroupList",technikalDataService.getTechnikalDataListByModification(modificationAuto));
         model.addAttribute("groupRepairMains", repairGroupService.findAllRepairGroupMain());
         return "autoCode";
     }

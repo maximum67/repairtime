@@ -1,5 +1,7 @@
 package com.example.repairtime.services;
 
+import com.example.repairtime.cipher.RepairCodeDecrypt;
+import com.example.repairtime.models.ModificationAuto;
 import com.example.repairtime.models.SpecificationGroup;
 import com.example.repairtime.models.SpecificationRow;
 import com.example.repairtime.models.SpecificationsCar;
@@ -9,8 +11,13 @@ import com.example.repairtime.repositories.SpecificationsCarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +44,7 @@ public class TechnikalDataService {
                     System.out.println(item.getName() + "  \t folder");
                 } else {
 //                    System.out.println(item.getName().replaceAll(".txt", ""));
-                    Scanner sc = new Scanner(item);
+                    Scanner sc = new Scanner(item,"UTF-8");
                     int i = 1;
                     List<String> listResult = new LinkedList<>();
                     StringBuilder stringBuilder = new StringBuilder();
@@ -153,6 +160,18 @@ public class TechnikalDataService {
                     }
                 }
             }
+        }
+    }
+
+    public List<SpecificationGroup> getTechnikalDataListByModification(ModificationAuto modificationAuto) throws NoSuchPaddingException,
+                    IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        String repairCodeDecrypt = RepairCodeDecrypt.repairCodeDecryptCipher(modificationAuto.getRepairCode());
+        if (specificationsCarRepository.getOptionalByRepairCode(repairCodeDecrypt).isPresent()) {
+            return specificationsCarRepository.getOptionalByRepairCode(repairCodeDecrypt).get().getSpecificationGroupList();
+        }else{
+            SpecificationGroup specificationGroup = new SpecificationGroup();
+            specificationGroup.setHeaderGroup("Данные отсутствуют");
+            return Collections.singletonList(specificationGroup);
         }
     }
 }

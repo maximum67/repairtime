@@ -58,6 +58,27 @@
             </tr>
             </tbody>
         </table>
+        <br>
+        <hr>
+        <br>
+        <table>
+            <thead>
+            <th>Tехнические данные</th>
+            <th></th>
+            <th></th>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+            <div th:each="specificationGroup:${specificationGroupList}">
+                <p th:text="${specificationGroup.headerGroup}"></p>
+            </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
     </main>
 </div>
 

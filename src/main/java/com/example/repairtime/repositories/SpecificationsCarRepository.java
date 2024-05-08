@@ -9,5 +9,7 @@ public interface SpecificationsCarRepository extends JpaRepository<Specification
 
     SpecificationsCar getByRepairCode(String string);
 
+    Optional<SpecificationsCar> getOptionalByRepairCode(String string);
+
     boolean existsByRepairCode(String string);
 }
