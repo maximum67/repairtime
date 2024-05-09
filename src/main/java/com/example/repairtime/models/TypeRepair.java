@@ -3,6 +3,7 @@ package com.example.repairtime.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -36,7 +37,7 @@ public class TypeRepair {
             name = "type_repairs_repair_code",
             joinColumns = @JoinColumn(name = "type_repair_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "repair_standard_id", referencedColumnName = "id"))
-    private List<StandardTime> standardTimeList;
+    private List<StandardTime> standardTimeList = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
