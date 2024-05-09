@@ -11,5 +11,7 @@ public interface SpecificationsCarRepository extends JpaRepository<Specification
 
     Optional<SpecificationsCar> getOptionalByRepairCode(String string);
 
+    Optional<SpecificationsCar> findAllByRepairCode(String string);
+
     boolean existsByRepairCode(String string);
 }

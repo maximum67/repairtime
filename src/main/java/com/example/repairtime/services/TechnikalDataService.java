@@ -1,13 +1,8 @@
 package com.example.repairtime.services;
 
 import com.example.repairtime.cipher.RepairCodeDecrypt;
-import com.example.repairtime.models.ModificationAuto;
-import com.example.repairtime.models.SpecificationGroup;
-import com.example.repairtime.models.SpecificationRow;
-import com.example.repairtime.models.SpecificationsCar;
-import com.example.repairtime.repositories.SpecificationGroupRepository;
-import com.example.repairtime.repositories.SpecificationRowRepository;
-import com.example.repairtime.repositories.SpecificationsCarRepository;
+import com.example.repairtime.models.*;
+import com.example.repairtime.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +11,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -29,6 +25,10 @@ public class TechnikalDataService {
     private final SpecificationsCarRepository specificationsCarRepository;
     private final SpecificationGroupRepository specificationGroupRepository;
     private final SpecificationRowRepository specificationRowRepository;
+    private final StandardTimeRepository standardTimeRepository;
+    private final TypeRepairRepository typeRepairRepository;
+    private final RepairGroupRepository repairGroupRepository;
+    private final RepairGroupMainRepository repairGroupMainRepository;
 
     public void readTechnikalData(String fileName) throws FileNotFoundException {
 
@@ -163,15 +163,87 @@ public class TechnikalDataService {
         }
     }
 
-    public List<SpecificationGroup> getTechnikalDataListByModification(ModificationAuto modificationAuto) throws NoSuchPaddingException,
-                    IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        String repairCodeDecrypt = RepairCodeDecrypt.repairCodeDecryptCipher(modificationAuto.getRepairCode());
-        if (specificationsCarRepository.getOptionalByRepairCode(repairCodeDecrypt).isPresent()) {
-            return specificationsCarRepository.getOptionalByRepairCode(repairCodeDecrypt).get().getSpecificationGroupList();
-        }else{
-            SpecificationGroup specificationGroup = new SpecificationGroup();
-            specificationGroup.setHeaderGroup("Данные отсутствуют");
-            return Collections.singletonList(specificationGroup);
+    public  void readDirectories(String fileName) throws FileNotFoundException {
+
+        File dir = new File(fileName);
+        String PATTERN_1 = "[A-Z]{1}\\d{1,2}\\.\\d{4}\\.?\\d?";
+        String PATTERN_2 = "\\d{1,2}\\.\\d{1,2}";
+        Pattern pattern1 = Pattern.compile(PATTERN_1);
+        Pattern pattern2 = Pattern.compile(PATTERN_2);
+        Matcher matcher;
+        if (dir.isDirectory()) {
+            for (File item : Objects.requireNonNull(dir.listFiles())) {
+                if (item.isDirectory()) {
+                    System.out.println(item.getName() + "  \t folder");
+                } else {
+                    System.out.println(item.getName().replaceAll(".txt", ""));
+                    Scanner sc = new Scanner(item);
+                    StandardTime standardTime = new StandardTime();
+                    String repairCode = Base64.getEncoder().encodeToString(item.getName()
+                            .replaceAll(".txt", "")
+                            .getBytes(StandardCharsets.UTF_8));
+                    if (standardTimeRepository.existsByRepairCode(repairCode)) {
+                        standardTime = standardTimeRepository.getByRepairCode(repairCode);
+                    }else{
+                        standardTime.setRepairCode(repairCode);
+                    }
+                    while (sc.hasNext()) {
+                        boolean typeIsPresent = false;
+                        matcher = pattern1.matcher(sc.nextLine());
+                        if (matcher.find()) {
+//                            System.out.println(matcher.group());
+                            if (typeRepairRepository.getByVendorCode(matcher.group()).isPresent()) {
+                                standardTime.getTypeRepairList()
+                                        .add(typeRepairRepository.getByVendorCode(matcher.group()).get());
+                                typeIsPresent = true;
+                            }
+                            if (sc.hasNext()) sc.nextLine();
+                        }
+                        matcher = pattern2.matcher(sc.nextLine());
+                        if (matcher.find()) {
+//                            System.out.println(matcher.group());
+                            standardTime.getStandardTimes().add(Double.parseDouble(matcher.group()));
+                            if (typeIsPresent) {
+                                standardTimeRepository.save(standardTime);
+                            }
+                            if (sc.hasNext()) sc.nextLine();
+                        }
+                    }
+                }
+            }
         }
     }
+    public void readFileGroup(String fileName) throws FileNotFoundException {
+        File file = new File(fileName);
+        Scanner sc = new Scanner(file);
+
+        String PATTERN = "(\\(?((ABS)|(ESP)|(T)|[А-Я])+\\d*\\.?\\)?\\,*\\/?\\s*)+";
+        Pattern pattern = Pattern.compile(PATTERN);
+        Matcher matcher;
+        while (sc.hasNext()) {
+            matcher = pattern.matcher(sc.nextLine().replaceAll("Услуга", "услуга"));
+            if (matcher.find()) {
+//                System.out.println(matcher.group());  // Выводит: подстрокой
+                RepairGroup repairGroup = new RepairGroup();
+                if (repairGroupRepository.existsByName(matcher.group())) {
+                    repairGroup = repairGroupRepository.getByName(matcher.group()).get();
+                } else {
+                    repairGroup.setName(matcher.group());
+                }
+                matcher = pattern.matcher(sc.nextLine().replaceAll("Услуга", "услуга"));
+                if (matcher.find()) {
+//                    System.out.println(matcher.group());  // Выводит: подстрокой
+                    RepairGroupMain repairGroupMain = new RepairGroupMain();
+                    if (repairGroupMainRepository.existsByName(matcher.group())) {
+                        repairGroupMain = repairGroupMainRepository.getByName(matcher.group()).get();
+                    } else {
+                        repairGroupMain.setName(matcher.group());
+                    }
+                    repairGroup.setRepairGroupMain(repairGroupMain);
+                    repairGroupRepository.save(repairGroup);
+                }
+            }
+        }
+    }
+
 }

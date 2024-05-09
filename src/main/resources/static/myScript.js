@@ -1,5 +1,5 @@
-function getRepairGroup(markid, modelid, typeEngineid, modificationid, id, groupMainName) {
-    fetch('/api/select/groupRepair/'+markid+'/'+modelid+'/'+typeEngineid+'/'+modificationid+'/'+id,{
+function getRepairGroup(markId, modelId, typeEngineId, modificationId, id, groupMainName) {
+    fetch('/api/select/groupRepair/'+markId+'/'+modelId+'/'+typeEngineId+'/'+modificationId+'/'+id,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ function getRepairGroup(markid, modelid, typeEngineid, modificationid, id, group
                 let repairGroupName = item.key;
                htmlFormType1.appendChild(repairGroup);
                htmlFormType1.appendChild(br);
-                repairGroup.setAttribute("onclick", "getStandardTimeData("+modificationid+","+repairGroupId+","+"'"+repairGroupName+"')");
+                repairGroup.setAttribute("onclick", "getStandardTimeData("+modificationId+","+repairGroupId+","+"'"+repairGroupName+"')");
             });
         })
         .catch(error => {
@@ -48,8 +48,8 @@ function getRepairGroup(markid, modelid, typeEngineid, modificationid, id, group
             console.error('There was a problem with the fetch operation:', error);
         });
 }
-function getStandardTimeData(modificationid, id, repairGroupName) {
-    fetch('/api/select/standardTime/1/2/3/'+modificationid+'/'+id, {
+function getStandardTimeData(modificationId, id, repairGroupName) {
+    fetch('/api/select/standardTime/1/2/3/'+modificationId+'/'+id, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -76,7 +76,6 @@ function getStandardTimeData(modificationid, id, repairGroupName) {
                 htmlFormTime.removeChild(htmlFormTime.firstChild);
             }
             data.forEach(item => {
-                // Assuming each item has 'id' and 'name' properties
                 const typeRepair = document.createElement('tr');
                 const timeRepair = document.createElement('tr');
                 typeRepair.textContent = item.key;
@@ -90,4 +89,31 @@ function getStandardTimeData(modificationid, id, repairGroupName) {
             console.error('There was a problem with the fetch operation:', error);
         });
 
+}
+function getSpecificationGroup(id, header) {
+    fetch('/api/select/specificationGroup/' + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((data)=>{
+            const htmlFormSpecification = document.querySelector('#specificationGroup');
+            const specificationHead = document.getElementById('specificationGroupHead');
+            specificationHead.textContent = header;
+            while(htmlFormSpecification.firstChild){
+                htmlFormSpecification.removeChild(htmlFormSpecification.firstChild);
+            }
+            data.forEach(item => {
+                const specificationRow = document.createElement('tr');
+                specificationRow.textContent = item.key;
+                htmlFormSpecification.appendChild(specificationRow);
+            });
+        })
 }

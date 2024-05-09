@@ -64,18 +64,17 @@
         <table>
             <thead>
             <th>Tехнические данные</th>
-            <th></th>
-            <th></th>
+            <th id="specificationGroupHead"></th>
             </thead>
             <tbody>
             <tr>
                 <td>
             <div th:each="specificationGroup:${specificationGroupList}">
-                <p th:text="${specificationGroup.headerGroup}"></p>
+                <a th:id="${specificationGroup.id}" href="#" th:onclick="getSpecificationGroup([[${specificationGroup.id}]],[[${specificationGroup.headerGroup}]])"
+                   th:text="${specificationGroup.headerGroup}">text</a>
             </div>
                 </td>
-                <td></td>
-                <td></td>
+                <td id="specificationGroup"></td>
             </tr>
             </tbody>
         </table>

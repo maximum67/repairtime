@@ -27,12 +27,12 @@ public class StandardTime {
             name = "type_repairs_repair_code",
             joinColumns = @JoinColumn(name = "repair_standard_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "type_repair_id", referencedColumnName = "id"))
-     private List<TypeRepair> typeRepairList = new LinkedList<>();
+     private List<TypeRepair> typeRepairList;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "standard_time_collection",
             joinColumns = @JoinColumn(name = "standard_time_id"))
-    private List<Double> standardTimes = new LinkedList<>();
+    private List<Double> standardTimes;
 
     @Override
     public boolean equals(Object o) {

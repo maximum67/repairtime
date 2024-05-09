@@ -23,11 +23,11 @@ public class SpecificationGroup {
     @Column(name="header_group")
     private String headerGroup;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private SpecificationsCar specificationsCar;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "specificationGroup")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "specificationGroup")
     private List<SpecificationRow> specificationRowList;
 
     @Override

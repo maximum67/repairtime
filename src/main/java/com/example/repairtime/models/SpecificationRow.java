@@ -28,7 +28,7 @@ public class SpecificationRow {
     @Column(name="specification_value")
     private String specificationValue="";
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private SpecificationGroup specificationGroup;
 

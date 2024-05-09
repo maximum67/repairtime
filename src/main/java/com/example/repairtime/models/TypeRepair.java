@@ -36,7 +36,7 @@ public class TypeRepair {
             name = "type_repairs_repair_code",
             joinColumns = @JoinColumn(name = "type_repair_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "repair_standard_id", referencedColumnName = "id"))
-    private List<StandardTime> standardTimeList = new LinkedList<>();
+    private List<StandardTime> standardTimeList;
 
     @Override
     public boolean equals(Object o) {

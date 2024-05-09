@@ -29,6 +29,7 @@ public class RestDataController {
     private final ModelAutoService modelAutoService;
     private final TypeEngineService typeEngineService;
     private final RepairGroupService repairGroupService;
+    private final SpecificationsCarService specificationsCarService;
 
     @GetMapping("/standardTime/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
     public List<Map<String, String>> getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
@@ -50,5 +51,9 @@ public class RestDataController {
                                                 @PathVariable("modificationid") ModificationAuto modificationAuto,
                                                 @PathVariable("id") RepairGroupMain repairGroupMain){
         return  repairGroupService.getAllRepairGroupOfModification(repairGroupMain,modificationAuto);
+    }
+    @GetMapping("/specificationGroup/{id}")
+    public List<Map<String, String>> getSpecificationGroup(@PathVariable("id") SpecificationGroup specificationGroup){
+        return specificationsCarService.getSpecificationsMaps(specificationGroup);
     }
 }

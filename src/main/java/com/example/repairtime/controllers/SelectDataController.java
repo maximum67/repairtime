@@ -33,6 +33,7 @@ public class SelectDataController {
     private final TypeRepaireService typeRepaireService;
     private final RepairGroupService repairGroupService;
     private final TechnikalDataService technikalDataService;
+    private final SpecificationsCarService specificationsCarService;
 
     @GetMapping("/mark")
     public String getMark(Model model){
@@ -84,9 +85,8 @@ public class SelectDataController {
         model.addAttribute("model", modelAuto);
         model.addAttribute("type", typeEngine);
         model.addAttribute("modification",modificationAuto);
-        model.addAttribute("repairCode", modificationAuto.getRepairCode());
-        model.addAttribute("specificationGroupList",technikalDataService.getTechnikalDataListByModification(modificationAuto));
         model.addAttribute("groupRepairMains", repairGroupService.findAllRepairGroupMain());
+        model.addAttribute("specificationGroupList",specificationsCarService.getSpecificationDataGroupListByModification(modificationAuto));
         return "autoCode";
     }
 
