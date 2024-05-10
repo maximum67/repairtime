@@ -47,11 +47,12 @@ public class ReceivedDataController {
                                      NoSuchAlgorithmException,
                                      BadPaddingException,
                                      InvalidKeyException {
-//        technikalDataService.readTechnikalData("ТехническиеДанные");
+        technikalDataService.readTechnikalData("ТехническиеДанные");
+//        technikalDataService.readeGroup("Группы технических данных");
 //        autoDataService.readFileAndSaveData("ЛистМодификаций.xlsx");
 //        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
 //        technikalDataService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
-        technikalDataService.readDirectories("Нормы времени");
+//        technikalDataService.readDirectories("Нормы времени");
         return "redirect:/data/modification/list";
     }
     @GetMapping("/modification/edit/{modification}")

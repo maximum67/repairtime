@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface SpecificationRowRepository extends JpaRepository<SpecificationRow, Long> {
 
-    Optional<SpecificationRow>  findAllBySpecificationGroup_HeaderGroup(String string);
+
 }

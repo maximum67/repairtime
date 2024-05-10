@@ -17,11 +17,12 @@ public class SpecificationGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column
     private long id;
 
-    @Column(name="header_group")
-    private String headerGroup;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private SpecificationsGroupName specificationsGroupName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -35,11 +36,11 @@ public class SpecificationGroup {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SpecificationGroup that = (SpecificationGroup) o;
-        return id == that.id && Objects.equals(headerGroup, that.headerGroup) && Objects.equals(specificationsCar, that.specificationsCar) && Objects.equals(specificationRowList, that.specificationRowList);
+        return id == that.id && Objects.equals(specificationsGroupName, that.specificationsGroupName) && Objects.equals(specificationsCar, that.specificationsCar) && Objects.equals(specificationRowList, that.specificationRowList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, headerGroup, specificationsCar, specificationRowList);
+        return Objects.hash(id, specificationsGroupName, specificationsCar, specificationRowList);
     }
 }

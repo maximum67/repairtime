@@ -26,7 +26,9 @@ public class SpecificationsCarService {
             return specificationsCarRepository.getOptionalByRepairCode(repairCodeDecrypt).get().getSpecificationGroupList();
         }else{
             SpecificationGroup specificationGroup = new SpecificationGroup();
-            specificationGroup.setHeaderGroup("Данные отсутствуют");
+            SpecificationsGroupName specificationsGroupName = new SpecificationsGroupName();
+            specificationsGroupName.setName("Данные отсутствуют");
+            specificationGroup.setSpecificationsGroupName(specificationsGroupName);
             return Collections.singletonList(specificationGroup);
         }
     }
@@ -38,7 +40,9 @@ public class SpecificationsCarService {
         }else{
             List <SpecificationGroup> list = new ArrayList<>();
             SpecificationGroup specificationGroup = new SpecificationGroup();
-            specificationGroup.setHeaderGroup("Данные отсутствуют");
+            SpecificationsGroupName specificationsGroupName = new SpecificationsGroupName();
+            specificationsGroupName.setName("Данные отсутствуют");
+            specificationGroup.setSpecificationsGroupName(specificationsGroupName);
             list.add(specificationGroup);
             return list;
         }

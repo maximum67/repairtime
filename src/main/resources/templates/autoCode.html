@@ -70,8 +70,8 @@
             <tr>
                 <td>
             <div th:each="specificationGroup:${specificationGroupList}">
-                <a th:id="${specificationGroup.id}" href="#" th:onclick="getSpecificationGroup([[${specificationGroup.id}]],[[${specificationGroup.headerGroup}]])"
-                   th:text="${specificationGroup.headerGroup}">text</a>
+                <a th:id="${specificationGroup.id}" href="#" th:onclick="getSpecificationGroup([[${specificationGroup.id}]],[[${specificationGroup.specificationsGroupName.name}]])"
+                   th:text="${specificationGroup.specificationsGroupName.name}">text</a>
             </div>
                 </td>
                 <td id="specificationGroup"></td>

@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,35 @@ public class TechnikalDataService {
     private final TypeRepairRepository typeRepairRepository;
     private final RepairGroupRepository repairGroupRepository;
     private final RepairGroupMainRepository repairGroupMainRepository;
+    private final SpecificationsGroupNameRepository specificationsGroupNameRepository;
+
+    public  void readeGroup(String fileName) throws FileNotFoundException {
+        File dir = new File(fileName);
+        List<SpecificationsGroupName> specificationsGroupNameList = new ArrayList<>();
+        if (!specificationsGroupNameRepository.findAll().isEmpty()){
+            specificationsGroupNameList = specificationsGroupNameRepository.findAll();
+        }
+        if (dir.isDirectory()) {
+            for (File item : Objects.requireNonNull(dir.listFiles())) {
+                if (item.isDirectory()) {
+                    System.out.println(item.getName() + "  \t folder");
+                } else {
+//                    System.out.println(item.getName() + "  \t file");
+                    Scanner sc = new Scanner(item, "UTF-8");
+                    while (sc.hasNextLine()) {
+                        String string = sc.nextLine();
+//                        System.out.println(string);
+                        if (specificationsGroupNameList.isEmpty() || specificationsGroupNameList.stream().noneMatch(s -> s.getName().equals(string))) {
+                            SpecificationsGroupName specificationsGroupName = new SpecificationsGroupName();
+                            specificationsGroupName.setName(string.trim());
+                            specificationsGroupNameRepository.save(specificationsGroupName);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     public void readTechnikalData(String fileName) throws FileNotFoundException {
 
@@ -46,7 +76,7 @@ public class TechnikalDataService {
 //                    System.out.println(item.getName().replaceAll(".txt", ""));
                     Scanner sc = new Scanner(item,"UTF-8");
                     int i = 1;
-                    List<String> listResult = new LinkedList<>();
+                    List<String> listResult = new ArrayList<>();
                     StringBuilder stringBuilder = new StringBuilder();
                     String repairCode = item.getName().replaceAll(".txt", "");
                     String repairCodeEncoded = Base64.getEncoder().encodeToString(repairCode.getBytes());
@@ -85,44 +115,59 @@ public class TechnikalDataService {
 //                        }
                     }
                     listResult = Arrays.asList(stringBuilder.toString().split("\n"));
-
+                    List<String> groupNameList = specificationsGroupNameRepository.findAll()
+                            .stream().map(SpecificationsGroupName::getName).toList();
+                    List<SpecificationsGroupName> specificationsGroupNameList = specificationsGroupNameRepository.findAll();
 
                     for (String s : listResult) {
 //                        System.out.println(s);
+                        if (s.equals("Головка блока цилиндров;*;*;") || s.equals("Другие моменты затяжки (двигатель);*;*;")){
+                            s = s.replaceAll("\\*"," ");
+                        }
                         if (s.contains(";*;*;")) {
+                            s = s.replaceAll(";\\*;\\*;","");
+                        }
+                        String[] strings = s.split(";");
+
+                        if (groupNameList.contains(s)) {
+                            String finalS = s;
+                            SpecificationsGroupName specificationsGroupName = specificationsGroupNameList.stream()
+                                                                             .filter(sGName -> sGName.getName().equals(finalS))
+                                                                             .findFirst().get();
                             SpecificationGroup specificationGroup = new SpecificationGroup();
-                            specificationGroup.setHeaderGroup(s.replaceAll(";\\*;\\*;", ""));
-//                            System.out.println(s);
                             if (specificationsCar.getSpecificationGroupList()==null) {
-                                List<SpecificationGroup> specificationGroupList = new LinkedList<>();
+                                List<SpecificationGroup> specificationGroupList = new ArrayList<>();
+                                specificationGroup.setSpecificationsGroupName(specificationsGroupName);
                                 specificationGroupList.add(specificationGroup);
                                 specificationsCar.setSpecificationGroupList(specificationGroupList);
-                            } else {
+                            } else if (!specificationsCar.getSpecificationGroupList().stream()
+                                    .map(SpecificationGroup::getSpecificationsGroupName)
+                                    .map(SpecificationsGroupName::getName).toList().contains(s)) {
+                                specificationGroup.setSpecificationsGroupName(specificationsGroupName);
                                 specificationsCar.getSpecificationGroupList().add(specificationGroup);
                             }
                             specificationGroup.setSpecificationsCar(specificationsCar);
 //                            specificationGroupRepository.save(specificationGroup);
-                        } else {
-                            String[] strings = s.split(";");
-//                            Arrays.stream(strings).forEach(System.out::println);
+                        } else if (strings.length == 3) {
                             SpecificationRow specificationRow = new SpecificationRow();
-                            specificationRow.setSpecificationName(strings[0]);
-                            specificationRow.setSpecificationUnit(strings[1].replaceAll("\\*",""));
-                            specificationRow.setSpecificationValue(strings[2].replaceAll("\\*",""));
+                            specificationRow.setSpecificationName(strings[0].replaceAll("\\*", " ").trim());
+                            specificationRow.setSpecificationUnit(strings[1].replaceAll("\\*", " ").trim());
+                            specificationRow.setSpecificationValue(strings[2].replaceAll("\\*", " ").trim());
+
 
                             if (specificationsCar.getSpecificationGroupList()==null) {
-                                List<SpecificationRow> specificationRowList = new LinkedList<>();
+                                List<SpecificationRow> specificationRowList = new ArrayList<>();
                                 specificationRowList.add(specificationRow);
                                 SpecificationGroup specificationGroup = new SpecificationGroup();
                                 specificationGroup.setSpecificationRowList(specificationRowList);
-                                List<SpecificationGroup> specificationGroupList = new LinkedList<>();
+                                List<SpecificationGroup> specificationGroupList = new ArrayList<>();
                                 specificationGroupList.add(specificationGroup);
                                 specificationsCar.setSpecificationGroupList(specificationGroupList);
                             } else {
                                 List<SpecificationGroup> specificationGroupList = specificationsCar.getSpecificationGroupList();
                                 SpecificationGroup specificationGroup1 = specificationsCar.getSpecificationGroupList().get(specificationGroupList.size() - 1);
                                 if (specificationGroup1.getSpecificationRowList()==null) {
-                                    List<SpecificationRow> specificationRowList = new LinkedList<>();
+                                    List<SpecificationRow> specificationRowList = new ArrayList<>();
                                     specificationRowList.add(specificationRow);
                                     specificationsCar.getSpecificationGroupList().get(specificationGroupList.size() - 1).setSpecificationRowList(specificationRowList);
                                 } else {
@@ -144,20 +189,20 @@ public class TechnikalDataService {
                     specificationsCarRepository.save(specificationsCar);
                     System.out.println(repairCode);
 //                    System.out.println(specificationsCarRepository.getByRepairCode(repairCode));
-                    List<SpecificationGroup> specificationGroupList = specificationGroupRepository
-                                                       .findAllBySpecificationsCar_RepairCode(repairCodeEncoded)
-                                                       .get();
-                    for (SpecificationGroup sg : specificationGroupList) {
-//                        System.out.println(sg.getHeaderGroup());
-                        List<SpecificationRow> specificationRowList = sg.getSpecificationRowList();
-                        if (!(specificationRowList==null)) {
-                            for (SpecificationRow sr : specificationRowList) {
+//                    List<SpecificationGroup> specificationGroupList = specificationGroupRepository
+//                                                       .findAllBySpecificationsCar_RepairCode(repairCodeEncoded)
+//                                                       .get();
+//                    for (SpecificationGroup sg : specificationGroupList) {
+//                        System.out.println(sg.getSpecificationsGroupName().getName());
+//                        List<SpecificationRow> specificationRowList = sg.getSpecificationRowList();
+//                        if (!(specificationRowList==null)) {
+//                            for (SpecificationRow sr : specificationRowList) {
 //                                System.out.println(sr.getSpecificationName() + " "
 //                                        + sr.getSpecificationValue() + " "
 //                                        + sr.getSpecificationUnit());
-                            }
-                        }
-                    }
+//                            }
+//                        }
+//                    }
                 }
             }
         }
