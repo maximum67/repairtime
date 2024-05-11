@@ -76,13 +76,15 @@ public class TechnikalDataService {
 //                    System.out.println(item.getName().replaceAll(".txt", ""));
                     Scanner sc = new Scanner(item,"UTF-8");
                     int i = 1;
+
                     List<String> listResult = new ArrayList<>();
                     StringBuilder stringBuilder = new StringBuilder();
                     String repairCode = item.getName().replaceAll(".txt", "");
                     String repairCodeEncoded = Base64.getEncoder().encodeToString(repairCode.getBytes());
                     SpecificationsCar specificationsCar = new SpecificationsCar();
                     if (specificationsCarRepository.existsByRepairCode(repairCodeEncoded)){
-                         specificationsCar = specificationsCarRepository.getByRepairCode(repairCodeEncoded);
+//                         specificationsCar = specificationsCarRepository.getByRepairCode(repairCodeEncoded);
+                        continue;
                     }else {
                         specificationsCar.setRepairCode(repairCodeEncoded);
                         specificationsCarRepository.save(specificationsCar);
@@ -114,10 +116,10 @@ public class TechnikalDataService {
 //                            if(sc.hasNext()) sc.nextLine();
 //                        }
                     }
+
                     listResult = Arrays.asList(stringBuilder.toString().split("\n"));
-                    List<String> groupNameList = specificationsGroupNameRepository.findAll()
-                            .stream().map(SpecificationsGroupName::getName).toList();
                     List<SpecificationsGroupName> specificationsGroupNameList = specificationsGroupNameRepository.findAll();
+                    List<String> groupNameList = specificationsGroupNameList.stream().map(SpecificationsGroupName::getName).toList();
 
                     for (String s : listResult) {
 //                        System.out.println(s);
@@ -153,7 +155,6 @@ public class TechnikalDataService {
                             specificationRow.setSpecificationName(strings[0].replaceAll("\\*", " ").trim());
                             specificationRow.setSpecificationUnit(strings[1].replaceAll("\\*", " ").trim());
                             specificationRow.setSpecificationValue(strings[2].replaceAll("\\*", " ").trim());
-
 
                             if (specificationsCar.getSpecificationGroupList()==null) {
                                 List<SpecificationRow> specificationRowList = new ArrayList<>();
@@ -212,7 +213,7 @@ public class TechnikalDataService {
 
         File dir = new File(fileName);
         String PATTERN_1 = "[A-Z]{1}\\d{1,2}\\.\\d{4}\\.?\\d?";
-        String PATTERN_2 = "\\d{1,2}\\.\\d{1,2}";
+        String PATTERN_2 = "\\d{1,2}\\.?\\d*";
         Pattern pattern1 = Pattern.compile(PATTERN_1);
         Pattern pattern2 = Pattern.compile(PATTERN_2);
         Matcher matcher;
@@ -229,35 +230,49 @@ public class TechnikalDataService {
                             .getBytes(StandardCharsets.UTF_8));
                     if (standardTimeRepository.existsByRepairCode(repairCode)) {
                         standardTime = standardTimeRepository.getByRepairCode(repairCode);
-                    }else{
+                    } else {
                         standardTime.setRepairCode(repairCode);
                     }
+
                     while (sc.hasNext()) {
                         boolean typeIsPresent = false;
+                        int indexTypeRepair = -1;
                         matcher = pattern1.matcher(sc.nextLine());
                         if (matcher.find()) {
 //                            System.out.println(matcher.group());
                             if (typeRepairRepository.getByVendorCode(matcher.group()).isPresent()) {
-                                standardTime.getTypeRepairList()
-                                        .add(typeRepairRepository.getByVendorCode(matcher.group()).get());
-                                typeIsPresent = true;
+                                TypeRepair typeRepair = typeRepairRepository.getByVendorCode(matcher.group()).get();
+                                if (standardTime.getTypeRepairList().contains(typeRepair)) {
+                                    indexTypeRepair = standardTime.getTypeRepairList().indexOf(typeRepair);
+                                } else {
+                                    standardTime.getTypeRepairList().add(typeRepair);
+                                    typeIsPresent = true;
+                                }
+                                sc.nextLine();
                             }
-                            if (sc.hasNext()) sc.nextLine();
-                        }
-                        matcher = pattern2.matcher(sc.nextLine());
-                        if (matcher.find()) {
-//                            System.out.println(matcher.group());
-                            standardTime.getStandardTimes().add(Double.parseDouble(matcher.group()));
-                            if (typeIsPresent) {
-                                standardTimeRepository.save(standardTime);
-                            }
-                            if (sc.hasNext()) sc.nextLine();
+//                            matcher = pattern2.matcher(sc.nextLine());
+                            String str = sc.nextLine();
+                            String resultString = (str.replaceAll("\\{\"N\"\\,", "")
+                                    .replaceAll("\\}\\,",""));
+//                            if (matcher.find()) {
+//                            System.out.println(resultString);
+                                if (indexTypeRepair != -1) {
+                                    standardTime.getStandardTimes().set(indexTypeRepair, Double.parseDouble(resultString));
+                                } else {
+                                    standardTime.getStandardTimes().add(Double.parseDouble(resultString));
+                                    if (typeIsPresent) {
+                                        standardTimeRepository.save(standardTime);
+                                    }
+                                    if (sc.hasNext()) sc.nextLine();
+                                }
+//                            }
                         }
                     }
                 }
             }
         }
     }
+
     public void readFileGroup(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
         Scanner sc = new Scanner(file);
@@ -276,7 +291,8 @@ public class TechnikalDataService {
                     repairGroup.setName(matcher.group());
                 }
                 matcher = pattern.matcher(sc.nextLine().replaceAll("Услуга", "услуга"));
-                if (matcher.find()) {
+                if (matcher.find() &&
+                        !matcher.group().equals("РЕМОНТНЫЕ РАБОТЫ НОРМО/ЧАС")) {
 //                    System.out.println(matcher.group());  // Выводит: подстрокой
                     RepairGroupMain repairGroupMain = new RepairGroupMain();
                     if (repairGroupMainRepository.existsByName(matcher.group())) {
