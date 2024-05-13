@@ -233,15 +233,21 @@ public class TechnikalDataService {
                     } else {
                         standardTime.setRepairCode(repairCode);
                     }
-
+                    List<TypeRepair> typeRepairList = typeRepairRepository.findAll();
+                    List<String> vendorCodeList = typeRepairList.stream().map(TypeRepair::getVendorCode).toList();
                     while (sc.hasNext()) {
                         boolean typeIsPresent = false;
                         int indexTypeRepair = -1;
                         matcher = pattern1.matcher(sc.nextLine());
                         if (matcher.find()) {
+                            String matcherString = matcher.group();
 //                            System.out.println(matcher.group());
-                            if (typeRepairRepository.getByVendorCode(matcher.group()).isPresent()) {
-                                TypeRepair typeRepair = typeRepairRepository.getByVendorCode(matcher.group()).get();
+//                            Optional<TypeRepair> optionalTypeRepair = typeRepairRepository.getByVendorCode(matcher.group());
+//                            if (optionalTypeRepair.isPresent()) {
+                            if (vendorCodeList.contains(matcherString)) {
+                                TypeRepair typeRepair = typeRepairList.stream()
+                                        .filter(typeRepair1 -> typeRepair1.getVendorCode().equals(matcherString)).findFirst().get();
+//                                TypeRepair typeRepair = optionalTypeRepair.get();
                                 if (standardTime.getTypeRepairList().contains(typeRepair)) {
                                     indexTypeRepair = standardTime.getTypeRepairList().indexOf(typeRepair);
                                 } else {
