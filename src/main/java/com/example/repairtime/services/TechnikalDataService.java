@@ -248,8 +248,8 @@ public class TechnikalDataService {
                                     standardTime.getTypeRepairList().add(typeRepair);
                                     typeIsPresent = true;
                                 }
-                                sc.nextLine();
                             }
+                            sc.nextLine();
 //                            matcher = pattern2.matcher(sc.nextLine());
                             String str = sc.nextLine();
                             String resultString = (str.replaceAll("\\{\"N\"\\,", "")
