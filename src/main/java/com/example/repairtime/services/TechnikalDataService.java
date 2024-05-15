@@ -274,7 +274,9 @@ public class TechnikalDataService {
 //                            }
                         }
                     }
+                    sc.close();
                 }
+
             }
         }
     }
