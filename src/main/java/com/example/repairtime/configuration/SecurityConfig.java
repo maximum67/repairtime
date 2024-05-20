@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/auth/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/data/modification")
                 .permitAll()
                 .and()
                 .logout()
@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/auth/login")
                 .permitAll();
         return http.build();
     }

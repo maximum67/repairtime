@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public boolean createNewUser(User user) {
-        if (userRepository.getUserByName(user.getName()).isPresent()) {
+        if (userRepository.getUserByName(user.getUsername()).isPresent()) {
             return false;
         } else {
             if (userRepository.findAll().isEmpty()) {
@@ -30,6 +30,7 @@ public class UserService {
             } else {
                 user.getRoles().add(Role.ROLE_USER);
             }
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return true;
         }
