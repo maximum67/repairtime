@@ -217,6 +217,7 @@ public class TechnikalDataService {
         Pattern pattern1 = Pattern.compile(PATTERN_1);
         Pattern pattern2 = Pattern.compile(PATTERN_2);
         Matcher matcher;
+        int counter = 1;
         if (dir.isDirectory()) {
             for (File item : Objects.requireNonNull(dir.listFiles())) {
                 if (item.isDirectory()) {
@@ -225,6 +226,7 @@ public class TechnikalDataService {
                     System.out.println(item.getName().replaceAll(".txt", ""));
                     Scanner sc = new Scanner(item);
                     StandardTime standardTime = new StandardTime();
+                    List<StandardTime> standardTimeList = new ArrayList<>();
                     String repairCode = Base64.getEncoder().encodeToString(item.getName()
                             .replaceAll(".txt", "")
                             .getBytes(StandardCharsets.UTF_8));
@@ -267,7 +269,8 @@ public class TechnikalDataService {
                                 } else {
                                     standardTime.getStandardTimes().add(Double.parseDouble(resultString));
                                     if (typeIsPresent) {
-                                        standardTimeRepository.save(standardTime);
+//                                        standardTimeRepository.save(standardTime);
+                                        standardTimeList.add(standardTime);
                                     }
                                     if (sc.hasNext()) sc.nextLine();
                                 }
@@ -275,6 +278,11 @@ public class TechnikalDataService {
                         }
                     }
                     sc.close();
+                    standardTimeRepository.saveAll(standardTimeList);
+                    //____________________________________________________
+                    long point5 = System.currentTimeMillis();
+                    System.out.println(counter++);
+                    //_________________________________________
                 }
 
             }
