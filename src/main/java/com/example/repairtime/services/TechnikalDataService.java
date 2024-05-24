@@ -256,31 +256,37 @@ public class TechnikalDataService {
                                     standardTime.getTypeRepairList().add(typeRepair);
                                     typeIsPresent = true;
                                 }
-                            }
-                            sc.nextLine();
-//                            matcher = pattern2.matcher(sc.nextLine());
-                            String str = sc.nextLine();
-                            String resultString = (str.replaceAll("\\{\"N\"\\,", "")
-                                    .replaceAll("\\}\\,",""));
+//                                System.out.println(typeRepair.getName()+" "+typeRepair.getVendorCode());
+
+
+                                sc.nextLine();
+//                              matcher = pattern2.matcher(sc.nextLine());
+                                String str = sc.nextLine();
+                                String resultString = (str.replaceAll("\\{\"N\"\\,", "")
+                                        .replaceAll("\\}\\,", ""));
 //                            if (matcher.find()) {
-//                            System.out.println(resultString);
+//                                System.out.println(resultString);
                                 if (indexTypeRepair != -1) {
                                     standardTime.getStandardTimes().set(indexTypeRepair, Double.parseDouble(resultString));
+//                                    System.out.println(standardTime.getStandardTimes().get(indexTypeRepair));
                                 } else {
                                     standardTime.getStandardTimes().add(Double.parseDouble(resultString));
+//                                    int q = standardTime.getStandardTimes().size();
+//                                    System.out.println(standardTime.getStandardTimes().get(q-1));
                                     if (typeIsPresent) {
 //                                        standardTimeRepository.save(standardTime);
                                         standardTimeList.add(standardTime);
                                     }
                                     if (sc.hasNext()) sc.nextLine();
                                 }
-//                            }
+
+                            }
                         }
                     }
                     sc.close();
                     standardTimeRepository.saveAll(standardTimeList);
                     //____________________________________________________
-                    long point5 = System.currentTimeMillis();
+//                    long point5 = System.currentTimeMillis();
                     System.out.println(counter++);
                     //_________________________________________
                 }

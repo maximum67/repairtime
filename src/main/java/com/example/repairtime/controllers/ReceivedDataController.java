@@ -51,8 +51,8 @@ public class ReceivedDataController {
 //        technikalDataService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
 //        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
 //        technikalDataService.readeGroup("Группы технических данных");
-//        technikalDataService.readTechnikalData("ТехническиеДанные");
-        technikalDataService.readDirectories("Нормы времени");
+        technikalDataService.readTechnikalData("ТехническиеДанные");
+//        technikalDataService.readDirectories("Нормы времени");
         return "redirect:/data/modification/list";
     }
     @GetMapping("/modification/edit/{modification}")
