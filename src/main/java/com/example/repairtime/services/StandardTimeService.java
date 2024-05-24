@@ -76,6 +76,7 @@ public class StandardTimeService {
         List<Map<String, String>> mapList = new LinkedList<>();
         Map<String, String> defaultMap = new HashMap<>();
         defaultMap.put("key", "Данные отсутствуют");
+        defaultMap.put("value","-");
         for (int i = 0; i< typeRepairList.size(); i++) {
             Map<String, String> map = new HashMap<>();
             if (typeRepairList.get(i).getRepairGroup().getName().equals(repairGroup.getName())) {

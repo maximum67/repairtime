@@ -1,10 +1,14 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
+<html lang="en" data-bs-theme="auto">
+  <head>
+   <script src="/js/color-modes.js"></script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <title th:text="${title}">title</title>
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.112.5">
+    <title>login</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
     <link href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" type="text/css" rel="stylesheet"/>
 
@@ -31,70 +35,65 @@
     <!--            src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=YOpYTRUk6jLx_FKfDTa9F2WFS5iMoeVb2ohfCAeR3wolBL-vPnofLRncLV64RU3wqpj8mMpIRr9TBRBvrH69y0fMJFyTXJ-kzPWg-TM11MU"-->
     <!--            charset="UTF-8"></script>-->
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
         }
+      }
     </style>
 
 
     <!-- Custom styles for this template -->
-    <link href="/data/modification" rel="stylesheet">
-</head>
-<body class="text-center">
 
-<main class="form-signin">
+  </head>
+  <body class="text-center">
+
+  <main class="form-signin">
     <br><br><br>
     <div class="container-lg">
-        <br><br><br>
-        <div class="row">
-            <div class="col"></div>
-            <br><br>
-            <div class="col-sm-6">
-                <form class="form-signin" th:action="@{/auth/login}" method="post">
-                    <h1 class="h3 mb-3 fw-normal">Пожалуйста, войдите в систему</h1>
+      <br><br><br>
+      <div class="row">
+        <div class="col"></div>
+        <br><br>
+        <div class="col-sm-6">
+          <form class="form-signin" th:action="@{/auth/login}" method="post">
+            <h1 class="h3 mb-3 fw-normal"><b>Авторизация</b></h1>
 
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="username" id="floatingInput"
-                               autocomplete="new-username" placeholder="Username">
-                        <label for="floatingInput">Username</label>
-                    </div>
-                    <br>
-                    <div class="form-floating">
-                        <input type="password" class="form-control" name="password" id="floatingPassword"
-                               autocomplete="new-password" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
-                    </div>
-                    <br><br>
-                    <!--                    <div class="checkbox mb-3">-->
-                    <!--                        <label>-->
-                    <!--                            <input type="checkbox" value="remember-me"> Запомнить меня-->
-                    <!--                        </label>-->
-                    <!--                    </div>-->
-                    <button class="w-100 btn btn-lg btn-secondary" type="submit">Войти</button>
-                    <br><br>
-
-                </form>
-                <br>
-                <a class="lead" th:href="@{/auth/registration}"><h5>Регистрация</h5></a>
+            <div class="form-floating">
+              <input type="text" class="form-control" name="username" id="floatingInput"
+                     autocomplete="new-username" placeholder="Username">
+              <label for="floatingInput">Username</label>
             </div>
-
-            <div class="col"></div>
+            <br>
+            <div class="form-floating">
+              <input type="password" class="form-control" name="password" id="floatingPassword"
+                     autocomplete="new-password" placeholder="Password">
+              <label for="floatingPassword">Password</label>
+            </div>
+            <br><br>
+            <button class="w-100 btn btn-lg btn-secondary" type="submit">Войти</button>
+          </form>
         </div>
-        <br><br><br><br><br><br>
-        <h1 class="h3 mb-3 flex-wrap ">MADigital</h1>
-        <br><br><br>
+        <div class="col"></div>
+      </div>
+      <br><br>
+      <div class="text-center">
+        <a class="lead" th:href="@{/auth/registration}"><h5>Регистрация</h5></a>
+      </div>
+      <br><br><br><br>
+      <h1 class="h3 mb-3 flex-wrap ">MADigital</h1>
+      <br><br><br>
     </div>
     <br><br><br>
-</main>
-</body>
+  </main>
+  <link href="/data/modification" rel="stylesheet">
+  </body>
 </html>
