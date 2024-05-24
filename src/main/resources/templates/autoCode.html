@@ -3,19 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title>autoCode</title>
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
 </head>
-<body style="background-color: #6edff6">
-<div>
+<body>
+<div class="container-fluid">
+
+    <div> <h1>Dt' works</h1></div>
+
     <main>
-        <h1>Выбор автомобиля</h1><b></b>
         <br>
-        <table>
+        <table class="table">
             <thead>
             <tr>
-                <th>Марка автомобиля</th>
-                <th>Модель автомобиля</th>
-                <th>Тип двигателя</th>
-                <th>Модификация</th>
+                <th scope="col">Марка автомобиля</th>
+                <th scope="col">Модель автомобиля</th>
+                <th scope="col">Тип двигателя</th>
+                <th scope="col">Модификация</th>
             </tr>
             </thead>
             <hr>
@@ -36,12 +39,12 @@
         <br>
         <hr>
         <br>
-        <table>
+        <table class="table">
             <thead>
-            <th id="repairGroupMainHead">ГРУППА РЕМОНТА</th>
-            <th id="repairGroupHead"></th>
-            <th id="typeRepairHead"></th>
-            <th id="timeRepairHead"></th>
+            <th scope="col" id="repairGroupMainHead">ГРУППА РЕМОНТА</th>
+            <th scope="col" id="repairGroupHead"></th>
+            <th scope="col" id="typeRepairHead"></th>
+            <th scope="col" id="timeRepairHead"></th>
             </thead>
             <tbody>
             <tr>
@@ -61,20 +64,20 @@
         <br>
         <hr>
         <br>
-        <table>
+        <table class="table">
             <thead>
-            <th>Tехнические данные</th>
-            <th id="specificationGroupHead"></th>
+            <th class="col-6">Tехнические данные</th>
+            <th class="col-6" id="specificationGroupHead"></th>
             </thead>
             <tbody>
             <tr>
-                <td>
+                <td class="col-6">
             <div th:each="specificationGroup:${specificationGroupList}">
                 <a th:id="${specificationGroup.id}" href="#" th:onclick="getSpecificationGroup([[${specificationGroup.id}]],[[${specificationGroup.specificationsGroupName.name}]])"
                    th:text="${specificationGroup.specificationsGroupName.name}">text</a>
             </div>
                 </td>
-                <td id="specificationGroup"></td>
+                <td class="col-6" id="specificationGroup"></td>
             </tr>
             </tbody>
         </table>

@@ -44,7 +44,7 @@ function getRepairGroup(markId, modelId, typeEngineId, modificationId, id, group
             });
         })
         .catch(error => {
-        alert(error);
+        // alert(error);
             console.error('There was a problem with the fetch operation:', error);
         });
 }
@@ -85,7 +85,7 @@ function getStandardTimeData(modificationId, id, repairGroupName) {
             });
         })
         .catch(error => {
-            alert(error);
+            // alert(error);
             console.error('There was a problem with the fetch operation:', error);
         });
 
