@@ -34,7 +34,7 @@ function getRepairGroup(markId, modelId, typeEngineId, modificationId, id, group
                 const repairGroup = document.createElement('a');
                 const br = document.createElement('br');
                 repairGroup.textContent = item.key;
-                repairGroup.href = '#';
+                repairGroup.href = 'javascript:void(0);';
                 repairGroup.id = item.key;
                 let repairGroupId = item.value;
                 let repairGroupName = item.key;

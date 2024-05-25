@@ -50,7 +50,7 @@
             <tr>
                 <td>
                 <div th:each="groupmain:${groupRepairMains}">
-                <a th:id="${groupmain.id}" href="#" th:onclick="getRepairGroup([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${groupmain.id}]],[[${groupmain.name}]])"
+                <a th:id="${groupmain.id}" href="javascript:void(0);" th:onclick="getRepairGroup([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${groupmain.id}]],[[${groupmain.name}]])"
                        th:text="${groupmain.name}">text
                     </a>
                 </div>
@@ -73,7 +73,7 @@
             <tr>
                 <td class="col-6">
             <div th:each="specificationGroup:${specificationGroupList}">
-                <a th:id="${specificationGroup.id}" href="#" th:onclick="getSpecificationGroup([[${specificationGroup.id}]],[[${specificationGroup.specificationsGroupName.name}]])"
+                <a th:id="${specificationGroup.id}" href="javascript:void(0);" th:onclick="getSpecificationGroup([[${specificationGroup.id}]],[[${specificationGroup.specificationsGroupName.name}]])"
                    th:text="${specificationGroup.specificationsGroupName.name}">text</a>
             </div>
                 </td>
@@ -82,6 +82,9 @@
             </tbody>
         </table>
     </main>
+    <br>
+    <div>футер</div>
+    <br>
 </div>
 
 <script src="/myScript.js"></script>
