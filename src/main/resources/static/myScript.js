@@ -34,7 +34,7 @@ function getRepairGroup(markId, modelId, typeEngineId, modificationId, id, group
                 const repairGroup = document.createElement('a');
                 const br = document.createElement('br');
                 repairGroup.textContent = item.key;
-                repairGroup.href = '#';
+                repairGroup.href = 'javascript:void(0);';
                 repairGroup.id = item.key;
                 let repairGroupId = item.value;
                 let repairGroupName = item.key;
@@ -46,6 +46,7 @@ function getRepairGroup(markId, modelId, typeEngineId, modificationId, id, group
         .catch(error => {
         // alert(error);
             console.error('There was a problem with the fetch operation:', error);
+            window.location.href = '/auth/login';
         });
 }
 function getStandardTimeData(modificationId, id, repairGroupName) {
@@ -87,6 +88,7 @@ function getStandardTimeData(modificationId, id, repairGroupName) {
         .catch(error => {
             // alert(error);
             console.error('There was a problem with the fetch operation:', error);
+            window.location.href = '/auth/login';
         });
 
 }
