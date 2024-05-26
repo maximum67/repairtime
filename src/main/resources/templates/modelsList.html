@@ -3,20 +3,24 @@
 <head>
     <meta charset="utf-8">
     <title>modelList</title>
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link href="/css/headers.css" rel="stylesheet"/>
+    <link href="/css/footers.css" rel="stylesheet"/>
 </head>
 <body>
-<div>
+<div class="wrapper">
+    <header th:insert="/header.html :: header"> </header>
+    <div class="content">
     <main>
-        <h1>Выбор автомобиля</h1><b></b>
         <br>
-        <table>
+        <table class="table">
             <thead>
             <tr>
-                <th>Марка автомобиля</th>
-                <th>Модель автомобиля</th>
+                <th class="col-md-2">Марка автомобиля</th>
+                <th class="col-md-2">Модель автомобиля</th>
+                <th class="col-md-8"> </th>
             </tr>
             </thead>
-            <hr>
             <tbody>
             <tr>
                 <td th:text="${mark.name}">name</td>
@@ -35,6 +39,8 @@
             </tbody>
         </table>
     </main>
+    </div>
+    <div th:replace="/footer.html :: footer"></div>
 </div>
 </body>
 </html>
