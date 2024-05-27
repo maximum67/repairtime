@@ -16,10 +16,11 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String getLoginPage(Model model){
+    public String getLoginPage(Model model) {
         model.addAttribute("title", "Авторизация");
         return "login";
     }
+
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("errorMessage", true);
@@ -33,6 +34,11 @@ public class UserController {
             return "registration";
         }
         userService.createNewUser(user);
+        return "redirect:/auth/login";
+    }
+
+    @PostMapping("/logout")
+    public String logout(Model model) {
         return "redirect:/auth/login";
     }
 

@@ -10,7 +10,7 @@
 <body>
 
 <div class="wrapper">
-    <header th:insert="/header.html :: header"> </header>
+    <header th:replace="~{/header.html :: header}"> </header>
     <div class="content">
     <main>
         <br>
@@ -33,7 +33,7 @@
                 <td th:text="${modification.name}">name</td>
                 <td>
                     <form th:action="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">
-                        <button type="submit">Очистить</button>
+                        <button  class="btn btn-danger rounded-pill px-3" type="submit">Назад</button>
                     </form>
                 </td>
             </tr>
@@ -43,10 +43,10 @@
 
         <table class="table">
             <thead>
-            <th scope="col" id="repairGroupMainHead">ГРУППА РЕМОНТА</th>
-            <th scope="col" id="repairGroupHead"></th>
-            <th scope="col" id="typeRepairHead"></th>
-            <th scope="col" id="timeRepairHead"></th>
+            <th class="col" id="repairGroupMainHead">ГРУППА РЕМОНТА</th>
+            <th class="col" id="repairGroupHead"></th>
+            <th class="col" id="typeRepairHead"></th>
+            <th class="col" id="timeRepairHead"></th>
             </thead>
             <tbody>
             <tr>
@@ -84,12 +84,9 @@
         </table>
     </main>
     </div>
-        <div th:replace="/footer.html :: footer"></div>
+        <div th:replace="~{/footer.html :: footer}"></div>
 </div>
-
-
 <script src="/myScript.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

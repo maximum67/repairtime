@@ -119,3 +119,16 @@ function getSpecificationGroup(id, header) {
             });
         })
 }
+
+function logoutPost(){
+    fetch('/auth/logout', {method: 'POST'})
+        .then((result) => {
+            if (result.status === 200) {
+                // successful logout, you can go to login page
+                window.location = '/'
+            } else {
+                console.error('Server error, logout failed')
+            }
+        })
+        .catch((err) => console.error(err))
+}
