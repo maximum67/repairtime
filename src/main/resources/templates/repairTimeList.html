@@ -2,27 +2,29 @@
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>autoCode</title>
+    <title>repairTimeList</title>
     <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link href="/css/headers.css" rel="stylesheet"/>
+    <link href="/css/footers.css" rel="stylesheet"/>
 </head>
 <body>
-<div class="container-fluid">
 
-    <div> <h1>Dt' Work</h1></div>
-
+<div class="wrapper">
+    <header th:insert="/header.html :: header"> </header>
+    <div class="content">
     <main>
         <br>
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Марка автомобиля</th>
-                <th scope="col">Модель автомобиля</th>
-                <th scope="col">Тип двигателя</th>
-                <th scope="col">Модификация</th>
-                <th scope="col"> </th>
+                <th class="col-md-2">Марка автомобиля</th>
+                <th class="col-md-2">Модель автомобиля</th>
+                <th class="col-md-2">Тип двигателя</th>
+                <th class="col-md-2">Модификация</th>
+                <th class="col-md-4"> </th>
             </tr>
             </thead>
-            <hr>
+
             <tbody>
             <tr>
                 <td th:text="${mark.name}">name</td>
@@ -38,8 +40,7 @@
             </tbody>
         </table>
         <br>
-        <hr>
-        <br>
+
         <table class="table">
             <thead>
             <th scope="col" id="repairGroupMainHead">ГРУППА РЕМОНТА</th>
@@ -63,8 +64,7 @@
             </tbody>
         </table>
         <br>
-        <hr>
-        <br>
+
         <table class="table">
             <thead>
             <th class="col-6">Tехнические данные</th>
@@ -83,10 +83,13 @@
             </tbody>
         </table>
     </main>
-    <div> <h1>footer</h1></div>
+    </div>
+        <div th:replace="/footer.html :: footer"></div>
 </div>
 
+
 <script src="/myScript.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

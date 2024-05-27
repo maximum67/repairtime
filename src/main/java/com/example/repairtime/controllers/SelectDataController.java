@@ -87,7 +87,7 @@ public class SelectDataController {
         model.addAttribute("modification",modificationAuto);
         model.addAttribute("groupRepairMains", repairGroupService.findAllRepairGroupMain());
         model.addAttribute("specificationGroupList",specificationsCarService.getSpecificationDataGroupListByModification(modificationAuto));
-        return "autoCode";
+        return "repairTimeList";
     }
 
     @GetMapping("/modification/{markid}/{modelid}/{typeEngineid}/{id}/V1")
