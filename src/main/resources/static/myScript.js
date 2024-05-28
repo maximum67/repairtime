@@ -1,3 +1,4 @@
+
 function getRepairGroup(markId, modelId, typeEngineId, modificationId, id, groupMainName) {
     fetch('/api/select/groupRepair/'+markId+'/'+modelId+'/'+typeEngineId+'/'+modificationId+'/'+id,{
         method: 'GET',
@@ -132,3 +133,4 @@ function logoutPost(){
         })
         .catch((err) => console.error(err))
 }
+

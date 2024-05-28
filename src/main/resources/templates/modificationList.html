@@ -6,6 +6,7 @@
     <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
     <link href="/css/headers.css" rel="stylesheet"/>
     <link href="/css/footers.css" rel="stylesheet"/>
+
 </head>
 <body>
 <div class="wrapper">
@@ -13,14 +14,14 @@
     <div class="content">
     <main>
         <br>
-        <table class="table">
+        <table  id="invoice" class="table">
             <thead>
             <tr>
                 <th  class="col-md-2">Марка автомобиля</th>
                 <th  class="col-md-2">Модель автомобиля</th>
                 <th  class="col-md-2">Тип двигателя</th>
                 <th  class="col-md-2">Модификация</th>
-                <th class="col-md-4"> </th>
+                <th  class="col-md-4"> </th>
             </tr>
             </thead>
             <tbody>
@@ -29,11 +30,13 @@
                 <td th:text="${model.name}">name</td>
                 <td th:text="${type.name}">name</td>
                 <td>
-                    <select onchange="window.location.href=this.value;">
-                        <option th:value="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">-модификация-</option>
-                        <option  th:each="modification:${modificationList}" th:text="${modification.name}"
-                                 th:value="'/select/modification/'+${mark.id}+'/'+${model.id}+'/'+${type.id}+'/'+${modification.id}">далее</option>
-                    </select>
+                    <label>
+                        <select class="form-select form-select-sm" onchange="window.location.href=this.value;">
+                            <option th:value="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">-модификация-</option>
+                            <option  th:each="modification:${modificationList}" th:text="${modification.name}"
+                                     th:value="'/select/modification/'+${mark.id}+'/'+${model.id}+'/'+${type.id}+'/'+${modification.id}">далее</option>
+                        </select>
+                    </label>
                 </td>
                 <td>
                     <form th:action="'/select/model/'+${mark.id}+'/'+${model.id}">
@@ -45,6 +48,8 @@
         </table>
     </main>
 </div>
+
+
     <div th:replace="~{/footer.html :: footer}"></div>
 </div>
 <script src="/myScript.js"></script>

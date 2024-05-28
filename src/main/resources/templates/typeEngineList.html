@@ -27,12 +27,14 @@
                 <td th:text="${mark.name}">name</td>
                 <td th:text="${model.name}">name</td>
                 <td>
-                    <select onchange="window.location.href=this.value;">
-                        <option th:value="'/select/model/'+${mark.id}+'/'+${model.id}">-тип двигателя-</option>
-                        <option th:each="type:${typeEngineList}" th:text="${type.name}"
-                                th:value="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">далее
-                        </option>
-                    </select>
+                    <label>
+                        <select class="form-select form-select-sm" onchange="window.location.href=this.value;">
+                            <option th:value="'/select/model/'+${mark.id}+'/'+${model.id}">-тип двигателя-</option>
+                            <option th:each="type:${typeEngineList}" th:text="${type.name}"
+                                    th:value="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">далее
+                            </option>
+                        </select>
+                    </label>
                 </td>
                 <td>
                     <form th:action="'/select/mark/'+${mark.id}">

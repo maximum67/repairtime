@@ -23,12 +23,14 @@
             <tbody>
             <tr>
                 <td>
-                    <select onchange="window.location.href=this.value;">
-                        <option th:value="'/select/mark'">-марка-</option>
-                        <option th:each="mark:${markList}" th:text="${mark.name}" th:value="'/select/mark/'+${mark.id}">
-                            далее
-                        </option>
-                    </select>
+                    <label>
+                        <select class="form-select form-select-sm" onchange="window.location.href=this.value;">
+                            <option th:value="'/select/mark'">-марка-</option>
+                            <option th:each="mark:${markList}" th:text="${mark.name}" th:value="'/select/mark/'+${mark.id}">
+                                далее
+                            </option>
+                        </select>
+                    </label>
                 </td>
                 <td>
 

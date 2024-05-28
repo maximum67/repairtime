@@ -25,12 +25,14 @@
             <tr>
                 <td th:text="${mark.name}">name</td>
                 <td>
-                    <select onchange="window.location.href=this.value;">
-                        <option th:value="'/select/mark/'+${mark.id}">-модель-</option>
-                        <option th:each="model:${modelsList}" th:text="${model.name}"
-                                th:value="'/select/model/'+${mark.id}+'/'+${model.id}">далее
-                        </option>
-                    </select>
+                    <label>
+                        <select class="form-select form-select-sm" onchange="window.location.href=this.value;">
+                            <option th:value="'/select/mark/'+${mark.id}">-модель-</option>
+                            <option th:each="model:${modelsList}" th:text="${model.name}"
+                                    th:value="'/select/model/'+${mark.id}+'/'+${model.id}">далее
+                            </option>
+                        </select>
+                    </label>
                 </td>
                 <td>
                     <button class="btn btn-danger rounded-pill px-3" type="button" onclick="window.location.href ='/select/mark';" value="text" name="back">Назад</button>
