@@ -5,13 +5,16 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="authenticated">
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <title>login</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
     <link href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" type="text/css" rel="stylesheet"/>
     <link href="/css/footers.css"  th:href="@{/css/footers.css}" type="text/css" rel="stylesheet"/>
     <link href="/select/mark" rel="stylesheet">
+
 
     <!-- Bootstrap core CSS -->
 <!--    <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
@@ -73,6 +76,7 @@
               <label for="floatingPassword">Password</label>
             </div>
             <br><br>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <button class="w-100 btn btn-lg btn-danger" type="submit">Войти</button>
           </form>
         </div>
@@ -83,6 +87,7 @@
         <a class="lead" th:href="@{/auth/registration}"><h5>Регистрация</h5></a>
       </div>
       <br><br><br><br>
+      <h4 th:text="${errorMessage}? '':'Пользователя с таким именем не существует'">Ошибка</h4>
 <!--      <h1 class="h3 mb-3 flex-wrap ">MADigital</h1>-->
       <br><br><br>
     </div>
