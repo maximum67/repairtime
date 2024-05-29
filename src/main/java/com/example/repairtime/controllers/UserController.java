@@ -18,6 +18,7 @@ public class UserController {
     @GetMapping("/login")
     public String getLoginPage(Model model) {
         model.addAttribute("title", "Авторизация");
+        model.addAttribute("errorMessage", false);
         return "login";
     }
 

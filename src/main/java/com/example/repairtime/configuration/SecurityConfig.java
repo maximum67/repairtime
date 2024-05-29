@@ -16,20 +16,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-    private final CustomUserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/css/**","/images/*","/auth/registration").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
+        return http
+//                .csrf().disable()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/css/**", "/images/*", "/auth/registration","/auth/logout")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+//                .and()
                 .formLogin()
                 .loginPage("/auth/login")
                 .defaultSuccessUrl("/select/mark")
@@ -41,12 +38,9 @@ public class SecurityConfig {
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/auth/login")
-                .permitAll();
-        return http.build();
-    }
-
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+                .permitAll()
+                .and()
+                .build();
     }
 
     @Bean

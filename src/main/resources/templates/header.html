@@ -26,7 +26,13 @@
                     <li><a class="dropdown-item" href="#">Настройки</a></li>
                     <li><a class="dropdown-item" href="#">Профиль</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="javascript:logoutPost()">Выход</a></li>
+<!--                    <li><a class="dropdown-item" href="javascript:logoutPost()">Выход</a></li>-->
+                    <li>
+                        <form class="form-signing" th:action="@{/auth/logout}" method="post">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <button class="btn btn-link rounded-pill px-3" type="submit">Выход</button>
+                    </form>
+                    </li>
                 </ul>
             </div>
         </div>
