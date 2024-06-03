@@ -87,7 +87,7 @@
         <a class="lead" th:href="@{/auth/registration}"><h5>Регистрация</h5></a>
       </div>
       <br><br><br><br>
-      <h4 th:text="${errorMessage}? '':'Пользователя с таким именем не существует'">Ошибка</h4>
+      <h4 th:text="*{errorMessage}">Ошибка</h4>
 <!--      <h1 class="h3 mb-3 flex-wrap ">MADigital</h1>-->
       <br><br><br>
     </div>
