@@ -22,6 +22,7 @@ public class UserController {
     @GetMapping("/login/error")
     public String getLoginPageHasError(@RequestParam(name="error") Exception exception,  Model model) {
         model.addAttribute("title", "Авторизация");
+        System.out.println(exception.getMessage());
         model.addAttribute("errorMessage", exception.getMessage());
         return "login";
     }
