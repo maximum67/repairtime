@@ -6,6 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.expression.Arrays;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/auth")
@@ -14,17 +19,15 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String getLoginPage( Model model) {
+    public String getLoginPage(Model model) {
         model.addAttribute("title", "Авторизация");
-        model.addAttribute("errorMessage", null);
         return "login";
     }
-    @GetMapping("/login/error")
-    public String getLoginPageHasError(@RequestParam(name="error") Exception exception,  Model model) {
-        model.addAttribute("title", "Авторизация");
-        System.out.println(exception.getMessage());
-        model.addAttribute("errorMessage", exception.getMessage());
-        return "login";
+    @GetMapping("/loginError")
+    public String getLoginPageHasError(@RequestParam(name="error") String error, Model model) {
+        model.addAttribute("title", "Ошибка авторизации");
+        model.addAttribute("errorMessage", error);
+        return "loginError";
     }
 
     @GetMapping("/registration")
