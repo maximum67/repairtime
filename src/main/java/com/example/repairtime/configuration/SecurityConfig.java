@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -35,7 +36,9 @@ public class SecurityConfig {
                                          .deleteCookies("JSESSIONID")
                                          .logoutSuccessUrl("/auth/login")
                                          .permitAll())
-                .sessionManagement((session)->session.maximumSessions(1).maxSessionsPreventsLogin(false))
+                .sessionManagement((session)->session.maximumSessions(1)
+                                                     .maxSessionsPreventsLogin(true)
+                                                     .expiredUrl("/auth/loginError"))
                 .build();
     }
 
@@ -47,5 +50,10 @@ public class SecurityConfig {
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
         return new CustomAuthenticationFailureHandler();
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 }
