@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.expression.Arrays;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -26,7 +28,8 @@ public class UserController {
     @GetMapping("/loginError")
     public String getLoginPageHasError(@RequestParam(name="error") String error, Model model) {
         model.addAttribute("title", "Ошибка авторизации");
-        model.addAttribute("errorMessage", error);
+        System.out.println(URLDecoder.decode(error, StandardCharsets.UTF_8));
+        model.addAttribute("errorMessage", URLDecoder.decode(error, StandardCharsets.UTF_8));
         return "loginError";
     }
 
