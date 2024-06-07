@@ -3,6 +3,7 @@ package com.example.repairtime.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,17 +22,23 @@ public class RepairGroup {
     @Column(name="repair_group_name", unique = true)
     private String name;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "repairGroup")
+    private List<TypeRepair> typeRepairList;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn
+    private RepairGroupMain repairGroupMain;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RepairGroup that = (RepairGroup) o;
-        return id == that.id && Objects.equals(name, that.name);
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(typeRepairList, that.typeRepairList) && Objects.equals(repairGroupMain, that.repairGroupMain);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, typeRepairList, repairGroupMain);
     }
 }

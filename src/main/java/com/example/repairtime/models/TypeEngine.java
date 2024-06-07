@@ -25,7 +25,7 @@ public class TypeEngine {
     @JoinColumn
     private ModelAuto modelAuto;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "typeEngine")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "typeEngine")
     private List<ModificationAuto> modificationAutoList;
 
     @Override

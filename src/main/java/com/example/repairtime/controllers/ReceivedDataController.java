@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.stream.Collectors;
 
 @Controller
@@ -20,12 +25,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/data")
 public class ReceivedDataController {
 
-    private final RepairDataService repairDataService;
+   
     private final ModificationAutoService modificationAutoService;
     private final StandardTimeService standardTimeService;
     private final MarkAutoService markAutoService;
     private final ModelAutoService modelAutoService;
-
+    private final AutoDataService autoDataService;
+    private final RepairElementService repairElementService;
+    private final RepairGroupService repairGroupService;
+    private final TechnikalDataService technikalDataService;
 
     @GetMapping("/modification/list")
     public String getModificationList(Model model){
@@ -33,18 +41,28 @@ public class ReceivedDataController {
         return "repairDataList";
     }
     @GetMapping("/write")
-    public String writeData() throws IOException {
-        repairDataService.writingFileAndSave("test.xlsx");
+    public String writeData() throws IOException,
+                                     NoSuchPaddingException,
+                                     IllegalBlockSizeException,
+                                     NoSuchAlgorithmException,
+                                     BadPaddingException,
+                                     InvalidKeyException {
+        autoDataService.readFileAndSaveData("ЛистМодификаций.xlsx");
+//        technikalDataService.readFileGroup("5_ГруппыРемонтныхРабот.txt");
+//        repairElementService.readFile("6_ЭлементыРемонтныхРабот.txt");
+//        technikalDataService.readeGroup("Группы технических данных");
+//        technikalDataService.readTechnikalData("ТехническиеДанные");
+//        technikalDataService.readDirectories("Нормы времени");
         return "redirect:/data/modification/list";
     }
     @GetMapping("/modification/edit/{modification}")
     public String getModificationEdit(@PathVariable ("modification") ModificationAuto modificationAuto, Model model) {
         model.addAttribute("modification", modificationAuto);
-        model.addAttribute("typeRepairs",
-                standardTimeService.getStandardTimeListByModification(modificationAuto)
-                        .stream().map(StandardTime::getTypeRepairId).collect(Collectors.toList()));
-        model.addAttribute("standardTimes",
-                standardTimeService.getStandardTimeListByModification(modificationAuto));
+//        model.addAttribute("typeRepairs",
+//                standardTimeService.getStandardTimeListByModification(modificationAuto)
+//                        .stream().map(StandardTime::getTypeRepairId).collect(Collectors.toList()));
+//        model.addAttribute("standardTimes",
+//                standardTimeService.getStandardTimeListByModification(modificationAuto));
 //                        .stream().map(StandardTime::getStandardTime).collect(Collectors.toList()));
         return "modificationEdit";
     }

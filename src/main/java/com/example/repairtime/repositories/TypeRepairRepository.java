@@ -8,7 +8,9 @@ import java.util.Optional;
 
 public interface TypeRepairRepository extends JpaRepository<TypeRepair, Long> {
 
-    boolean existsByName(String string);
+    boolean existsByVendorCode(String vendorCode);
 
     Optional<TypeRepair> getByName(String string);
+
+    Optional<TypeRepair> getByVendorCode(String string);
 }

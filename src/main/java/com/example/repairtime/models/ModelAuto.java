@@ -26,7 +26,7 @@ public class ModelAuto {
     @JoinColumn
     private MarkAuto markAuto;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "modelAuto")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "modelAuto")
     private List<TypeEngine> typeEngineList;
 
 

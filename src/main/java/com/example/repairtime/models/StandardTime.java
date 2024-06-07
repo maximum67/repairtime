@@ -3,7 +3,7 @@ package com.example.repairtime.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Getter
@@ -11,31 +11,41 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="repair_standard")
-@IdClass(StandardTimeKey.class)
 public class StandardTime {
 
     @Id
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "modification_auto_id", nullable = false)
-    private ModificationAuto modificationAutoId;
-    @Id
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "type_repair_id", nullable = false)
-    private TypeRepair typeRepairId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
 
-    @Column(name="standardTime")
-    private double standardTime;
+    @Column(name="repairCode",unique = true)
+    private String repairCode;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "type_repairs_repair_code",
+            joinColumns = @JoinColumn(name = "repair_standard_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "type_repair_id", referencedColumnName = "id"))
+     private List<TypeRepair> typeRepairList = new ArrayList<>();
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "standard_time_collection",
+            joinColumns = @JoinColumn(name = "standard_time_id"))
+    private List<Double> standardTimes = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StandardTime that = (StandardTime) o;
-        return Double.compare(that.standardTime, standardTime) == 0 && Objects.equals(modificationAutoId, that.modificationAutoId) && Objects.equals(typeRepairId, that.typeRepairId);
+        return id == that.id && Objects.equals(repairCode, that.repairCode) && Objects.equals(typeRepairList, that.typeRepairList) && Objects.equals(standardTimes, that.standardTimes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(modificationAutoId, typeRepairId, standardTime);
+        return Objects.hash(id, repairCode, typeRepairList, standardTimes);
     }
 }
+
+

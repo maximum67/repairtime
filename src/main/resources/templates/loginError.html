@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="authenticated">
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+    <title th:text="${title}">login</title>
+    <link rel="icon" th:href="@{/images/modelDB.ico}"/>
+    <link href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" type="text/css" rel="stylesheet"/>
+    <link href="/css/footers.css" th:href="@{/css/footers.css}" type="text/css" rel="stylesheet"/>
+    <link href="/select/mark"/>
+</head>
+<body class="text-center">
+<div class="wrapper">
+    <main class="form-signing">
+        <br><br><br>
+        <div class="container-lg">
+            <br><br><br>
+            <div class="row">
+                <div class="col"></div>
+                <br><br>
+                <div class="col-sm-6">
+                    <form class="form-signing" th:action="@{/auth/login}" method="post">
+                        <h1 class="h3 mb-3 fw-normal"><b>Авторизация</b></h1>
+                        <div class="form-floating">
+                            <input type="text" class="form-control is-valid" name="username" id="floatingInput"
+                                   autocomplete="new-username" placeholder="Username">
+                            <label for="floatingInput">Имя пользователя</label>
+                        </div>
+                        <br>
+                        <div class="form-floating">
+                            <input type="password" class="form-control is-valid" name="password" id="floatingPassword"
+                                   autocomplete="new-password" placeholder="Password">
+                            <label for="floatingPassword">Пароль</label>
+                        </div>
+                        <br><br>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button class="w-100 btn btn-lg btn-danger" type="submit">Войти</button>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+            <!--      <br><br>-->
+            <!--      <div class="text-center">-->
+            <!--        <a class="lead" th:href="@{/auth/registration}"><h5>Регистрация</h5></a>-->
+            <!--      </div>-->
+            <br><br><br><br>
+            <h5 style="color: red" th:text="${errorMessage}">Ошибка</h5>
+            <!--      <h1 class="h3 mb-3 flex-wrap ">MADigital</h1>-->
+            <br><br><br>
+        </div>
+        <br><br><br>
+    </main>
+</div>
+</body>
+</html>
