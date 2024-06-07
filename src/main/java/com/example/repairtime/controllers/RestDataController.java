@@ -52,6 +52,7 @@ public class RestDataController {
                                                 @PathVariable("id") RepairGroupMain repairGroupMain){
         return  repairGroupService.getAllRepairGroupOfModification(repairGroupMain,modificationAuto);
     }
+
     @GetMapping("/specificationGroup/{id}")
     public List<Map<String, String>> getSpecificationGroup(@PathVariable("id") SpecificationGroup specificationGroup){
         return specificationsCarService.getSpecificationsMaps(specificationGroup);

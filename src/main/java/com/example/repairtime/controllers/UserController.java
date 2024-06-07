@@ -28,7 +28,6 @@ public class UserController {
     @GetMapping("/loginError")
     public String getLoginPageHasError(@RequestParam(name="error") String error, Model model) {
         model.addAttribute("title", "Ошибка авторизации");
-        System.out.println(URLDecoder.decode(error, StandardCharsets.UTF_8));
         model.addAttribute("errorMessage", URLDecoder.decode(error, StandardCharsets.UTF_8));
         return "loginError";
     }
