@@ -31,61 +31,82 @@ public class SelectDataController {
     private final ModelAutoService modelAutoService;
     private final TypeEngineService typeEngineService;
     private final TypeRepaireService typeRepaireService;
-    private final RepairGroupService repairGroupService;
     private final TechnikalDataService technikalDataService;
     private final SpecificationsCarService specificationsCarService;
 
-    @GetMapping("/mark")
-    public String getMark(Model model){
-        model.addAttribute("markList",
-                markAutoService.getMarkAutoList());
+    @GetMapping("/main")
+    public String Main(Model model){
+        model.addAttribute("page", 1);
+        model.addAttribute("stringUrl", "mark");
+        return "main";
+    }
+
+    @GetMapping("/{page}/mark")
+    public String getMark(@PathVariable("page") Integer page, Model model){
+        model.addAttribute("markList", markAutoService.getMarkAutoList());
+        model.addAttribute("page", page);
+        model.addAttribute("stringUrl", "mark");
         return "markList";
     }
 
-    @GetMapping("/mark/{id}")
-    public String getModel(@PathVariable("id") MarkAuto markAuto, Model model){
+    @GetMapping("/{page}/mark/{id}")
+    public String getModel(@PathVariable("id") MarkAuto markAuto,
+                           @PathVariable("page") Integer page, Model model){
         model.addAttribute("mark", markAuto);
+        model.addAttribute("page", page);
+        model.addAttribute("stringUrl", "mark/"+markAuto.getId());
         model.addAttribute("modelsList",
                 modelAutoService.getModelsListByMark(markAuto.getId()));
         return "modelsList";
     }
 
-    @GetMapping("/model/{markid}/{id}")
+    @GetMapping("/{page}/model/{markid}/{id}")
     public String getTypeEngine(@PathVariable("markid") MarkAuto markAuto,
+                                @PathVariable("page") Integer page,
                                 @PathVariable("id") ModelAuto modelAuto, Model model) {
         model.addAttribute("mark", markAuto);
         model.addAttribute("model", modelAuto);
+        model.addAttribute("page", page);
+        model.addAttribute("stringUrl", "model/"+markAuto.getId()+'/'+modelAuto.getId());
         model.addAttribute("typeEngineList",
                 typeEngineService.getTypeEngineList(modelAuto.getId()));
         return "typeEngineList";
     }
 
-    @GetMapping("/typeEngine/{markid}/{modelid}/{id}")
+    @GetMapping("/{page}/typeEngine/{markid}/{modelid}/{id}")
     public String getModification(@PathVariable("markid") MarkAuto markAuto,
                                 @PathVariable("modelid") ModelAuto modelAuto,
+                                @PathVariable("page") Integer page,
                                 @PathVariable("id") TypeEngine typeEngine,
                                 Model model) {
         model.addAttribute("mark", markAuto);
         model.addAttribute("model", modelAuto);
         model.addAttribute("type", typeEngine);
+        model.addAttribute("page", page);
+        model.addAttribute("stringUrl",
+                "typeEngine/"+markAuto.getId()+'/'+modelAuto.getId()+'/'+typeEngine.getId());
         model.addAttribute("modificationList",
                 modificationAutoService.getModificationListByTypeEngine(typeEngine.getId()));
         return "modificationList";
     }
 
 
-    @GetMapping("/modification/{markid}/{modelid}/{typeEngineid}/{id}")
+    @GetMapping("/{page}/modification/{markid}/{modelid}/{typeEngineid}/{id}")
     public String getGroupRepair(@PathVariable("markid") MarkAuto markAuto,
                                 @PathVariable("modelid") ModelAuto modelAuto,
                                 @PathVariable("typeEngineid") TypeEngine typeEngine,
                                 @PathVariable("id") ModificationAuto modificationAuto,
+                                @PathVariable("page") Integer page,
                                 Model model) throws NoSuchPaddingException,
             IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         model.addAttribute("mark", markAuto);
         model.addAttribute("model", modelAuto);
         model.addAttribute("type", typeEngine);
         model.addAttribute("modification",modificationAuto);
-        model.addAttribute("groupRepairMains", repairGroupService.findAllRepairGroupMain());
+        model.addAttribute("page", page);
+        model.addAttribute("stringUrl",
+                "modification/"+markAuto.getId()+'/'+modelAuto.getId()+'/'+typeEngine.getId()+'/'+modificationAuto.getId());
+        model.addAttribute("groupRepairMains", standardTimeService.findAllRepairGroupMain());
         model.addAttribute("specificationGroupList",specificationsCarService.getSpecificationDataGroupListByModification(modificationAuto));
         return "repairTimeList";
     }

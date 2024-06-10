@@ -2,6 +2,8 @@ package com.example.repairtime.services;
 
 import com.example.repairtime.cipher.RepairCodeDecrypt;
 import com.example.repairtime.models.*;
+import com.example.repairtime.repositories.RepairGroupMainRepository;
+import com.example.repairtime.repositories.RepairGroupRepository;
 import com.example.repairtime.repositories.StandardTimeRepository;
 import com.example.repairtime.repositories.TypeRepairRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,46 +28,42 @@ public class StandardTimeService {
 
     private final StandardTimeRepository standardTimeRepository;
     private final TypeRepairRepository typeRepairRepository;
+    private final RepairGroupRepository repairGroupRepository;
+    private final RepairGroupMainRepository repairGroupMainRepository;
 
 
-    public List<RepairGroupMain> getListOfRepairGroupMain(String typeRepairCode) {
+    public List<RepairGroupMain> findAllRepairGroupMain() {
+        return repairGroupMainRepository.findAll();
+    }
 
-   try {
-     return  standardTimeRepository.getByRepairCode(typeRepairCode)
-               .getTypeRepairList()
-               .stream()
-               .map(TypeRepair::getRepairGroup)
-               .toList()
-               .stream()
-               .map(RepairGroup::getRepairGroupMain)
-               .collect(Collectors.toSet()).stream().toList();
-   }catch (NullPointerException e){
-       return new LinkedList<>();
-   }
-
-}
+    public List<Map<String, String>> getAllRepairGroupOfModification(RepairGroupMain repairGroupMain, ModificationAuto modificationAuto) {
+        List<RepairGroup> repairGroupList = repairGroupMainRepository.getByName(repairGroupMain.getName()).get().getRepairGroupList();
+        List<Map<String, String>> mapList = new LinkedList<>();
+        for (RepairGroup rg : repairGroupList) {
+            Map<String, String> map = new LinkedHashMap<>();
+            map.put("key", rg.getName());
+            map.put("value", String.valueOf(rg.getId()));
+            mapList.add(map);
+        }
+        return mapList;
+    }
 
     public Optional<StandardTime> getStandardTimeByModification(ModificationAuto modificationAuto) throws NoSuchPaddingException,
-                                                                                                       IllegalBlockSizeException,
-                                                                                                       NoSuchAlgorithmException,
-                                                                                                       BadPaddingException,
-                                                                                                       InvalidKeyException {
+                                                                            IllegalBlockSizeException, NoSuchAlgorithmException,
+                                                                            BadPaddingException, InvalidKeyException {
         String repairCodeDecrypt = RepairCodeDecrypt.repairCodeDecryptCipher(modificationAuto.getRepairCode());
         return standardTimeRepository.getStandardTimeByRepairCode(repairCodeDecrypt);
     }
 
 
     public List<Map<String, String>> getMapDataStandardTime(ModificationAuto modificationAuto, RepairGroup repairGroup) throws NoSuchPaddingException,
-                                                                                                                              IllegalBlockSizeException,
-                                                                                                                              NoSuchAlgorithmException,
-                                                                                                                              BadPaddingException,
-                                                                                                                              InvalidKeyException {
+                                                                             IllegalBlockSizeException, NoSuchAlgorithmException,
+                                                                             BadPaddingException, InvalidKeyException {
         List<TypeRepair> typeRepairList = new LinkedList<>();
         List<Double> standardTimeList = new LinkedList<>();
         Optional<StandardTime> optionalStandardTime = getStandardTimeByModification(modificationAuto);
         if (optionalStandardTime.isPresent()) {
             StandardTime standardTime = optionalStandardTime.get();
-//            System.out.println(standardTime.getId());
              typeRepairList = standardTime.getTypeRepairList();
              standardTimeList = standardTime.getStandardTimes();
         }
@@ -74,19 +72,22 @@ public class StandardTimeService {
 
     private static List<Map<String, String>> getMaps(RepairGroup repairGroup, List<TypeRepair> typeRepairList, List<Double> standardTimeList) {
         List<Map<String, String>> mapList = new LinkedList<>();
-        Map<String, String> defaultMap = new HashMap<>();
-        defaultMap.put("key", "Данные отсутствуют");
-        defaultMap.put("value","-");
         for (int i = 0; i< typeRepairList.size(); i++) {
             Map<String, String> map = new HashMap<>();
             if (typeRepairList.get(i).getRepairGroup().getName().equals(repairGroup.getName())) {
                 map.put("key", typeRepairList.get(i).getName());
                 map.put("value", String.valueOf(standardTimeList.get(i)));
-//                System.out.println(typeRepairList.get(i).getName()+" "+typeRepairList.get(i).getVendorCode()+" "+String.valueOf(standardTimeList.get(i)));
                 mapList.add(map);
             }
         }
-        if (mapList.isEmpty()) mapList.add(defaultMap);
+        if (mapList.isEmpty()) mapList.add(getDefaultMap());
         return mapList;
+    }
+
+    private static Map<String,String> getDefaultMap(){
+        Map<String, String> defaultMap = new HashMap<>();
+        defaultMap.put("key", "Данные отсутствуют");
+        defaultMap.put("value","-");
+        return defaultMap;
     }
 }

@@ -10,7 +10,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100%;
-    background-image: url(/images/v915-wit-010.jpg);
+    background-image: url(/images/v915-wit-010_V11.jpg);
 }
 .content {
     flex: 1 0 auto;

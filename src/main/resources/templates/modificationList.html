@@ -19,10 +19,10 @@
             <thead>
             <tr>
                 <th  class="col-md-2">Марка автомобиля</th>
-                <th  class="col-md-2">Модель автомобиля</th>
+                <th  class="col-md-3">Модель автомобиля</th>
                 <th  class="col-md-2">Тип двигателя</th>
-                <th  class="col-md-2">Модификация</th>
-                <th  class="col-md-4"> </th>
+                <th  class="col-md-3">Модификация</th>
+                <th  class="col-md-2"> </th>
             </tr>
             </thead>
             <tbody>
@@ -33,14 +33,14 @@
                 <td>
                     <label>
                         <select class="form-select form-select-sm" onchange="window.location.href=this.value;">
-                            <option th:value="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">-модификация-</option>
+                            <option th:value="'/select/'+${page}+'/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">-модификация-</option>
                             <option  th:each="modification:${modificationList}" th:text="${modification.name}"
-                                     th:value="'/select/modification/'+${mark.id}+'/'+${model.id}+'/'+${type.id}+'/'+${modification.id}">далее</option>
+                                     th:value="'/select/'+${page}+'/modification/'+${mark.id}+'/'+${model.id}+'/'+${type.id}+'/'+${modification.id}">далее</option>
                         </select>
                     </label>
                 </td>
                 <td>
-                    <form th:action="'/select/model/'+${mark.id}+'/'+${model.id}">
+                    <form th:action="'/select/'+${page}+'/model/'+${mark.id}+'/'+${model.id}">
                         <button class="btn btn-danger rounded-pill px-3" type="submit">Назад</button>
                     </form>
                 </td>

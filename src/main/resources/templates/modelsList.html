@@ -18,8 +18,8 @@
             <thead>
             <tr>
                 <th class="col-md-2">Марка автомобиля</th>
-                <th class="col-md-2">Модель автомобиля</th>
-                <th class="col-md-8"> </th>
+                <th class="col-md-3">Модель автомобиля</th>
+                <th class="col-md-6"> </th>
             </tr>
             </thead>
             <tbody>
@@ -28,15 +28,16 @@
                 <td>
                     <label>
                         <select class="form-select form-select-sm" onchange="window.location.href=this.value;">
-                            <option th:value="'/select/mark/'+${mark.id}">-модель-</option>
+                            <option th:value="'/select/'+${page}+'/mark/'+${mark.id}">-модель-</option>
                             <option th:each="model:${modelsList}" th:text="${model.name}"
-                                    th:value="'/select/model/'+${mark.id}+'/'+${model.id}">далее
+                                    th:value="'/select/'+${page}+'/model/'+${mark.id}+'/'+${model.id}">далее
                             </option>
                         </select>
                     </label>
                 </td>
                 <td>
-                    <button class="btn btn-danger rounded-pill px-3" type="button" onclick="window.location.href ='/select/mark';" value="text" name="back">Назад</button>
+                    <button class="btn btn-danger rounded-pill px-3" type="button"
+                            onclick="window.location.href = this.value;" th:value="'/select/'+${page}+'/mark'" name="back">Назад</button>
                 </td>
             </tr>
             </tbody>

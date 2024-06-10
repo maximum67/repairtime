@@ -18,10 +18,10 @@
             <thead>
             <tr>
                 <th class="col-md-2">Марка автомобиля</th>
-                <th class="col-md-2">Модель автомобиля</th>
+                <th class="col-md-3">Модель автомобиля</th>
                 <th class="col-md-2">Тип двигателя</th>
-                <th class="col-md-2">Модификация</th>
-                <th class="col-md-4"> </th>
+                <th class="col-md-3">Модификация</th>
+                <th class="col-md-2"> </th>
             </tr>
             </thead>
 
@@ -32,7 +32,7 @@
                 <td th:text="${type.name}">name</td>
                 <td th:text="${modification.name}">name</td>
                 <td>
-                    <form th:action="'/select/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">
+                    <form th:action="'/select/'+${page}+'/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">
                         <button  class="btn btn-danger rounded-pill px-3" type="submit">Назад</button>
                     </form>
                 </td>
@@ -41,12 +41,14 @@
         </table>
         <br>
 
-        <table class="table">
+        <table class="table" th:hidden="${page==2}? 'false':'true'">
             <thead>
-            <th class="col" id="repairGroupMainHead">ГРУППА РЕМОНТА</th>
-            <th class="col" id="repairGroupHead"></th>
-            <th class="col" id="typeRepairHead"></th>
-            <th class="col" id="timeRepairHead"></th>
+            <tr>
+            <th class="col-3" id="repairGroupMainHead">Группа ремонта</th>
+            <th class="col-3" id="repairGroupHead"></th>
+            <th class="col-5" id="typeRepairHead"></th>
+            <th class="col-1" id="timeRepairHead"></th>
+            </tr>
             </thead>
             <tbody>
             <tr>
@@ -65,20 +67,20 @@
         </table>
         <br>
 
-        <table class="table">
+        <table class="table" th:hidden="${page==3}? 'false':'true'">
             <thead>
-            <th class="col-6">Tехнические данные</th>
-            <th class="col-6" id="specificationGroupHead"></th>
+            <th class="col-4">Tехнические данные</th>
+            <th class="col-8" id="specificationGroupHead"></th>
             </thead>
             <tbody>
             <tr>
-                <td class="col-6">
+                <td class="col-4">
             <div th:each="specificationGroup:${specificationGroupList}">
                 <a th:id="${specificationGroup.id}" href="javascript:void(0);" th:onclick="getSpecificationGroup([[${specificationGroup.id}]],[[${specificationGroup.specificationsGroupName.name}]])"
                    th:text="${specificationGroup.specificationsGroupName.name}">text</a>
             </div>
                 </td>
-                <td class="col-6" id="specificationGroup"></td>
+                <td class="col-8" id="specificationGroup"></td>
             </tr>
             </tbody>
         </table>
