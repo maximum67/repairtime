@@ -36,10 +36,8 @@ public class RestDataController {
                                    @PathVariable("typeEngineid") TypeEngine typeEngine,
                                    @PathVariable("modificationid") ModificationAuto modificationAuto,
                                    @PathVariable("id") RepairGroup repairGroup) throws NoSuchPaddingException,
-                                                                                       IllegalBlockSizeException,
-                                                                                       NoSuchAlgorithmException,
-                                                                                       BadPaddingException,
-                                                                                       InvalidKeyException {
+                                                       IllegalBlockSizeException, NoSuchAlgorithmException,
+                                                       BadPaddingException, InvalidKeyException {
         return standardTimeService.getMapDataStandardTime(modificationAuto, repairGroup);
     }
 
@@ -48,7 +46,9 @@ public class RestDataController {
                                                 @PathVariable("modelid") ModelAuto modelAuto,
                                                 @PathVariable("typeEngineid") TypeEngine typeEngine,
                                                 @PathVariable("modificationid") ModificationAuto modificationAuto,
-                                                @PathVariable("id") RepairGroupMain repairGroupMain){
+                                                @PathVariable("id") RepairGroupMain repairGroupMain) throws NoSuchPaddingException,
+                                                                               IllegalBlockSizeException, NoSuchAlgorithmException,
+                                                                               BadPaddingException, InvalidKeyException {
         return  standardTimeService.getAllRepairGroupOfModification(repairGroupMain,modificationAuto);
     }
 

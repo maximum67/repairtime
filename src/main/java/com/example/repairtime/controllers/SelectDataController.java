@@ -30,8 +30,6 @@ public class SelectDataController {
     private final MarkAutoService markAutoService;
     private final ModelAutoService modelAutoService;
     private final TypeEngineService typeEngineService;
-    private final TypeRepaireService typeRepaireService;
-    private final TechnikalDataService technikalDataService;
     private final SpecificationsCarService specificationsCarService;
 
     @GetMapping("/main")
@@ -90,7 +88,6 @@ public class SelectDataController {
         return "modificationList";
     }
 
-
     @GetMapping("/{page}/modification/{markid}/{modelid}/{typeEngineid}/{id}")
     public String getGroupRepair(@PathVariable("markid") MarkAuto markAuto,
                                 @PathVariable("modelid") ModelAuto modelAuto,
@@ -98,7 +95,7 @@ public class SelectDataController {
                                 @PathVariable("id") ModificationAuto modificationAuto,
                                 @PathVariable("page") Integer page,
                                 Model model) throws NoSuchPaddingException,
-            IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+                                IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         model.addAttribute("mark", markAuto);
         model.addAttribute("model", modelAuto);
         model.addAttribute("type", typeEngine);
@@ -123,20 +120,4 @@ public class SelectDataController {
         model.addAttribute("modification", modificationAuto);
         return "groupRepairList";
     }
-
-//    @GetMapping("/grouprepair/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
-//    public String getTypeRepair(@PathVariable("markid") MarkAuto markAuto,
-//                                @PathVariable("modelid") ModelAuto modelAuto,
-//                                @PathVariable("typeEngineid") TypeEngine typeEngine,
-//                                @PathVariable("modificationid") ModificationAuto modificationAuto,
-//                                @PathVariable("id") RepairGroup repairGroup,
-//                                Model model) {
-//        model.addAttribute("mark", markAuto);
-//        model.addAttribute("model", modelAuto);
-//        model.addAttribute("type", typeEngine);
-//        model.addAttribute("modification",modificationAuto);
-//        model.addAttribute("groupRepairs",);
-//
-//        return "typeRepairList";
-//    }
 }
