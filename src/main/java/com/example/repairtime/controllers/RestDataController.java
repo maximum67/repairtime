@@ -28,7 +28,6 @@ public class RestDataController {
     private final MarkAutoService markAutoService;
     private final ModelAutoService modelAutoService;
     private final TypeEngineService typeEngineService;
-    private final RepairGroupService repairGroupService;
     private final SpecificationsCarService specificationsCarService;
 
     @GetMapping("/standardTime/{markid}/{modelid}/{typeEngineid}/{modificationid}/{id}")
@@ -50,7 +49,7 @@ public class RestDataController {
                                                 @PathVariable("typeEngineid") TypeEngine typeEngine,
                                                 @PathVariable("modificationid") ModificationAuto modificationAuto,
                                                 @PathVariable("id") RepairGroupMain repairGroupMain){
-        return  repairGroupService.getAllRepairGroupOfModification(repairGroupMain,modificationAuto);
+        return  standardTimeService.getAllRepairGroupOfModification(repairGroupMain,modificationAuto);
     }
 
     @GetMapping("/specificationGroup/{id}")

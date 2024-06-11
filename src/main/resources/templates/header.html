@@ -7,9 +7,9 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-secondary">Главная</a></li>
-                <li><a href="#" class="nav-link px-2 link-body-emphasis">Нормы времени</a></li>
-                <li><a href="#" class="nav-link px-2 link-body-emphasis">Технические данные</a></li>
+                <li><a href="/select/main" th:class="${page==1}? 'nav-link px-2 link-secondary':'nav-link px-2 link-body-emphasis'">Главная</a></li>
+                <li><a th:href="'/select/2/'+${stringUrl}" th:class="${page==2}? 'nav-link px-2 link-secondary':'nav-link px-2 link-body-emphasis'">Нормы времени</a></li>
+                <li><a th:href="'/select/3/'+${stringUrl}" th:class="${page==3}? 'nav-link px-2 link-secondary':'nav-link px-2 link-body-emphasis'">Технические данные</a></li>
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">Информация</a></li>
             </ul>
 

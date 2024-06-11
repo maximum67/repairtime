@@ -27,7 +27,7 @@ public class SecurityConfig {
                         .authenticated())
 //                .and()
                 .formLogin((formLogin) -> formLogin.loginPage("/auth/login")
-                                                   .defaultSuccessUrl("/select/mark")
+                                                   .defaultSuccessUrl("/select/main")
                                                    .permitAll()
                                                    .failureHandler(authenticationFailureHandler()))
                 .logout((logout)-> logout.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))

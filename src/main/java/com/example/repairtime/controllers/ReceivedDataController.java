@@ -32,7 +32,6 @@ public class ReceivedDataController {
     private final ModelAutoService modelAutoService;
     private final AutoDataService autoDataService;
     private final RepairElementService repairElementService;
-    private final RepairGroupService repairGroupService;
     private final TechnikalDataService technikalDataService;
 
     @GetMapping("/modification/list")
