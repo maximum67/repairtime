@@ -14,7 +14,7 @@
     <link href="/select/main" type="text/css" rel="stylesheet">
 </head>
 <body class="text-center">
-<div class="wrapper">
+<div class="wrapper_log">
     <main class="form-signing">
         <br><br><br>
         <div class="container-lg">
@@ -36,7 +36,9 @@
                                    autocomplete="new-password" placeholder="Password">
                             <label for="floatingPassword">Пароль</label>
                         </div>
-                        <br><br>
+                        <br>
+                        <h5 style="color: red" th:text="${errorMessage}">Ошибка</h5>
+                        <br>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <button class="w-100 btn btn-lg btn-danger" type="submit">Войти</button>
                     </form>
@@ -48,7 +50,6 @@
             <!--        <a class="lead" th:href="@{/auth/registration}"><h5>Регистрация</h5></a>-->
             <!--      </div>-->
             <br><br><br><br>
-            <h5 style="color: red" th:text="${errorMessage}">Ошибка</h5>
             <!--      <h1 class="h3 mb-3 flex-wrap ">MADigital</h1>-->
             <br><br><br>
         </div>

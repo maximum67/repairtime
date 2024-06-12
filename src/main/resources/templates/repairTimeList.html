@@ -21,7 +21,9 @@
                 <th class="col-md-3">Модель автомобиля</th>
                 <th class="col-md-2">Тип двигателя</th>
                 <th class="col-md-3">Модификация</th>
-                <th class="col-md-2"> </th>
+                <th class="col-md-1"> </th>
+                <th class="col-md-1"> </th>
+
             </tr>
             </thead>
 
@@ -34,6 +36,11 @@
                 <td>
                     <form th:action="'/select/'+${page}+'/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">
                         <button  class="btn btn-danger rounded-pill px-3" type="submit">Назад</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="'/select/'+${page}+'/mark'">
+                        <button  class="btn btn-danger rounded-pill px-3" type="submit">Очистить</button>
                     </form>
                 </td>
             </tr>
@@ -54,7 +61,7 @@
             <tr>
                 <td>
                 <div th:each="groupmain:${groupRepairMains}">
-                <a th:id="${groupmain.id}" href="javascript:void(0);" th:onclick="getRepairGroup([[${mark.id}]],[[${model.id}]], [[${type.id}]], [[${modification.id}]], [[${groupmain.id}]],[[${groupmain.name}]])"
+                    <a th:id="${groupmain.id}" href="javascript:void(0);" th:onclick="getRepairGroup([[${modification.id}]], [[${groupmain.id}]],[[${groupmain.name}]])"
                        th:text="${groupmain.name}">text
                     </a>
                 </div>

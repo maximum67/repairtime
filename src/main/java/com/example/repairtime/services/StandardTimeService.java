@@ -30,7 +30,7 @@ public class StandardTimeService {
         return repairGroupMainRepository.findAll();
     }
 
-    public List<Map<String, String>> getAllRepairGroupOfModification(RepairGroupMain repairGroupMain, ModificationAuto modificationAuto) throws NoSuchPaddingException,
+    public List<Map<String, String>> getAllRepairGroupsOfModification(RepairGroupMain repairGroupMain, ModificationAuto modificationAuto) throws NoSuchPaddingException,
                                                                        IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Optional<StandardTime> optionalStandardTime = getStandardTimeByModification(modificationAuto);
         List<RepairGroup> repairGroups = new ArrayList<>();

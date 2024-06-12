@@ -22,7 +22,8 @@
                 <th  class="col-md-3">Модель автомобиля</th>
                 <th  class="col-md-2">Тип двигателя</th>
                 <th  class="col-md-3">Модификация</th>
-                <th  class="col-md-2"> </th>
+                <th  class="col-md-1"> </th>
+                <th  class="col-md-1"> </th>
             </tr>
             </thead>
             <tbody>
@@ -42,6 +43,11 @@
                 <td>
                     <form th:action="'/select/'+${page}+'/model/'+${mark.id}+'/'+${model.id}">
                         <button class="btn btn-danger rounded-pill px-3" type="submit">Назад</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="'/select/'+${page}+'/mark'">
+                        <button  class="btn btn-danger rounded-pill px-3" type="submit">Очистить</button>
                     </form>
                 </td>
             </tr>

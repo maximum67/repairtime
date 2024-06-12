@@ -14,7 +14,7 @@
     <link href="/select/main"  type="text/css" rel="stylesheet">
 </head>
 <body class="text-center">
-<div class="wrapper">
+<div class="wrapper_log">
     <main class="form-signing">
         <br><br><br>
         <div class="container-lg">
@@ -36,7 +36,9 @@
                                    autocomplete="new-password" placeholder="Пароль">
                             <label for="floatingPassword">Пароль</label>
                         </div>
-                        <br><br>
+                        <br>
+                        <br>
+                        <br>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <button class="w-100 btn btn-lg btn-danger" type="submit">Войти</button>
                     </form>

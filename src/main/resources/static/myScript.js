@@ -1,6 +1,6 @@
 
-function getRepairGroup(markId, modelId, typeEngineId, modificationId, id, groupMainName) {
-    fetch('/api/select/groupRepair/'+markId+'/'+modelId+'/'+typeEngineId+'/'+modificationId+'/'+id,{
+ function getRepairGroup(modificationId, id, groupMainName) {
+        fetch('/api/select/groupRepair/'+modificationId+'/'+id,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ function getRepairGroup(markId, modelId, typeEngineId, modificationId, id, group
         });
 }
 function getStandardTimeData(modificationId, id, repairGroupName) {
-    fetch('/api/select/standardTime/1/2/3/'+modificationId+'/'+id, {
+    fetch('/api/select/standardTime/'+modificationId+'/'+id, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

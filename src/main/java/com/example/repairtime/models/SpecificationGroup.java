@@ -20,7 +20,7 @@ public class SpecificationGroup {
     @Column
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private SpecificationsGroupName specificationsGroupName;
 
