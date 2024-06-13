@@ -5,6 +5,7 @@
 html,
 body {
     height: 100%;
+
 }
 .wrapper_log {
     display: flex;
@@ -30,6 +31,7 @@ body {
     background-size: cover;
 }
 .content {
+    margin:1%;
     flex: 1 0 auto;
 }
 .footer {

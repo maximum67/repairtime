@@ -16,9 +16,9 @@
 <body class="text-center">
 <div class="wrapper_log">
     <main class="form-signing">
-        <br><br><br>
+        <br>
         <div class="container-lg">
-            <br><br><br>
+            <br>
             <div class="row">
                 <div class="col"></div>
                 <br><br>
@@ -36,7 +36,6 @@
                                    autocomplete="new-password" placeholder="Password">
                             <label for="floatingPassword">Пароль</label>
                         </div>
-                        <br>
                         <h5 style="color: red" th:text="${errorMessage}">Ошибка</h5>
                         <br>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
