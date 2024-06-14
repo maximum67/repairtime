@@ -14,6 +14,7 @@
     <div class="content">
     <main>
         <br>
+        <span class="title">
         <table class="table">
             <thead>
             <tr>
@@ -35,17 +36,18 @@
                 <td th:text="${modification.name}">name</td>
                 <td>
                     <form th:action="'/select/'+${page}+'/typeEngine/'+${mark.id}+'/'+${model.id}+'/'+${type.id}">
-                        <button  class="btn btn-danger rounded-pill px-3" type="submit">Назад</button>
+                        <button  class="btn btn-link rounded-pill px-3" type="submit">Назад</button>
                     </form>
                 </td>
                 <td>
                     <form th:action="'/select/'+${page}+'/mark'">
-                        <button  class="btn btn-danger rounded-pill px-3" type="submit">Очистить</button>
+                        <button  class="btn btn-link rounded-pill px-3" type="submit">Очистить</button>
                     </form>
                 </td>
             </tr>
             </tbody>
         </table>
+        </span>
         <br>
 
         <table class="table" th:hidden="${page==2}? 'false':'true'">
@@ -73,7 +75,7 @@
             </tbody>
         </table>
         <br>
-
+         <div id="specification">
         <table class="table" th:hidden="${page==3}? 'false':'true'">
             <thead>
             <th class="col-4">Tехнические данные</th>
@@ -91,11 +93,17 @@
             </tr>
             </tbody>
         </table>
+         </div>
     </main>
+        <div>
+            <a th:id="toPDF" href="javascript:void(0);" th:onclick="toPDF()">Печать</a>
+        </div>
     </div>
         <div th:replace="~{/footer.html :: footer}"></div>
 </div>
 <script src="/myScript.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/pdfScript.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
